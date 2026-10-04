@@ -1,9 +1,14 @@
 {
-  "apiVersion": "nexo/v1alpha1",
+  "apiVersion": "nexoharness.dev/v1alpha1",
   "kind": "Contract",
-  "metadata": { "id": "invalid-contract", "title": "Invalid Contract", "version": "0.1.0" },
+  "metadata": { "id": "invalid-contract", "title": "Invalid Contract", "version": "0.1.0", "status": "draft" },
   "spec": {
-    "status": "DONE",
-    "requiredFields": ["task_id"]
+    "purpose": "Define a handoff shape.",
+    "artifactType": "Implementation Report",
+    "requiredEnvelopeFields": ["cycle_id", "task_id"],
+    "payload": {
+      "requiredFields": ["verification"]
+    },
+    "status": "READY"
   }
 }

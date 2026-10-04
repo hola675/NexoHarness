@@ -1,6 +1,6 @@
 {
-  "apiVersion": "nexo/v0",
+  "apiVersion": "nexo/v1alpha1",
   "kind": "Directive",
-  "metadata": { "id": "invalid-directive", "title": "Invalid Directive", "version": "0.1.0" },
+  "metadata": { "id": "invalid-directive", "title": "Invalid Directive", "version": "0.1.0", "status": "draft" },
   "spec": { "summary": "Invalid API version.", "appliesTo": ["coding-agent"] }
 }

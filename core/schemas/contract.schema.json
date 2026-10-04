@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://nexoharness.dev/schemas/contract.schema.json",
-  "title": "Nexo Contract",
+  "title": "Nexo Contract Definition",
   "type": "object",
   "additionalProperties": false,
   "required": ["apiVersion", "kind", "metadata", "spec"],
@@ -12,11 +12,20 @@
     "spec": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status", "requiredFields"],
+      "required": ["purpose", "artifactType", "requiredEnvelopeFields", "payload"],
       "properties": {
-        "status": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/status" },
-        "requiredFields": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
-        "nextAgent": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" }
+        "purpose": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "artifactType": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "requiredEnvelopeFields": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requiredFields": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+            "allowedStatuses": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+            "nextAgentRef": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" }
+          }
+        }
       }
     }
   }

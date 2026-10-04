@@ -1,10 +1,11 @@
 ---
-apiVersion: nexo/v1alpha1
+apiVersion: nexoharness.dev/v1alpha1
 kind: Policy
 metadata:
   id: scope-control
   title: Scope Control Policy
   version: 0.1.0
+  status: draft
 spec:
   summary: Classification and escalation of requested, supporting and unrelated scope.
   appliesTo:

@@ -1,10 +1,11 @@
 ---
-apiVersion: nexo/v1alpha1
+apiVersion: nexoharness.dev/v1alpha1
 kind: Directive
 metadata:
   id: core-directive
   title: Nexo Core Directive
   version: 0.1.0
+  status: draft
 spec:
   summary: Universal behavior inherited by every NexoHarness-controlled coding agent.
   appliesTo:

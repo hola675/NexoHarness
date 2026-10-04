@@ -1,9 +1,12 @@
 {
-  "apiVersion": "nexo/v1alpha1",
+  "apiVersion": "nexoharness.dev/v1alpha1",
   "kind": "Workflow",
-  "metadata": { "id": "invalid-workflow", "title": "Invalid Workflow", "version": "0.1.0" },
+  "metadata": { "id": "invalid-workflow", "title": "Invalid Workflow", "version": "0.1.0", "status": "draft" },
   "spec": {
     "entryStep": "start",
+    "limits": {
+      "maxDelegationDepth": -1
+    },
     "steps": [
       { "id": "start", "action": "Begin." },
       { "id": "start", "action": "Duplicate step id." }

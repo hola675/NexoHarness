@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "apiVersion": "nexo/v1alpha1",
+  "apiVersion": "nexoharness.dev/v1alpha1",
   "version": "0.1.0",
   "schemas": {
     "Directive": "directive.schema.json",

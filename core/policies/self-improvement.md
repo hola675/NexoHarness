@@ -1,10 +1,11 @@
 ---
-apiVersion: nexo/v1alpha1
+apiVersion: nexoharness.dev/v1alpha1
 kind: Policy
 metadata:
   id: self-improvement
   title: Self-Improvement Policy
   version: 0.1.0
+  status: draft
 spec:
   summary: Evidence-driven improvement with an explicit promotion boundary.
   appliesTo:

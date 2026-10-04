@@ -8,6 +8,7 @@ const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..")
 const schemaRoot = join(repositoryRoot, "core", "schemas");
 const fixtureRoot = join(repositoryRoot, "tests", "fixtures", "schemas");
 const prohibitedCanonicalCoupling = /Kilo|Claude|Context7|Serena|DBHub|Playwright|GitMCP|Cloudflare MCP|modelId|providerId/i;
+export const CANONICAL_API_VERSION = "nexoharness.dev/v1alpha1";
 
 export const SUPPORTED_KINDS = [
   "Directive",
@@ -66,7 +67,7 @@ function assertRegistry(value: unknown): SchemaRegistry {
     throw new Error("Schema registry must be an object.");
   }
   const registry = value as Partial<SchemaRegistry>;
-  if (registry.apiVersion !== "nexo/v1alpha1" || typeof registry.version !== "string" || !registry.schemas) {
+  if (registry.apiVersion !== CANONICAL_API_VERSION || typeof registry.version !== "string" || !registry.schemas) {
     throw new Error("Schema registry must define apiVersion, version and schemas.");
   }
   const entries = Object.entries(registry.schemas);
@@ -92,6 +93,11 @@ export async function loadSchemaBundle(): Promise<SchemaBundle> {
   const common = await readJson(join(schemaRoot, "common.schema.json")) as Record<string, unknown>;
   if (common.$id !== "https://nexoharness.dev/schemas/common.schema.json" || common.$schema !== "https://json-schema.org/draft/2020-12/schema") {
     throw new Error("common.schema.json must use Draft 2020-12 and its canonical $id.");
+  }
+  const commonDefinitions = common.$defs as Record<string, unknown> | undefined;
+  const apiVersionDefinition = commonDefinitions?.apiVersion as Record<string, unknown> | undefined;
+  if (apiVersionDefinition?.const !== CANONICAL_API_VERSION) {
+    throw new Error("common.schema.json apiVersion definition diverges from the canonical API version.");
   }
 
   if (prohibitedCanonicalCoupling.test(JSON.stringify(common))) {
@@ -131,8 +137,13 @@ export async function loadSchemaBundle(): Promise<SchemaBundle> {
 }
 
 function formatAjvPath(error: ErrorObject): string {
-  if (error.keyword === "required" && typeof error.params === "object" && error.params && "missingProperty" in error.params) {
-    return `${error.instancePath || "/"}/${String(error.params.missingProperty)}`;
+  if (typeof error.params === "object" && error.params) {
+    if (error.keyword === "required" && "missingProperty" in error.params) {
+      return `${error.instancePath || "/"}/${String(error.params.missingProperty)}`;
+    }
+    if (error.keyword === "additionalProperties" && "additionalProperty" in error.params) {
+      return `${error.instancePath || "/"}/${String(error.params.additionalProperty)}`;
+    }
   }
   return error.instancePath || "/";
 }
@@ -222,9 +233,9 @@ function expectedInvalidPath(file: string): string {
     "agent-invalid-authority.json": "/spec/authority",
     "skill-missing-purpose.json": "/spec/purpose",
     "rule-invalid-severity.json": "/spec/severity",
-    "workflow-duplicate-step-ids.json": "/spec/steps",
+    "workflow-duplicate-step-ids.json": "/spec/limits/maxDelegationDepth",
     "contract-invalid-status.json": "/spec/status",
-    "capability-missing-semantic.json": "/spec/semantic",
+    "capability-missing-semantic.json": "/spec/name",
     "profile-malformed-reference.json": "/spec/capabilities/0",
     "enforcement-invalid-level.json": "/spec/level",
     "evaluation-missing-pass-criteria.json": "/spec/passCriteria",

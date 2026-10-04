@@ -12,10 +12,11 @@
     "spec": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["request", "semantic"],
+      "required": ["name", "purpose", "effect"],
       "properties": {
-        "request": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/id" },
-        "semantic": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "name": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/capabilityName" },
+        "purpose": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "effect": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/capabilityEffect" },
         "inputContract": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
         "outputContract": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" }
       }

@@ -1,8 +1,8 @@
 # Contracts
 
-Contracts are structured handoff artifacts. They make work traceable across agents and workflow states.
+Contracts are structured definitions for handoff artifacts. They make work traceable across agents and workflow states.
 
-Planned contracts:
+Planned contract definitions include:
 
 - Requirement Brief
 - Context Brief
@@ -13,7 +13,9 @@ Planned contracts:
 - Remediation Report
 - Delivery Report
 
-Every future runtime artifact should be traceable with:
+## Contract Definition versus Contract Instance
+
+A **Contract Definition** describes the shape and constraints of a future artifact. It may declare required envelope fields such as:
 
 ```text
 cycle_id
@@ -23,8 +25,6 @@ status
 next_agent
 ```
 
-Planned statuses:
+A **Contract Instance** is a runtime handoff that fills that shape and carries an actual completion status. The canonical Contract entity is a definition and must not claim a runtime status such as `READY` or a concrete `nextAgent` value.
 
-`READY` · `PASS` · `FAIL` · `BLOCKED` · `INCOMPLETE` · `ESCALATION_REQUIRED`
-
-Phase 0.0 defines the vocabulary only; it does not build runtime serialization or validation logic.
+Phase 0.1 defines the distinction and validates definitions only. It does not build runtime serialization or instance validation logic.

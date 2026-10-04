@@ -1,7 +1,7 @@
 {
-  "apiVersion": "nexo/v1alpha1",
+  "apiVersion": "nexoharness.dev/v1alpha1",
   "kind": "Rule",
-  "metadata": { "id": "scope-rule", "title": "Scope Rule", "version": "0.1.0" },
+  "metadata": { "id": "scope-rule", "title": "Scope Rule", "version": "0.1.0", "status": "draft" },
   "spec": {
     "intent": "Prevent unrelated work.",
     "scope": ["implementation"],

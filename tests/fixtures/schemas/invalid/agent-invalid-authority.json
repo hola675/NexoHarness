@@ -1,7 +1,7 @@
 {
-  "apiVersion": "nexo/v1alpha1",
+  "apiVersion": "nexoharness.dev/v1alpha1",
   "kind": "Agent",
-  "metadata": { "id": "invalid-agent", "title": "Invalid Agent", "version": "0.1.0" },
+  "metadata": { "id": "invalid-agent", "title": "Invalid Agent", "version": "0.1.0", "status": "draft" },
   "spec": {
     "responsibility": "Do bounded work.",
     "authority": "superuser",

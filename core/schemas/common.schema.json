@@ -4,7 +4,7 @@
   "$defs": {
     "apiVersion": {
       "type": "string",
-      "const": "nexo/v1alpha1"
+      "const": "nexoharness.dev/v1alpha1"
     },
     "id": {
       "type": "string",
@@ -25,33 +25,53 @@
       "minLength": 1,
       "maxLength": 2000
     },
+    "entityStatus": {
+      "type": "string",
+      "enum": ["draft", "experimental", "stable", "deprecated"]
+    },
+    "completionStatus": {
+      "type": "string",
+      "enum": ["READY", "PASS", "FAIL", "BLOCKED", "INCOMPLETE", "ESCALATION_REQUIRED"]
+    },
     "metadata": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "title", "version"],
+      "required": ["id", "title", "version", "status"],
       "properties": {
         "id": { "$ref": "#/$defs/id" },
         "title": { "$ref": "#/$defs/nonEmptyString" },
         "version": { "$ref": "#/$defs/version" },
+        "status": { "$ref": "#/$defs/entityStatus" },
         "description": { "$ref": "#/$defs/nonEmptyString" },
         "tags": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "provenanceRefs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonEmptyString" },
           "uniqueItems": true
         }
       }
     },
     "severity": {
       "type": "string",
-      "enum": ["info", "low", "medium", "high", "critical"]
+      "enum": ["low", "medium", "high", "critical"]
     },
-    "authority": {
+    "authorityMode": {
       "type": "string",
-      "enum": ["read-only", "bounded", "review", "remediate", "admin"]
+      "enum": ["none", "scoped", "allowed"]
     },
-    "status": {
+    "capabilityName": {
       "type": "string",
-      "enum": ["READY", "PASS", "FAIL", "BLOCKED", "INCOMPLETE", "ESCALATION_REQUIRED"]
+      "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9-]*)+$",
+      "minLength": 3,
+      "maxLength": 120
+    },
+    "capabilityEffect": {
+      "type": "string",
+      "enum": ["read", "local-write", "external-write", "destructive"]
     },
     "refList": {
       "type": "array",
@@ -62,6 +82,10 @@
       "type": "array",
       "items": { "$ref": "#/$defs/nonEmptyString" },
       "uniqueItems": true
+    },
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
     }
   }
 }

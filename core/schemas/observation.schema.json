@@ -12,10 +12,27 @@
     "spec": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["signal", "resultStatus"],
+      "required": ["signal", "resultStatus", "privacy"],
       "properties": {
         "signal": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
         "resultStatus": { "type": "string", "enum": ["observed", "validated", "failed", "blocked"] },
+        "cycleId": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "taskId": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "workflowRef": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" },
+        "taskClass": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "complexity": { "type": "string", "enum": ["BOUNDED", "COMPLEX"] },
+        "execution": { "type": "object" },
+        "signals": { "type": "object" },
+        "findings": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "metrics": { "type": "object" },
+        "privacy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceContentStored"],
+          "properties": {
+            "sourceContentStored": { "type": "boolean" }
+          }
+        },
         "subject": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" },
         "evidence": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" }
       }

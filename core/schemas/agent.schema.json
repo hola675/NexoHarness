@@ -15,7 +15,17 @@
       "required": ["responsibility", "authority", "triggers", "capabilities", "constraints"],
       "properties": {
         "responsibility": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
-        "authority": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/authority" },
+        "authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceModification", "delegation", "commandExecution", "externalMutation"],
+          "properties": {
+            "sourceModification": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/authorityMode" },
+            "delegation": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/authorityMode" },
+            "commandExecution": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/authorityMode" },
+            "externalMutation": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/authorityMode" }
+          }
+        },
         "triggers": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
         "capabilities": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" },
         "constraints": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },

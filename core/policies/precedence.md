@@ -1,10 +1,11 @@
 ---
-apiVersion: nexo/v1alpha1
+apiVersion: nexoharness.dev/v1alpha1
 kind: Policy
 metadata:
   id: precedence
   title: Precedence Policy
   version: 0.1.0
+  status: draft
 spec:
   summary: Logical authority ordering and conflict handling inside NexoHarness.
   appliesTo:

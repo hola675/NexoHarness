@@ -6,27 +6,30 @@ Use real task execution evidence to improve NexoHarness without allowing executi
 
 ## Inputs
 
-The observer accepts structured execution signals only. Initial signals include:
+The observer accepts structured execution signals only. An Observation may record optional concepts such as:
 
-- task type
-- complexity classification
-- workflow selected
-- agents invoked
-- delegation count
-- failed delegations
-- tool failures
-- degraded capabilities
-- artifact validation failures
-- review findings
-- remediation cycles
-- verification results
-- scope expansion
-- elapsed time
-- token/context metrics when available
+- cycle and task identifiers
+- workflow reference
+- task class and complexity
+- execution details
+- structured signals
+- findings
+- optional metrics
+- result status
+- privacy metadata
 
-## Privacy principle
+Unavailable telemetry remains absent; it is never fabricated.
 
-Default to structured metrics and references rather than complete conversation or source-code capture. Collection should be minimized, bounded and transparent.
+## Privacy contract
+
+Every Observation declares:
+
+```yaml
+privacy:
+  sourceContentStored: false
+```
+
+`sourceContentStored` is explicit and may be `true` only under a later, separately approved collection policy. Structured metrics and references are preferred over complete conversation or source-code capture.
 
 ## Observer output
 
@@ -57,4 +60,4 @@ Candidate improvement
 
 ## Anti-pattern: SELF-EDITING SYSTEM
 
-NexoHarness must never silently rewrite itself because one task failed. Observation is evidence for a bounded proposal, not permission to mutate behavior. Phase 0.0 documents this safety model and does not implement observer runtime code.
+NexoHarness must never silently rewrite itself because one task failed. Observation is evidence for a bounded proposal, not permission to mutate behavior.

@@ -7,42 +7,49 @@ NexoHarness uses strict canonical schemas to make definitions understandable, in
 Every canonical entity uses the same envelope:
 
 ```yaml
-apiVersion: nexo/v1alpha1
-kind: Directive
+apiVersion: nexoharness.dev/v1alpha1
+kind: Capability
 metadata:
-  id: core-directive
-  title: Nexo Core Directive
+  id: repository-search
+  title: Repository Search
   version: 0.1.0
+  status: draft
 spec:
-  ...
+  name: repository.search
+  purpose: Search repository content without naming a provider.
+  effect: read
 ```
 
 - **`apiVersion`** identifies the canonical schema dialect.
 - **`kind`** selects one registered entity schema.
-- **`metadata`** carries stable identity and entity version.
+- **`metadata`** carries logical identity, entity version, lifecycle status and optional provenance references.
 - **`spec`** carries kind-specific content.
 
-IDs are logical entity identifiers, not filesystem paths. Entity references use the form `Kind:entity-id` and may include an explicit version such as `Kind:entity-id@0.1.0`.
+Entity IDs are logical kebab-case identifiers, not filesystem paths. Entity references use `Kind:entity-id` and may include an explicit version such as `Kind:entity-id@0.1.0`.
+
+## Lifecycle and runtime status
+
+`metadata.status` uses the entity lifecycle values `draft`, `experimental`, `stable` and `deprecated`. Runtime completion statuses (`READY`, `PASS`, `FAIL`, `BLOCKED`, `INCOMPLETE`, `ESCALATION_REQUIRED`) are separate and must not substitute for entity lifecycle status.
+
+Canonical metadata requires `id`, `title`, `version` and `status`. `provenanceRefs` is optional for original NexoHarness work and uses a strict unique non-empty string array when present; provenance graph resolution is deferred.
 
 ## Versioning and strictness
 
-Schemas use JSON Schema Draft 2020-12. Entity versions use semantic `major.minor.patch` syntax. Phase 0.1 uses strict contracts: unknown fields fail validation and no generic `extra`, `extensions` or unbounded metadata escape hatches are provided.
-
-Strictness is intentional. If a future extension requirement emerges, it must be evaluated and added explicitly rather than bypassing validation.
+Schemas use JSON Schema Draft 2020-12. Entity versions use semantic `major.minor.patch` syntax. Unknown fields fail validation and no generic `extra`, `extensions` or unbounded metadata escape hatches are provided.
 
 ## Authoring formats
 
 - Markdown entities use a small YAML frontmatter envelope followed by an uninterpreted Markdown body.
-- Structured fixtures use JSON for deterministic schema tests.
-- YAML parsing is limited to frontmatter and structured YAML values; no Markdown framework is required.
+- Structured definitions and fixtures use JSON/YAML values.
+- YAML parsing is limited to frontmatter and structured values; no Markdown framework is required.
 
 Frontmatter must begin with `---`, contain a closing `---`, parse as one YAML object and preserve the body separately. Malformed frontmatter is an error.
 
 ## Registry and validation
 
-`core/schemas/registry.json` maps each supported `kind` to exactly one schema. The validator loads the registry, parses every schema, resolves internal references, compiles every schema under Draft 2020-12 and validates fixtures and canonical entities.
+`core/schemas/registry.json` maps each supported `kind` to exactly one schema. The validator loads the registry, parses every schema, resolves references, compiles every schema under Draft 2020-12 and validates fixtures and canonical entities.
 
-Validation reports the file and field path for failures. It does not silently skip malformed canonical entities. Current reference validation checks syntax and, where the repository contains the target entity, known logical IDs. Full repository graph resolution is deferred to Phase 0.2.
+Validation reports the file and field path for failures. It does not silently skip malformed canonical entities. Current reference validation checks syntax and known logical IDs where the repository contains the target entity. Full repository graph resolution is deferred to Phase 0.2.
 
 ## Canonical versus harness schemas
 
@@ -67,7 +74,3 @@ Claude-native configuration
 ```
 
 Canonical schemas must not encode harness names, provider IDs, model IDs or concrete tool configuration. Adapters own translation and provider selection.
-
-## Relationship to adapters
-
-Schemas validate canonical authoring before translation. Adapters consume validated canonical entities and may impose additional target-specific requirements, but target requirements must not be copied back into canonical behavior. Generated distribution artifacts remain outputs and never become schema inputs.

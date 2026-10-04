@@ -1,10 +1,13 @@
 {
-  "apiVersion": "nexo/v1alpha1",
+  "apiVersion": "nexoharness.dev/v1alpha1",
   "kind": "Contract",
-  "metadata": { "id": "implementation-report", "title": "Implementation Report", "version": "0.1.0" },
+  "metadata": { "id": "implementation-report", "title": "Implementation Report", "version": "0.1.0", "status": "draft" },
   "spec": {
-    "status": "READY",
-    "requiredFields": ["cycle_id", "task_id", "created_by", "status", "next_agent"],
-    "nextAgent": "Agent:context-agent"
+    "purpose": "Define the implementation handoff artifact shape.",
+    "artifactType": "Implementation Report",
+    "requiredEnvelopeFields": ["cycle_id", "task_id", "created_by", "status", "next_agent"],
+    "payload": {
+      "requiredFields": ["changed_files", "verification"]
+    }
   }
 }

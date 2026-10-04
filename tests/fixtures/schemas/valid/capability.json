@@ -1,10 +1,11 @@
 {
-  "apiVersion": "nexo/v1alpha1",
+  "apiVersion": "nexoharness.dev/v1alpha1",
   "kind": "Capability",
-  "metadata": { "id": "repository-search", "title": "Repository Search", "version": "0.1.0" },
+  "metadata": { "id": "repository-search", "title": "Repository Search", "version": "0.1.0", "status": "draft" },
   "spec": {
-    "request": "repository-search",
-    "semantic": "Search repository content and structure without defining a provider.",
+    "name": "repository.search",
+    "purpose": "Search repository content and structure without defining a provider.",
+    "effect": "read",
     "inputContract": ["query"],
     "outputContract": ["matching paths", "relevant context"]
   }
