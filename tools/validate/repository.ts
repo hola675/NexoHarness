@@ -34,6 +34,7 @@ export const requiredCoreFiles = [
 export const requiredDocumentationFiles = [
   "docs/architecture.md",
   "docs/schema-system.md",
+  "docs/versioning.md",
   "docs/canonical-format.md",
   "docs/decisions/0001-canonical-manifest-model.md",
   "docs/principles.md",

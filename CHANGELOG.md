@@ -4,6 +4,9 @@
 
 ### Added
 
+- Versioning and certification tag governance.
+- GitHub CI and release automation.
+- Exact-SHA phase-close promotion tooling.
 - Initial NexoHarness repository foundation.
 - Canonical architecture documentation.
 - Kilo-first adapter strategy.

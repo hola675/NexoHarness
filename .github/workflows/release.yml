@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "phase-*-certified"
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to validate and release
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Resolve tag
+        id: tag
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+        shell: bash
+        run: |
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            tag="$INPUT_TAG"
+          else
+            tag="${GITHUB_REF_NAME}"
+          fi
+          node --experimental-strip-types tools/release/verify-release.ts --tag "$tag"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Checkout tagged commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.tag.outputs.tag }}
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Repository validation
+        run: npm run validate
+      - name: Tests
+        run: npm test
+      - name: Git whitespace check
+        run: git diff --check
+      - name: Verify tag target
+        env:
+          RELEASE_TAG: ${{ steps.tag.outputs.tag }}
+        shell: bash
+        run: |
+          tag="$RELEASE_TAG"
+          test -n "$(git show-ref --tags --verify --hash "refs/tags/$tag")"
+          echo "Tag: $tag"
+          echo "Target commit: $(git rev-list -n 1 "$tag")"
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.tag.outputs.tag }}
+        shell: bash
+        run: |
+          tag="$RELEASE_TAG"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "A GitHub Release already exists for $tag; refusing to overwrite it."
+            exit 1
+          fi
+          sha="$(git rev-list -n 1 "$tag")"
+          if [[ "$tag" == phase-*-certified || "$tag" == *-alpha.* || "$tag" == *-beta.* || "$tag" == *-rc.* ]]; then
+            prerelease=(--prerelease)
+            certification="pre-release"
+          else
+            prerelease=()
+            certification="stable release"
+          fi
+          title="NexoHarness $tag"
+          notes=$(printf 'Tag: %s\nTarget commit SHA: %s\nCertification type: %s\nValidation: passed in the release workflow.' "$tag" "$sha" "$certification")
+          gh release create "$tag" --title "$title" --notes "$notes" --generate-notes "${prerelease[@]}"

@@ -35,6 +35,8 @@ Generated output: `dist/`
 - preserve the semantic separation between agents, skills, rules, policies, workflows, capabilities and providers
 - respect the Nexo Core Directive architecture without copying it into this file
 - review licenses and provenance before adapting third-party content
+- certified phase tags require independent review and must point to the exact approved SHA
+- `phase:close` cannot replace independent review and must not edit source or create commits
 
 ## Documentation
 
@@ -44,6 +46,7 @@ Generated output: `dist/`
 - [Lifecycle](docs/lifecycle.md)
 - [Execution model](docs/execution-model.md)
 - [Schema system](docs/schema-system.md)
+- [Versioning and release governance](docs/versioning.md)
 - [Component coordination](docs/concepts/directives.md)
 - [Nexo Core Directive](core/directives/core-directive.md)
 

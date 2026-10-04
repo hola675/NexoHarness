@@ -16,7 +16,7 @@ NexoHarness is in its foundation phase. Keep contributions small, evidence-based
 - Add or update tests and evaluations for behavior changes.
 - Record provenance for external adaptations.
 - Avoid silent generated-file changes.
-- Use conventional commits or another clearly structured commit format.
+- Use Conventional Commits or another clearly structured commit format; preferred types include `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`, `build` and `perf`.
 
 ## Validation
 
@@ -30,3 +30,7 @@ git diff --check
 ```
 
 Explain any unavailable or failing check in the change description. Independent review is expected for changes to rules, enforcement, permissions, adapters or promotion paths.
+
+## Candidate and certified state
+
+A candidate commit is validated work awaiting independent review. A certified phase tag is immutable and may only point to the exact independently reviewed and approved commit. `npm run phase:close` is a promotion command: it requires a clean, synchronized `main` branch and an explicit full approved SHA, then creates and pushes only the annotated tag. It cannot replace independent review.
