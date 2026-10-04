@@ -1,0 +1,20 @@
+{
+  "name": "nexo-harness",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Portable engineering harness for AI coding agents.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "validate": "node --experimental-strip-types tools/validate/repository.ts",
+    "test": "node --test --experimental-strip-types tests/repository.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}

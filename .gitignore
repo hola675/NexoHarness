@@ -1,0 +1,9 @@
+node_modules/
+coverage/
+temp/
+.cache/
+*.log
+
+# Generated distribution output; never canonical input.
+# Revisit this decision explicitly if a future release needs committed artifacts.
+dist/
