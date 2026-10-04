@@ -1,0 +1,9 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Evaluation",
+  "metadata": { "id": "invalid-evaluation", "title": "Invalid Evaluation", "version": "0.1.0" },
+  "spec": {
+    "target": "Rule:scope-rule",
+    "method": "behavioral"
+  }
+}

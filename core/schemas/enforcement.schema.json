@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/enforcement.schema.json",
+  "title": "Nexo Enforcement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "Enforcement" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "detects"],
+      "properties": {
+        "level": { "type": "string", "enum": ["L1", "L2", "L3"] },
+        "detects": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "blocks": { "type": "boolean" },
+        "ruleRefs": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" }
+      }
+    }
+  }
+}

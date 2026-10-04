@@ -1,0 +1,11 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Rule",
+  "metadata": { "id": "invalid-rule", "title": "Invalid Rule", "version": "0.1.0" },
+  "spec": {
+    "intent": "Reject invalid severity.",
+    "scope": ["all"],
+    "severity": "urgent",
+    "requirements": ["Have a valid severity."]
+  }
+}

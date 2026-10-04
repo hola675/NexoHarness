@@ -1,3 +1,16 @@
+---
+apiVersion: nexo/v1alpha1
+kind: Directive
+metadata:
+  id: core-directive
+  title: Nexo Core Directive
+  version: 0.1.0
+spec:
+  summary: Universal behavior inherited by every NexoHarness-controlled coding agent.
+  appliesTo:
+    - coding-agent
+---
+
 # Nexo Core Directive
 
 **Stable identifier:** `NH-CORE`

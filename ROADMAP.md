@@ -2,8 +2,8 @@
 
 ## Foundation
 
-- 0.0 Repository constitution
-- 0.0.5 Core Directive & Execution Model
+- 0.0 Repository constitution — COMPLETE
+- 0.0.5 Core Directive & Execution Model — COMPLETE
 - 0.1 Canonical schemas
 - 0.2 Validation framework
 

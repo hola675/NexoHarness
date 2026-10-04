@@ -1,3 +1,18 @@
+---
+apiVersion: nexo/v1alpha1
+kind: Policy
+metadata:
+  id: delegation
+  title: Delegation Policy
+  version: 0.1.0
+spec:
+  summary: Bounded delegation requirements and accountability invariants.
+  appliesTo:
+    - delegation
+  decisions:
+    - every delegation has a bounded objective and completion condition
+---
+
 # Delegation Policy
 
 Delegation transfers a bounded piece of work while preserving parent accountability.

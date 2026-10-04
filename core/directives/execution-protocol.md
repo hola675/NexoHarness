@@ -1,3 +1,16 @@
+---
+apiVersion: nexo/v1alpha1
+kind: Directive
+metadata:
+  id: execution-protocol
+  title: Nexo Execution Protocol
+  version: 0.1.0
+spec:
+  summary: Universal logical lifecycle for coding tasks.
+  appliesTo:
+    - coding-task
+---
+
 # Nexo Execution Protocol
 
 **Stable identifier:** `NEP-1`

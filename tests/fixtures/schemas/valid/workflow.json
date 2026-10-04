@@ -1,0 +1,13 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Workflow",
+  "metadata": { "id": "bounded-task", "title": "Bounded Task", "version": "0.1.0" },
+  "spec": {
+    "entryStep": "start",
+    "steps": [
+      { "id": "start", "action": "Understand the objective.", "next": "verify", "agent": "Agent:context-agent" },
+      { "id": "verify", "action": "Verify the result." }
+    ],
+    "failureStates": ["BLOCKED"]
+  }
+}

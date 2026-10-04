@@ -1,3 +1,18 @@
+---
+apiVersion: nexo/v1alpha1
+kind: Policy
+metadata:
+  id: completion
+  title: Completion Policy
+  version: 0.1.0
+spec:
+  summary: Explicit completion states and evidence requirements.
+  appliesTo:
+    - reporting
+  decisions:
+    - PASS requires applicable verification and no fabricated evidence
+---
+
 # Completion Policy
 
 Completion states are explicit:

@@ -1,0 +1,9 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Contract",
+  "metadata": { "id": "invalid-contract", "title": "Invalid Contract", "version": "0.1.0" },
+  "spec": {
+    "status": "DONE",
+    "requiredFields": ["task_id"]
+  }
+}

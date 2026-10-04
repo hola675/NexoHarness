@@ -10,11 +10,16 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "validate": "node --experimental-strip-types tools/validate/repository.ts",
+    "validate": "npm run validate:repository && npm run validate:schemas && npm run validate:canonical",
+    "validate:repository": "node --experimental-strip-types tools/validate/repository.ts",
+    "validate:schemas": "node --experimental-strip-types tools/validate/schemas.ts",
+    "validate:canonical": "node --experimental-strip-types tools/validate/canonical.ts",
     "test": "node --test --experimental-strip-types tests/repository.test.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
-    "typescript": "^5.9.0"
+    "ajv": "^8.20.0",
+    "typescript": "^5.9.0",
+    "yaml": "^2.9.1"
   }
 }

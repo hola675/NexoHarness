@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/directive.schema.json",
+  "title": "Nexo Directive",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "Directive" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "appliesTo"],
+      "properties": {
+        "summary": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "appliesTo": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "invariants": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" }
+      }
+    }
+  }
+}

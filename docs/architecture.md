@@ -6,7 +6,7 @@ This document is the authoritative high-level architecture for NexoHarness.
 
 ### Canonical Definition Layer
 
-The harness-neutral source defines `core/` (including the Nexo Core Directive, execution protocol and policies), `agents/`, `skills/`, `rules/`, `workflows/`, `capabilities/` and `profiles/`. These directories describe behavior, responsibilities and abstract requirements without depending on a target harness.
+The harness-neutral source defines `core/` (including schemas, the Nexo Core Directive, execution protocol and policies), `agents/`, `skills/`, `rules/`, `workflows/`, `capabilities/` and `profiles/`. These directories describe behavior, responsibilities and abstract requirements without depending on a target harness.
 
 ### Behavior Assurance Layer
 

@@ -1,3 +1,18 @@
+---
+apiVersion: nexo/v1alpha1
+kind: Policy
+metadata:
+  id: evidence
+  title: Evidence Policy
+  version: 0.1.0
+spec:
+  summary: Proportional fresh evidence requirements for claims and outcomes.
+  appliesTo:
+    - verification
+  decisions:
+    - evidence strength is proportional to claim and risk
+---
+
 # Evidence Policy
 
 Evidence requirements are proportional to the claim, risk and workflow. Evidence must be fresh: generated against the current relevant state. Successful tests from before a change are not proof after the change.

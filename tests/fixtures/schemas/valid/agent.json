@@ -1,0 +1,15 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Agent",
+  "metadata": { "id": "context-agent", "title": "Context Agent", "version": "0.1.0" },
+  "spec": {
+    "responsibility": "Collect bounded task context.",
+    "authority": "bounded",
+    "triggers": ["task.start"],
+    "capabilities": ["Capability:repository-search"],
+    "constraints": ["Do not modify source files."],
+    "handoff": "Context Brief",
+    "failureBehavior": "Report BLOCKED when context is unavailable.",
+    "verification": ["Required context paths are recorded."]
+  }
+}

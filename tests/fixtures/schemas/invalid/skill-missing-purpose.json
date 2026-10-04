@@ -1,0 +1,9 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Skill",
+  "metadata": { "id": "invalid-skill", "title": "Invalid Skill", "version": "0.1.0" },
+  "spec": {
+    "activationConditions": ["Always"],
+    "procedure": ["Do a thing"]
+  }
+}

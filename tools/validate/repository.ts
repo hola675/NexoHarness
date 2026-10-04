@@ -33,6 +33,7 @@ export const requiredCoreFiles = [
 
 export const requiredDocumentationFiles = [
   "docs/architecture.md",
+  "docs/schema-system.md",
   "docs/principles.md",
   "docs/terminology.md",
   "docs/source-of-truth.md",
@@ -56,6 +57,7 @@ export const requiredCanonicalDirectories = [
   "core",
   "core/directives",
   "core/policies",
+  "core/schemas",
   "agents",
   "skills",
   "rules",
@@ -165,7 +167,14 @@ export async function validateRepository(): Promise<void> {
     ["AGENTS.md", "core/directives/core-directive.md"],
     ["AGENTS.md", "not the canonical runtime directive"],
     ["docs/concepts/directives.md", "AGENT != SKILL"],
-    ["docs/concepts/directives.md", "MCP != CAPABILITY"],
+    ["docs/concepts/directives.md", "RULE != POLICY"],
+    ["docs/concepts/directives.md", "CAPABILITY != MCP"],
+    ["docs/concepts/directives.md", "MCP != AUTHORITY"],
+    ["docs/concepts/directives.md", "PLUGIN != DIRECTIVE"],
+    ["docs/concepts/directives.md", "SKILL != AUTHORITY"],
+    ["docs/concepts/directives.md", "PROVIDER != AUTHORITY"],
+    ["docs/concepts/directives.md", "OBSERVER != PROMOTION AUTHORITY"],
+    ["docs/concepts/directives.md", "DIST != SOURCE"],
   ] as const;
   for (const [path, text] of requiredText) {
     const content = await readFile(join(repositoryRoot, path), "utf8");

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/skill.schema.json",
+  "title": "Nexo Skill",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "Skill" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "activationConditions", "procedure"],
+      "properties": {
+        "purpose": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "activationConditions": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "procedure": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "references": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "relatedAgents": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" }
+      }
+    }
+  }
+}

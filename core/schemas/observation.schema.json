@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/observation.schema.json",
+  "title": "Nexo Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "Observation" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["signal", "resultStatus"],
+      "properties": {
+        "signal": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "resultStatus": { "type": "string", "enum": ["observed", "validated", "failed", "blocked"] },
+        "subject": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" },
+        "evidence": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" }
+      }
+    }
+  }
+}

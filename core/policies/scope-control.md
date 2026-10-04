@@ -1,3 +1,18 @@
+---
+apiVersion: nexo/v1alpha1
+kind: Policy
+metadata:
+  id: scope-control
+  title: Scope Control Policy
+  version: 0.1.0
+spec:
+  summary: Classification and escalation of requested, supporting and unrelated scope.
+  appliesTo:
+    - scope
+  decisions:
+    - unrelated scope requires explicit escalation
+---
+
 # Scope Control Policy
 
 Scope is divided into three categories:

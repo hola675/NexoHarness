@@ -1,3 +1,18 @@
+---
+apiVersion: nexo/v1alpha1
+kind: Policy
+metadata:
+  id: self-improvement
+  title: Self-Improvement Policy
+  version: 0.1.0
+spec:
+  summary: Evidence-driven improvement with an explicit promotion boundary.
+  appliesTo:
+    - task-observer
+  decisions:
+    - canonical promotion requires explicit approval
+---
+
 # Self-Improvement Policy
 
 Task Observer supports evidence-driven improvement without autonomous promotion of behavioral changes.

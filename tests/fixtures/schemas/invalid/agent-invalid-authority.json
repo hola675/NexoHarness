@@ -1,0 +1,12 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Agent",
+  "metadata": { "id": "invalid-agent", "title": "Invalid Agent", "version": "0.1.0" },
+  "spec": {
+    "responsibility": "Do bounded work.",
+    "authority": "superuser",
+    "triggers": ["task.start"],
+    "capabilities": ["Playwright MCP"],
+    "constraints": ["Stay in scope."]
+  }
+}

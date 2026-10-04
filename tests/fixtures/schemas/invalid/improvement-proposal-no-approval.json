@@ -1,0 +1,12 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "ImprovementProposal",
+  "metadata": { "id": "invalid-proposal", "title": "Invalid Proposal", "version": "0.1.0" },
+  "spec": {
+    "observationRefs": ["Observation:scope-observation"],
+    "changeSummary": "This proposal bypasses approval.",
+    "requiresExplicitApproval": false,
+    "evaluationPlan": ["Run evaluations"],
+    "target": "Rule:scope-rule"
+  }
+}

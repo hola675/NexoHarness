@@ -1,0 +1,11 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Policy",
+  "metadata": { "id": "scope-policy-fixture", "title": "Fixture Policy", "version": "0.1.0" },
+  "spec": {
+    "summary": "A valid policy fixture.",
+    "appliesTo": ["scope"],
+    "decisions": ["unrelated scope requires escalation"],
+    "relatedRules": ["Rule:scope-rule"]
+  }
+}

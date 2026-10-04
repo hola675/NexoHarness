@@ -1,0 +1,11 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Enforcement",
+  "metadata": { "id": "validation-gate", "title": "Validation Gate", "version": "0.1.0" },
+  "spec": {
+    "level": "L2",
+    "detects": "A missing verification result.",
+    "blocks": true,
+    "ruleRefs": ["Rule:scope-rule"]
+  }
+}

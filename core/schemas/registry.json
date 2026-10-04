@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "apiVersion": "nexo/v1alpha1",
+  "version": "0.1.0",
+  "schemas": {
+    "Directive": "directive.schema.json",
+    "Policy": "policy.schema.json",
+    "Agent": "agent.schema.json",
+    "Skill": "skill.schema.json",
+    "Rule": "rule.schema.json",
+    "Workflow": "workflow.schema.json",
+    "Contract": "contract.schema.json",
+    "Capability": "capability.schema.json",
+    "Profile": "profile.schema.json",
+    "Enforcement": "enforcement.schema.json",
+    "Evaluation": "evaluation.schema.json",
+    "Observation": "observation.schema.json",
+    "ImprovementProposal": "improvement-proposal.schema.json"
+  }
+}

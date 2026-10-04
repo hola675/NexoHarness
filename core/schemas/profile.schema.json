@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/profile.schema.json",
+  "title": "Nexo Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "Profile" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilities", "constraints"],
+      "properties": {
+        "capabilities": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" },
+        "constraints": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" }
+      }
+    }
+  }
+}

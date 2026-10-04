@@ -1,0 +1,9 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Enforcement",
+  "metadata": { "id": "invalid-enforcement", "title": "Invalid Enforcement", "version": "0.1.0" },
+  "spec": {
+    "level": "L4",
+    "detects": "An invalid enforcement level."
+  }
+}

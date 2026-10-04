@@ -1,0 +1,11 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Observation",
+  "metadata": { "id": "scope-observation", "title": "Scope Observation", "version": "0.1.0" },
+  "spec": {
+    "signal": "scope expansion detected",
+    "resultStatus": "observed",
+    "subject": "Rule:scope-rule",
+    "evidence": ["A task requested unrelated changes."]
+  }
+}

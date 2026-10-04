@@ -27,9 +27,15 @@ AGENT != SKILL
 RULE != POLICY
 WORKFLOW != AGENT
 CAPABILITY != TOOL
+CAPABILITY != MCP
 MCP != CAPABILITY
+MCP != AUTHORITY
 PLUGIN != DIRECTIVE
+SKILL != AUTHORITY
+PROVIDER != AUTHORITY
 OBSERVER != AUTONOMOUS AUTHORITY
+OBSERVER != PROMOTION AUTHORITY
+DIST != SOURCE
 ```
 
 An agent owns a responsibility; a skill explains a procedure. A rule constrains behavior; a policy coordinates related decisions. A workflow coordinates state; it does not become an agent. A capability states what is needed; a tool is one concrete operation that may provide it. MCP and plugins are implementation mechanisms selected by adapters or runtime profiles, not canonical behavioral authority. The observer records and analyzes evidence but cannot promote its own proposals.

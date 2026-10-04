@@ -1,0 +1,12 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Workflow",
+  "metadata": { "id": "invalid-workflow", "title": "Invalid Workflow", "version": "0.1.0" },
+  "spec": {
+    "entryStep": "start",
+    "steps": [
+      { "id": "start", "action": "Begin." },
+      { "id": "start", "action": "Duplicate step id." }
+    ]
+  }
+}

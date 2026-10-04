@@ -1,0 +1,10 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Directive",
+  "metadata": { "id": "core-directive-fixture", "title": "Fixture Directive", "version": "0.1.0" },
+  "spec": {
+    "summary": "A valid directive fixture.",
+    "appliesTo": ["coding-agent"],
+    "invariants": ["context-before-action"]
+  }
+}

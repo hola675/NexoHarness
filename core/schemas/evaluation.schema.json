@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/evaluation.schema.json",
+  "title": "Nexo Evaluation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "Evaluation" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "method", "passCriteria"],
+      "properties": {
+        "target": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" },
+        "method": { "type": "string", "enum": ["structural", "behavioral", "adapter", "integration", "regression"] },
+        "passCriteria": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "evidenceClass": { "type": "string", "enum": ["E0", "E1", "E2", "E3", "E4"] }
+      }
+    }
+  }
+}

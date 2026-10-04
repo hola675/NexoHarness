@@ -1,0 +1,9 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Observation",
+  "metadata": { "id": "invalid-observation", "title": "Invalid Observation", "version": "0.1.0" },
+  "spec": {
+    "signal": "invalid result",
+    "resultStatus": "promoted"
+  }
+}

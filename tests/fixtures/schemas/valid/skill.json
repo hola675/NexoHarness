@@ -1,0 +1,11 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Skill",
+  "metadata": { "id": "repository-search-skill", "title": "Repository Search Skill", "version": "0.1.0" },
+  "spec": {
+    "purpose": "Find relevant repository context.",
+    "activationConditions": ["Task requires repository context."],
+    "procedure": ["Inspect structure", "Search relevant files"],
+    "relatedAgents": ["Agent:context-agent"]
+  }
+}

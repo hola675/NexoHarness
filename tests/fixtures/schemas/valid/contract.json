@@ -1,0 +1,10 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Contract",
+  "metadata": { "id": "implementation-report", "title": "Implementation Report", "version": "0.1.0" },
+  "spec": {
+    "status": "READY",
+    "requiredFields": ["cycle_id", "task_id", "created_by", "status", "next_agent"],
+    "nextAgent": "Agent:context-agent"
+  }
+}

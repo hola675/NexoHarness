@@ -1,0 +1,6 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Policy",
+  "metadata": { "id": "invalid-policy", "title": "Invalid Policy", "version": "0.1.0" },
+  "spec": { "appliesTo": ["scope"], "decisions": ["A decision"] }
+}

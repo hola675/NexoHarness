@@ -43,6 +43,7 @@ Generated output: `dist/`
 - [Source of truth](docs/source-of-truth.md)
 - [Lifecycle](docs/lifecycle.md)
 - [Execution model](docs/execution-model.md)
+- [Schema system](docs/schema-system.md)
 - [Component coordination](docs/concepts/directives.md)
 - [Nexo Core Directive](core/directives/core-directive.md)
 

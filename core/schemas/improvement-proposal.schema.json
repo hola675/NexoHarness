@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/improvement-proposal.schema.json",
+  "title": "Nexo Improvement Proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "ImprovementProposal" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observationRefs", "changeSummary", "requiresExplicitApproval", "evaluationPlan"],
+      "properties": {
+        "observationRefs": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" },
+        "changeSummary": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "requiresExplicitApproval": { "const": true },
+        "evaluationPlan": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "target": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" }
+      }
+    }
+  }
+}

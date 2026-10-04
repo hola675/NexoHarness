@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/agent.schema.json",
+  "title": "Nexo Agent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "Agent" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["responsibility", "authority", "triggers", "capabilities", "constraints"],
+      "properties": {
+        "responsibility": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "authority": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/authority" },
+        "triggers": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "capabilities": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" },
+        "constraints": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "handoff": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "failureBehavior": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "verification": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" }
+      }
+    }
+  }
+}

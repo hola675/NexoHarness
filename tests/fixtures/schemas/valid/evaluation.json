@@ -1,0 +1,11 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Evaluation",
+  "metadata": { "id": "scope-eval", "title": "Scope Evaluation", "version": "0.1.0" },
+  "spec": {
+    "target": "Rule:scope-rule",
+    "method": "behavioral",
+    "passCriteria": ["Unrelated changes are escalated."],
+    "evidenceClass": "E3"
+  }
+}

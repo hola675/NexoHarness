@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { validateMarkdownLinks } from "../tools/validate/repository.ts";
+import { SUPPORTED_KINDS, loadSchemaBundle, validateDocument, validateFixtures } from "../tools/validate/schemas.ts";
+import { parseFrontmatter, validateCanonical } from "../tools/validate/canonical.ts";
 
 const root = resolve(import.meta.dirname, "..");
 
@@ -72,4 +74,28 @@ test("root development guidance points to the product directive", async () => {
 test("roadmap places phase 0.0.5 before phase 0.1", async () => {
   const roadmap = await readFile(resolve(root, "ROADMAP.md"), "utf8");
   assert.ok(roadmap.indexOf("0.0.5 Core Directive & Execution Model") < roadmap.indexOf("0.1 Canonical schemas"));
+});
+
+test("all registered schemas compile and all fixtures validate", async () => {
+  const bundle = await loadSchemaBundle();
+  assert.equal(bundle.validators.size, SUPPORTED_KINDS.length);
+  const result = await validateFixtures(bundle);
+  assert.deepEqual(result, { valid: SUPPORTED_KINDS.length, invalid: SUPPORTED_KINDS.length });
+});
+
+test("existing canonical directives and policies validate", async () => {
+  assert.equal(await validateCanonical(), 8);
+});
+
+test("malformed frontmatter is rejected", () => {
+  assert.throws(() => parseFrontmatter("# Missing frontmatter", "fixture.md"), /must start with YAML frontmatter/);
+  assert.throws(() => parseFrontmatter("---\nkind: Directive\n", "fixture.md"), /unterminated YAML frontmatter/);
+});
+
+test("approval and reference boundaries reject invalid metadata", async () => {
+  const bundle = await loadSchemaBundle();
+  const approval = JSON.parse(await readFile(resolve(root, "tests/fixtures/schemas/invalid/improvement-proposal-no-approval.json"), "utf8")) as Record<string, unknown>;
+  const malformedReference = JSON.parse(await readFile(resolve(root, "tests/fixtures/schemas/invalid/profile-malformed-reference.json"), "utf8")) as Record<string, unknown>;
+  assert.ok(validateDocument(bundle, approval).some((issue) => issue.path === "/spec/requiresExplicitApproval"));
+  assert.ok(validateDocument(bundle, malformedReference).some((issue) => issue.path === "/spec/capabilities/0"));
 });

@@ -1,0 +1,11 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Rule",
+  "metadata": { "id": "scope-rule", "title": "Scope Rule", "version": "0.1.0" },
+  "spec": {
+    "intent": "Prevent unrelated work.",
+    "scope": ["implementation"],
+    "severity": "high",
+    "requirements": ["Record discovered scope expansion."]
+  }
+}

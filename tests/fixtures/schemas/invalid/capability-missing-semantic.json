@@ -1,0 +1,6 @@
+{
+  "apiVersion": "nexo/v1alpha1",
+  "kind": "Capability",
+  "metadata": { "id": "invalid-capability", "title": "Invalid Capability", "version": "0.1.0" },
+  "spec": { "request": "repository-search" }
+}

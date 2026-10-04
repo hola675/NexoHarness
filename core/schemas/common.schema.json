@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/common.schema.json",
+  "$defs": {
+    "apiVersion": {
+      "type": "string",
+      "const": "nexo/v1alpha1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "entityRef": {
+      "type": "string",
+      "pattern": "^(Directive|Policy|Agent|Skill|Rule|Workflow|Contract|Capability|Profile|Enforcement|Evaluation|Observation|ImprovementProposal):[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:@[0-9]+\\.[0-9]+\\.[0-9]+)?$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "version"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/version" },
+        "description": { "$ref": "#/$defs/nonEmptyString" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["info", "low", "medium", "high", "critical"]
+    },
+    "authority": {
+      "type": "string",
+      "enum": ["read-only", "bounded", "review", "remediate", "admin"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["READY", "PASS", "FAIL", "BLOCKED", "INCOMPLETE", "ESCALATION_REQUIRED"]
+    },
+    "refList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entityRef" },
+      "uniqueItems": true
+    },
+    "stringList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nonEmptyString" },
+      "uniqueItems": true
+    }
+  }
+}

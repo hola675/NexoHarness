@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexoharness.dev/schemas/rule.schema.json",
+  "title": "Nexo Rule",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/apiVersion" },
+    "kind": { "const": "Rule" },
+    "metadata": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/metadata" },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intent", "scope", "severity", "requirements"],
+      "properties": {
+        "intent": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
+        "scope": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "severity": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/severity" },
+        "requirements": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "exceptions": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
+        "enforcement": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" },
+        "evals": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" }
+      }
+    }
+  }
+}
