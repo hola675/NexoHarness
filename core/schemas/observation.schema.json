@@ -21,10 +21,40 @@
         "workflowRef": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" },
         "taskClass": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonEmptyString" },
         "complexity": { "type": "string", "enum": ["BOUNDED", "COMPLEX"] },
-        "execution": { "type": "object" },
-        "signals": { "type": "object" },
+        "execution": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "agentRefs": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/refList" },
+            "delegationCount": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonNegativeInteger" },
+            "reviewCycles": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonNegativeInteger" },
+            "failedToolCalls": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonNegativeInteger" },
+            "fallbackCount": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonNegativeInteger" }
+          }
+        },
+        "signals": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "reviewerFoundIssue": { "type": "boolean" },
+            "verificationFailed": { "type": "boolean" },
+            "contextMissing": { "type": "boolean" },
+            "unnecessaryDelegation": { "type": "boolean" },
+            "scopeExpanded": { "type": "boolean" },
+            "capabilityDegraded": { "type": "boolean" }
+          }
+        },
         "findings": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
-        "metrics": { "type": "object" },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "durationMs": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonNegativeInteger" },
+            "inputTokens": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonNegativeInteger" },
+            "outputTokens": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonNegativeInteger" },
+            "contextTokens": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/nonNegativeInteger" }
+          }
+        },
         "privacy": {
           "type": "object",
           "additionalProperties": false,

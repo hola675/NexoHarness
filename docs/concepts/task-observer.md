@@ -11,12 +11,14 @@ The observer accepts structured execution signals only. An Observation may recor
 - cycle and task identifiers
 - workflow reference
 - task class and complexity
-- execution details
-- structured signals
+- bounded execution counts and agent references
+- declared boolean signals
 - findings
-- optional metrics
+- bounded metrics
 - result status
 - privacy metadata
+
+Execution supports only declared fields such as agent references, delegation count, review cycles, failed tool calls and fallback count. Signals are named booleans. Metrics are limited to duration and optional token counts. Unknown telemetry fields fail validation; future fields require schema evolution.
 
 Unavailable telemetry remains absent; it is never fabricated.
 
@@ -29,7 +31,7 @@ privacy:
   sourceContentStored: false
 ```
 
-`sourceContentStored` is explicit and may be `true` only under a later, separately approved collection policy. Structured metrics and references are preferred over complete conversation or source-code capture.
+`sourceContentStored` is explicit and may be `true` only under a later, separately approved collection policy. Structured telemetry does not itself authorize source or chat capture. Raw conversations, source dumps, generic payloads and arbitrary extension maps are not Observation fields.
 
 ## Observer output
 

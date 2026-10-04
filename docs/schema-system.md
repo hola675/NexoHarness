@@ -37,6 +37,10 @@ Canonical metadata requires `id`, `title`, `version` and `status`. `provenanceRe
 
 Schemas use JSON Schema Draft 2020-12. Entity versions use semantic `major.minor.patch` syntax. Unknown fields fail validation and no generic `extra`, `extensions` or unbounded metadata escape hatches are provided.
 
+Observation telemetry is deliberately bounded. Execution, boolean signals and metrics each have explicit allowed fields. Unknown telemetry fields fail validation, and unavailable measurements remain absent. Observation privacy metadata is required; structured telemetry does not authorize raw conversation or source capture.
+
+Contract definitions use a constrained completion-status list when they declare allowed outcomes. They cannot select a concrete next agent; workflow definitions own routing and state transitions.
+
 ## Authoring formats
 
 - Markdown entities use a small YAML frontmatter envelope followed by an uninterpreted Markdown body.

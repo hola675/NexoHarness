@@ -148,23 +148,40 @@ test("capability identity and semantic name remain separate", async () => {
   assert.ok(validateDocument(bundle, malformed, knownFixtureIds).some((issue) => issue.path === "/spec/name"));
 });
 
-test("observation privacy metadata is required and explicit", async () => {
+test("observation telemetry is structured and privacy is explicit", async () => {
   const bundle = await loadSchemaBundle();
   const valid = await readFixture("valid", "observation.json");
-  const missing = await readFixture("valid", "observation.json");
-  delete (missing.spec as Record<string, unknown>).privacy;
+  const sourceAllowed = await readFixture("valid", "observation.json");
+  const missingPrivacy = await readFixture("valid", "observation.json");
+  const unknownExecution = await readFixture("valid", "observation.json");
+  const unknownSignals = await readFixture("valid", "observation.json");
+  const unknownMetrics = await readFixture("valid", "observation.json");
+  (sourceAllowed.spec as Record<string, unknown>).privacy = { sourceContentStored: true };
+  delete (missingPrivacy.spec as Record<string, unknown>).privacy;
+  ((unknownExecution.spec as Record<string, unknown>).execution as Record<string, unknown>).unknown = 1;
+  ((unknownSignals.spec as Record<string, unknown>).signals as Record<string, unknown>).unknown = true;
+  ((unknownMetrics.spec as Record<string, unknown>).metrics as Record<string, unknown>).unknown = 1;
   assert.deepEqual(validateDocument(bundle, valid, knownFixtureIds), []);
-  assert.ok(validateDocument(bundle, missing, knownFixtureIds).some((issue) => issue.path === "/spec/privacy"));
+  assert.deepEqual(validateDocument(bundle, sourceAllowed, knownFixtureIds), []);
+  assert.ok(validateDocument(bundle, missingPrivacy, knownFixtureIds).some((issue) => issue.path === "/spec/privacy"));
+  assert.ok(validateDocument(bundle, unknownExecution, knownFixtureIds).some((issue) => issue.path === "/spec/execution/unknown"));
+  assert.ok(validateDocument(bundle, unknownSignals, knownFixtureIds).some((issue) => issue.path === "/spec/signals/unknown"));
+  assert.ok(validateDocument(bundle, unknownMetrics, knownFixtureIds).some((issue) => issue.path === "/spec/metrics/unknown"));
 });
 
-test("contract fixtures represent definitions rather than runtime instances", async () => {
+test("contract definitions constrain completion status and do not route agents", async () => {
   const bundle = await loadSchemaBundle();
   const definition = await readFixture("valid", "contract.json");
   const runtimeInstance = await readFixture("valid", "contract.json");
+  const routedDefinition = await readFixture("valid", "contract.json");
   (runtimeInstance.spec as Record<string, unknown>).status = "READY";
+  ((routedDefinition.spec as Record<string, unknown>).payload as Record<string, unknown>).nextAgentRef = "Agent:context-agent";
   assert.deepEqual(validateDocument(bundle, definition, knownFixtureIds), []);
   assert.equal("status" in (definition.spec as Record<string, unknown>), false);
   assert.ok(validateDocument(bundle, runtimeInstance, knownFixtureIds).some((issue) => issue.path === "/spec/status"));
+  assert.ok(validateDocument(bundle, routedDefinition, knownFixtureIds).some((issue) => issue.path === "/spec/payload/nextAgentRef"));
+  const invalidStatus = await readFixture("invalid", "contract-invalid-status.json");
+  assert.ok(validateDocument(bundle, invalidStatus, knownFixtureIds).some((issue) => issue.path === "/spec/payload/allowedStatuses/0"));
 });
 
 test("rule info severity and negative workflow limits are rejected", async () => {

@@ -33,6 +33,11 @@
       "type": "string",
       "enum": ["READY", "PASS", "FAIL", "BLOCKED", "INCOMPLETE", "ESCALATION_REQUIRED"]
     },
+    "completionStatusList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/completionStatus" },
+      "uniqueItems": true
+    },
     "metadata": {
       "type": "object",
       "additionalProperties": false,

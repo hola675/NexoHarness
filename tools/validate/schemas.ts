@@ -234,7 +234,7 @@ function expectedInvalidPath(file: string): string {
     "skill-missing-purpose.json": "/spec/purpose",
     "rule-invalid-severity.json": "/spec/severity",
     "workflow-duplicate-step-ids.json": "/spec/limits/maxDelegationDepth",
-    "contract-invalid-status.json": "/spec/status",
+    "contract-invalid-status.json": "/spec/payload/allowedStatuses/0",
     "capability-missing-semantic.json": "/spec/name",
     "profile-malformed-reference.json": "/spec/capabilities/0",
     "enforcement-invalid-level.json": "/spec/level",

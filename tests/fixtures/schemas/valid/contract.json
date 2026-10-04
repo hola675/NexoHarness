@@ -7,7 +7,8 @@
     "artifactType": "Implementation Report",
     "requiredEnvelopeFields": ["cycle_id", "task_id", "created_by", "status", "next_agent"],
     "payload": {
-      "requiredFields": ["changed_files", "verification"]
+      "requiredFields": ["changed_files", "verification"],
+      "allowedStatuses": ["READY", "PASS", "FAIL", "BLOCKED", "INCOMPLETE", "ESCALATION_REQUIRED"]
     }
   }
 }

@@ -22,8 +22,7 @@
           "additionalProperties": false,
           "properties": {
             "requiredFields": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
-            "allowedStatuses": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/stringList" },
-            "nextAgentRef": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/entityRef" }
+            "allowedStatuses": { "$ref": "https://nexoharness.dev/schemas/common.schema.json#/$defs/completionStatusList" }
           }
         }
       }

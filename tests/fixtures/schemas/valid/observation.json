@@ -5,6 +5,23 @@
   "spec": {
     "signal": "scope expansion detected",
     "resultStatus": "observed",
+    "execution": {
+      "agentRefs": ["Agent:context-agent"],
+      "delegationCount": 1,
+      "reviewCycles": 0,
+      "failedToolCalls": 0,
+      "fallbackCount": 1
+    },
+    "signals": {
+      "scopeExpanded": false,
+      "capabilityDegraded": true
+    },
+    "metrics": {
+      "durationMs": 1000,
+      "inputTokens": 10,
+      "outputTokens": 20,
+      "contextTokens": 30
+    },
     "privacy": {
       "sourceContentStored": false
     },

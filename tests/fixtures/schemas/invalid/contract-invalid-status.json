@@ -7,8 +7,8 @@
     "artifactType": "Implementation Report",
     "requiredEnvelopeFields": ["cycle_id", "task_id"],
     "payload": {
-      "requiredFields": ["verification"]
-    },
-    "status": "READY"
+      "requiredFields": ["verification"],
+      "allowedStatuses": ["DONE"]
+    }
   }
 }
