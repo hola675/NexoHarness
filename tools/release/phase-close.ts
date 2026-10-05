@@ -38,26 +38,47 @@ interface CommandResult {
   stderr: string;
 }
 
-function commandName(name: string): string {
-  return process.platform === "win32" && name === "npm" ? "npm.cmd" : name;
+export interface NpmInvocation {
+  command: string;
+  args: string[];
 }
 
-function run(command: string, args: string[], cwd: string, allowFailure = false): CommandResult {
-  const result = spawnSync(commandName(command), args, {
-    cwd,
-    encoding: "utf8",
-    shell: false,
-    windowsHide: true,
-  });
+export function resolveNpmInvocation(npmExecPath: string | undefined, args: string[]): NpmInvocation {
+  if (!npmExecPath) throw new Error("phase:close requires an npm-provided npm_execpath");
+  return { command: process.execPath, args: [npmExecPath, ...args] };
+}
+
+function normalizeCommandResult(command: string, args: string[], result: ReturnType<typeof spawnSync>, allowFailure: boolean): CommandResult {
   const normalized: CommandResult = {
     status: result.status,
-    stdout: result.stdout ?? "",
-    stderr: result.stderr ?? "",
+    stdout: result.stdout?.toString() ?? "",
+    stderr: result.stderr?.toString() ?? "",
   };
   if (!allowFailure && (normalized.status !== 0 || result.error)) {
     throw new Error(`${command} ${args.join(" ")} failed: ${normalized.stderr || result.error?.message || "unknown error"}`);
   }
   return normalized;
+}
+
+function runGit(args: string[], cwd: string, allowFailure = false): CommandResult {
+  const result = spawnSync("git", args, {
+    cwd,
+    encoding: "utf8",
+    shell: false,
+    windowsHide: true,
+  });
+  return normalizeCommandResult("git", args, result, allowFailure);
+}
+
+function runNpm(args: string[], cwd: string): CommandResult {
+  const invocation = resolveNpmInvocation(process.env.npm_execpath, args);
+  const result = spawnSync(invocation.command, invocation.args, {
+    cwd,
+    encoding: "utf8",
+    shell: false,
+    windowsHide: true,
+  });
+  return normalizeCommandResult("npm", args, result, false);
 }
 
 function output(result: CommandResult): string {
@@ -66,7 +87,7 @@ function output(result: CommandResult): string {
 
 function repositoryRoot(): string {
   const cwd = process.cwd();
-  const result = run("git", ["rev-parse", "--show-toplevel"], cwd);
+  const result = runGit(["rev-parse", "--show-toplevel"], cwd);
   const root = resolve(output(result));
   const outside = relative(root, resolve(cwd));
   if (outside.startsWith("..") || outside.includes(":") || resolve(root, outside) !== resolve(cwd)) {
@@ -77,9 +98,9 @@ function repositoryRoot(): string {
 
 function tagExists(root: string, tag: string, remote = false): boolean {
   if (remote) {
-    return run("git", ["ls-remote", "--exit-code", "--refs", "origin", `refs/tags/${tag}`], root, true).status === 0;
+    return runGit(["ls-remote", "--exit-code", "--refs", "origin", `refs/tags/${tag}`], root, true).status === 0;
   }
-  return run("git", ["rev-parse", "--verify", "--quiet", `refs/tags/${tag}`], root, true).status === 0;
+  return runGit(["rev-parse", "--verify", "--quiet", `refs/tags/${tag}`], root, true).status === 0;
 }
 
 function parseArguments(argv: string[]): { phase: string; title: string; approvedSha: string } {
@@ -101,21 +122,21 @@ function parseArguments(argv: string[]): { phase: string; title: string; approve
 }
 
 function runFreshValidation(root: string): void {
-  for (const script of ["typecheck", "validate", "test"]) run("npm", ["run", script], root);
-  run("git", ["diff", "--check"], root);
+  for (const script of ["typecheck", "validate", "test"]) runNpm(["run", script], root);
+  runGit(["diff", "--check"], root);
 }
 
 export function closePhase(input: { phase: string; title: string; approvedSha: string }): void {
   const root = repositoryRoot();
   const tag = certificationTag(input.phase);
-  const branch = output(run("git", ["branch", "--show-current"], root));
-  const worktreeClean = output(run("git", ["status", "--porcelain"], root)) === "";
-  const originExists = run("git", ["remote", "get-url", "origin"], root, true).status === 0;
+  const branch = output(runGit(["branch", "--show-current"], root));
+  const worktreeClean = output(runGit(["status", "--porcelain"], root)) === "";
+  const originExists = runGit(["remote", "get-url", "origin"], root, true).status === 0;
   if (!originExists) throw new Error("origin remote is required.");
-  run("git", ["fetch", "origin"], root);
-  const currentSha = output(run("git", ["rev-parse", "HEAD"], root));
-  const originMainSha = output(run("git", ["rev-parse", "refs/remotes/origin/main"], root));
-  run("git", ["cat-file", "-e", `${input.approvedSha}^{commit}`], root);
+  runGit(["fetch", "origin"], root);
+  const currentSha = output(runGit(["rev-parse", "HEAD"], root));
+  const originMainSha = output(runGit(["rev-parse", "refs/remotes/origin/main"], root));
+  runGit(["cat-file", "-e", `${input.approvedSha}^{commit}`], root);
   const plan: PhaseClosePlan = {
     ...input,
     currentSha,
@@ -128,8 +149,8 @@ export function closePhase(input: { phase: string; title: string; approvedSha: s
   };
   validatePhaseClosePlan(plan);
   runFreshValidation(root);
-  run("git", ["tag", "-a", tag, input.approvedSha, "-m", `NexoHarness Phase ${input.phase} — ${input.title}`], root);
-  run("git", ["push", "origin", tag], root);
+  runGit(["tag", "-a", tag, input.approvedSha, "-m", `NexoHarness Phase ${input.phase} — ${input.title}`], root);
+  runGit(["push", "origin", tag], root);
   console.log(`Certified ${tag} at ${input.approvedSha}.`);
 }
 

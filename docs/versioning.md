@@ -56,7 +56,7 @@ Before stable `v1.0.0` certification, the project must explicitly decide and imp
 
 ## Promotion command
 
-`npm run phase:close -- --phase <phase> --title <title> --approved-sha <full-sha>` is a promotion command. It validates a clean, synchronized `main` worktree and the exact approved commit, runs fresh validation, creates an annotated certification tag and pushes only that tag.
+`npm run phase:close -- --phase <phase> --title <title> --approved-sha <full-sha>` is a promotion command. It validates a clean, synchronized `main` worktree and the exact approved commit, runs fresh validation, creates an annotated certification tag and pushes only that tag. Its subprocess invocation uses Node with npm's provided CLI path and individual arguments with shell execution disabled.
 
 It never edits source, creates commits, amends history, merges branches, force-pushes or moves an existing tag. Independent review remains required before promotion.
 

@@ -1,10 +1,11 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { isFullCommitSha, parseReleaseTag } from "../tools/release/verify-release.ts";
-import { validatePhaseClosePlan, type PhaseClosePlan } from "../tools/release/phase-close.ts";
+import { resolveNpmInvocation, validatePhaseClosePlan, type PhaseClosePlan } from "../tools/release/phase-close.ts";
 
 const root = resolve(import.meta.dirname, "..");
 const fullSha = "a".repeat(40);
@@ -94,6 +95,42 @@ test("phase close is promotion-only and contains no mutation commands", async ()
   assert.doesNotMatch(source, /run\("git", \["commit"/);
   assert.doesNotMatch(source, /run\("git", \["amend"/);
   assert.doesNotMatch(source, /--force/);
-  assert.match(source, /git.*tag/);
+  assert.match(source, /runGit\(\["tag"/);
   assert.match(source, /approvedSha/);
+});
+
+test("npm invocation uses the Node executable and keeps arguments separate", () => {
+  const npmExecPath = process.env.npm_execpath;
+  assert.ok(npmExecPath);
+  const args = ["run", "phase:close", "--", "--phase", "0.2", "--title", "Validation Framework & Reference Integrity"];
+  const invocation = resolveNpmInvocation(npmExecPath, args);
+  assert.equal(invocation.command, process.execPath);
+  assert.equal(invocation.args[0], npmExecPath);
+  assert.deepEqual(invocation.args.slice(1), args);
+});
+
+test("npm invocation fails clearly when npm_execpath is unavailable", () => {
+  assert.throws(() => resolveNpmInvocation(undefined, ["--version"]), /requires an npm-provided npm_execpath/);
+});
+
+test("npm CLI version runs through a shell-free Node subprocess", () => {
+  const npmExecPath = process.env.npm_execpath;
+  assert.ok(npmExecPath);
+  const invocation = resolveNpmInvocation(npmExecPath, ["--version"]);
+  const result = spawnSync(invocation.command, invocation.args, {
+    cwd: root,
+    encoding: "utf8",
+    shell: false,
+    windowsHide: true,
+  });
+  assert.equal(result.error, undefined, result.error?.message);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout.trim(), /^\d+\.\d+\.\d+/);
+});
+
+test("phase close has no npm.cmd or shell-enabled subprocess fallback", async () => {
+  const source = await readFile(resolve(root, "tools/release/phase-close.ts"), "utf8");
+  assert.doesNotMatch(source, /npm\.cmd/);
+  assert.doesNotMatch(source, /shell:\s*true/);
+  assert.match(source, /shell:\s*false/);
 });
