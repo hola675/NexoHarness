@@ -45,11 +45,18 @@ test("canonical improvement requires eval, review and explicit approval", async 
 
 test("target order remains Codex, Claude Code, then Kilo as adapter siblings", async () => {
   const architecture = await read("docs/architecture.md");
+  const changelog = await read("CHANGELOG.md");
   const codex = architecture.indexOf("Codex is first");
   const claude = architecture.indexOf("Claude Code second");
   const kilo = architecture.indexOf("Kilo Code third");
   assert.ok(codex >= 0 && codex < claude && claude < kilo);
+  assert.doesNotMatch(changelog, /Kilo-first/i);
   assert.match(architecture, /consumes the same canonical source independently/i);
+});
+
+test("Phase 0.3 architecture decision is accepted", async () => {
+  const decision = await read("docs/decisions/0002-orchestration-shared-runtime.md");
+  assert.match(decision, /^- \*\*Status:\*\* Accepted$/m);
 });
 
 test("Phase 0.3 adds no Pack or Composition kind or runtime implementation", async () => {

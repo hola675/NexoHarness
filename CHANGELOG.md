@@ -15,5 +15,5 @@
 - Exact-SHA phase-close promotion tooling.
 - Initial NexoHarness repository foundation.
 - Canonical architecture documentation.
-- Kilo-first adapter strategy.
+- Harness-neutral adapter strategy.
 - Task Observer continuous improvement model.
