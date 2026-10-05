@@ -1,6 +1,6 @@
 # Codex / Nexo Gap Analysis
 
-Snapshot: 2026-10-05; selected research target is proposed local Codex CLI 0.160.0. See the [detailed matrix](capability-matrix.md) and [source provenance](sources.md). This records gaps for later phases; it does not solve them.
+Snapshot: 2026-10-05; selected research target is local Codex CLI 0.160.0. See the [detailed matrix](capability-matrix.md) and [source provenance](sources.md). This records gaps for later phases; it does not solve them.
 
 | Gap class | Gap / impact | Possible future strategy | Phase |
 |---|---|---|---|

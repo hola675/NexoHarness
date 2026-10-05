@@ -8,7 +8,7 @@
 
 Phase 1.0 compares NexoHarness requirements to distinct current Codex surfaces. Codex Local CLI, local IDE extension, local desktop app, Codex Cloud/managed, and Agents API/SDK have related naming or infrastructure but are not interchangeable capability targets. The selected target must match NexoHarness's local, portable repository coding-agent goal and be testable against a pinned release.
 
-## Proposed decision
+## Decision
 
 ### Primary target
 
