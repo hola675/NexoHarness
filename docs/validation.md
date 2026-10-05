@@ -35,7 +35,7 @@ Supported canonical roots and formats are:
 | `enforcement/` | Enforcement | YAML |
 | `evals/` | Evaluation | YAML |
 
-Discovery is recursive, stays inside repository-controlled roots, rejects unsupported files and sorts paths before parsing. `.gitkeep` is the only ignored infrastructure file. Entity identity never depends on its filename.
+Discovery is recursive, stays inside repository-controlled roots, rejects unsupported files and sorts paths with a locale-independent comparator before parsing. `.gitkeep` is the only ignored infrastructure file. Entity identity never depends on its filename. Canonical roots and nested entries that are symbolic links are rejected.
 
 `observer/` is runtime storage, not a canonical authoring root. Observation and ImprovementProposal schemas are validated as structured artifacts by their dedicated schema tests, but their runtime instances do not enter the canonical index.
 
@@ -58,7 +58,7 @@ The logical key is `Kind:id`; the optional versioned identity is `Kind:id@versio
 
 ## Reference resolution
 
-References use `Kind:id` or `Kind:id@version`. The shared reference parser validates syntax. The repository index resolves unversioned references to the unique current entity and versioned references only when the target metadata version matches.
+References use `Kind:id` or `Kind:id@version`. The shared reference parser validates values only when they occur in declared semantic reference fields. Arbitrary strings, including colon-containing provenance values, are never heuristically promoted to references. The repository index resolves unversioned references to the unique current entity and versioned references only when the target metadata version matches.
 
 Failures are distinct:
 
@@ -67,7 +67,7 @@ Failures are distinct:
 - `REFERENCE_KIND_MISMATCH` — the target exists but is not allowed by that relationship.
 - `MALFORMED_REFERENCE` — reference syntax is invalid.
 
-Typed relationship truth is centralized in the validator's semantic reference table. Examples include Agent capabilities to Capability, Workflow step agents to Agent, Profile capabilities to Capability, Rule enforcement to Enforcement, and ImprovementProposal observation references to Observation.
+Typed relationship truth is centralized in `references.ts`'s semantic reference-field table. Examples include Agent capabilities to Capability, Workflow step agents to Agent, Profile capabilities to Capability, Rule enforcement to Enforcement, and ImprovementProposal observation references to Observation. Schema validation and repository reference integrity intentionally remain separate responsibilities.
 
 Generic fields such as evaluation targets remain open to any supported canonical kind unless a more specific rule exists.
 

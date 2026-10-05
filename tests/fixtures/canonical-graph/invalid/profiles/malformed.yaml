@@ -1,12 +1,12 @@
 apiVersion: nexoharness.dev/v1alpha1
 kind: Profile
 metadata:
-  id: missing-profile
-  title: Missing Profile
+  id: malformed-profile
+  title: Malformed Profile
   version: 0.1.0
   status: draft
 spec:
   capabilities:
-    - Capability:bad-capability
+    - Capability:bad id
   constraints:
-    - Invalid reference.
+    - Invalid declared reference.

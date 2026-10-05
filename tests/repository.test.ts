@@ -7,14 +7,6 @@ import { CANONICAL_API_VERSION, SUPPORTED_KINDS, loadSchemaBundle, validateDocum
 import { parseFrontmatter, validateCanonical } from "../tools/validate/canonical.ts";
 
 const root = resolve(import.meta.dirname, "..");
-const knownFixtureIds = new Set([
-  "Capability:repository-search",
-  "Agent:context-agent",
-  "Rule:scope-rule",
-  "Observation:scope-observation",
-  "Policy:scope-policy-fixture",
-]);
-
 async function readFixture(folder: "valid" | "invalid", name: string): Promise<Record<string, unknown>> {
   return JSON.parse(await readFile(resolve(root, `tests/fixtures/schemas/${folder}/${name}`), "utf8")) as Record<string, unknown>;
 }
@@ -107,8 +99,8 @@ test("approval and reference boundaries reject invalid metadata", async () => {
   const bundle = await loadSchemaBundle();
   const approval = await readFixture("invalid", "improvement-proposal-no-approval.json");
   const malformedReference = await readFixture("invalid", "profile-malformed-reference.json");
-  assert.ok(validateDocument(bundle, approval, knownFixtureIds).some((issue) => issue.path === "/spec/requiresExplicitApproval"));
-  assert.ok(validateDocument(bundle, malformedReference, knownFixtureIds).some((issue) => issue.path === "/spec/capabilities/0"));
+  assert.ok(validateDocument(bundle, approval).some((issue) => issue.path === "/spec/requiresExplicitApproval"));
+  assert.ok(validateDocument(bundle, malformedReference).some((issue) => issue.path === "/spec/capabilities/0"));
 });
 
 test("canonical API identifier accepts only nexoharness.dev/v1alpha1", async () => {
@@ -117,8 +109,8 @@ test("canonical API identifier accepts only nexoharness.dev/v1alpha1", async () 
   const invalid = await readFixture("invalid", "directive-invalid-api-version.json");
   assert.equal(valid.apiVersion, CANONICAL_API_VERSION);
   assert.notEqual(invalid.apiVersion, CANONICAL_API_VERSION);
-  assert.deepEqual(validateDocument(bundle, valid, knownFixtureIds), []);
-  assert.ok(validateDocument(bundle, invalid, knownFixtureIds).some((issue) => issue.path === "/apiVersion"));
+  assert.deepEqual(validateDocument(bundle, valid), []);
+  assert.ok(validateDocument(bundle, invalid).some((issue) => issue.path === "/apiVersion"));
 });
 
 test("entity lifecycle status is required and separate from completion status", async () => {
@@ -128,24 +120,24 @@ test("entity lifecycle status is required and separate from completion status", 
   delete missingMetadata.status;
   const completion = await readFixture("valid", "directive.json");
   (completion.metadata as Record<string, unknown>).status = "PASS";
-  assert.ok(validateDocument(bundle, missing, knownFixtureIds).some((issue) => issue.path === "/metadata/status"));
-  assert.ok(validateDocument(bundle, completion, knownFixtureIds).some((issue) => issue.path === "/metadata/status"));
+  assert.ok(validateDocument(bundle, missing).some((issue) => issue.path === "/metadata/status"));
+  assert.ok(validateDocument(bundle, completion).some((issue) => issue.path === "/metadata/status"));
 });
 
 test("agent authority is dimensional rather than scalar", async () => {
   const bundle = await loadSchemaBundle();
   const dimensional = await readFixture("valid", "agent.json");
   const scalar = await readFixture("invalid", "agent-invalid-authority.json");
-  assert.deepEqual(validateDocument(bundle, dimensional, knownFixtureIds), []);
-  assert.ok(validateDocument(bundle, scalar, knownFixtureIds).some((issue) => issue.path === "/spec/authority"));
+  assert.deepEqual(validateDocument(bundle, dimensional), []);
+  assert.ok(validateDocument(bundle, scalar).some((issue) => issue.path === "/spec/authority"));
 });
 
 test("capability identity and semantic name remain separate", async () => {
   const bundle = await loadSchemaBundle();
   const valid = await readFixture("valid", "capability.json");
   const malformed = await readFixture("invalid", "capability-missing-semantic.json");
-  assert.deepEqual(validateDocument(bundle, valid, knownFixtureIds), []);
-  assert.ok(validateDocument(bundle, malformed, knownFixtureIds).some((issue) => issue.path === "/spec/name"));
+  assert.deepEqual(validateDocument(bundle, valid), []);
+  assert.ok(validateDocument(bundle, malformed).some((issue) => issue.path === "/spec/name"));
 });
 
 test("observation telemetry is structured and privacy is explicit", async () => {
@@ -161,12 +153,12 @@ test("observation telemetry is structured and privacy is explicit", async () => 
   ((unknownExecution.spec as Record<string, unknown>).execution as Record<string, unknown>).unknown = 1;
   ((unknownSignals.spec as Record<string, unknown>).signals as Record<string, unknown>).unknown = true;
   ((unknownMetrics.spec as Record<string, unknown>).metrics as Record<string, unknown>).unknown = 1;
-  assert.deepEqual(validateDocument(bundle, valid, knownFixtureIds), []);
-  assert.deepEqual(validateDocument(bundle, sourceAllowed, knownFixtureIds), []);
-  assert.ok(validateDocument(bundle, missingPrivacy, knownFixtureIds).some((issue) => issue.path === "/spec/privacy"));
-  assert.ok(validateDocument(bundle, unknownExecution, knownFixtureIds).some((issue) => issue.path === "/spec/execution/unknown"));
-  assert.ok(validateDocument(bundle, unknownSignals, knownFixtureIds).some((issue) => issue.path === "/spec/signals/unknown"));
-  assert.ok(validateDocument(bundle, unknownMetrics, knownFixtureIds).some((issue) => issue.path === "/spec/metrics/unknown"));
+  assert.deepEqual(validateDocument(bundle, valid), []);
+  assert.deepEqual(validateDocument(bundle, sourceAllowed), []);
+  assert.ok(validateDocument(bundle, missingPrivacy).some((issue) => issue.path === "/spec/privacy"));
+  assert.ok(validateDocument(bundle, unknownExecution).some((issue) => issue.path === "/spec/execution/unknown"));
+  assert.ok(validateDocument(bundle, unknownSignals).some((issue) => issue.path === "/spec/signals/unknown"));
+  assert.ok(validateDocument(bundle, unknownMetrics).some((issue) => issue.path === "/spec/metrics/unknown"));
 });
 
 test("contract definitions constrain completion status and do not route agents", async () => {
@@ -176,12 +168,12 @@ test("contract definitions constrain completion status and do not route agents",
   const routedDefinition = await readFixture("valid", "contract.json");
   (runtimeInstance.spec as Record<string, unknown>).status = "READY";
   ((routedDefinition.spec as Record<string, unknown>).payload as Record<string, unknown>).nextAgentRef = "Agent:context-agent";
-  assert.deepEqual(validateDocument(bundle, definition, knownFixtureIds), []);
+  assert.deepEqual(validateDocument(bundle, definition), []);
   assert.equal("status" in (definition.spec as Record<string, unknown>), false);
-  assert.ok(validateDocument(bundle, runtimeInstance, knownFixtureIds).some((issue) => issue.path === "/spec/status"));
-  assert.ok(validateDocument(bundle, routedDefinition, knownFixtureIds).some((issue) => issue.path === "/spec/payload/nextAgentRef"));
+  assert.ok(validateDocument(bundle, runtimeInstance).some((issue) => issue.path === "/spec/status"));
+  assert.ok(validateDocument(bundle, routedDefinition).some((issue) => issue.path === "/spec/payload/nextAgentRef"));
   const invalidStatus = await readFixture("invalid", "contract-invalid-status.json");
-  assert.ok(validateDocument(bundle, invalidStatus, knownFixtureIds).some((issue) => issue.path === "/spec/payload/allowedStatuses/0"));
+  assert.ok(validateDocument(bundle, invalidStatus).some((issue) => issue.path === "/spec/payload/allowedStatuses/0"));
 });
 
 test("rule info severity and negative workflow limits are rejected", async () => {
@@ -189,8 +181,8 @@ test("rule info severity and negative workflow limits are rejected", async () =>
   const rule = await readFixture("valid", "rule.json");
   (rule.spec as Record<string, unknown>).severity = "info";
   const workflow = await readFixture("invalid", "workflow-duplicate-step-ids.json");
-  assert.ok(validateDocument(bundle, rule, knownFixtureIds).some((issue) => issue.path === "/spec/severity"));
-  assert.ok(validateDocument(bundle, workflow, knownFixtureIds).some((issue) => issue.path === "/spec/limits/maxDelegationDepth"));
+  assert.ok(validateDocument(bundle, rule).some((issue) => issue.path === "/spec/severity"));
+  assert.ok(validateDocument(bundle, workflow).some((issue) => issue.path === "/spec/limits/maxDelegationDepth"));
 });
 
 test("Phase 0.1 authoring documents exist", async () => {

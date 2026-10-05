@@ -1,8 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { resolve } from "node:path";
-import { discoverCanonicalFiles } from "../tools/validate/canonical-discovery.ts";
+import { compareDeterministic, discoverCanonicalFiles, isCanonicalRootSymlink } from "../tools/validate/canonical-discovery.ts";
 import { validateCanonicalIntegrity } from "../tools/validate/canonical-integrity.ts";
+import { collectEntityReferences, parseEntityReference } from "../tools/validate/references.ts";
 import { loadSchemaBundle } from "../tools/validate/schemas.ts";
 
 const root = resolve(import.meta.dirname, "..");
@@ -45,15 +46,33 @@ test("invalid graph reports deterministic integrity diagnostics", async () => {
     "UNRESOLVED_REFERENCE",
     "VERSION_MISMATCH",
     "REFERENCE_KIND_MISMATCH",
+    "MALFORMED_REFERENCE",
+    "PLACEMENT_MISMATCH",
     "FORMAT_MISMATCH",
     "MALFORMED_MANIFEST",
   ]) assert.equal(found.has(expected), true, expected);
   assert.equal(result.diagnostics.every((diagnostic, index, diagnostics) => index === 0 || `${diagnostics[index - 1].file}:${diagnostics[index - 1].path}:${diagnostics[index - 1].code}` <= `${diagnostic.file}:${diagnostic.path}:${diagnostic.code}`), true);
   assert.match(result.diagnostics.find((diagnostic) => diagnostic.code === "UNRESOLVED_REFERENCE")?.message ?? "", /does not exist/);
+  assert.equal(result.diagnostics.some((diagnostic) => diagnostic.file.endsWith("profiles/missing.yaml") && diagnostic.code === "UNRESOLVED_REFERENCE"), true);
 });
 
 test("canonical index does not use filenames as identity", async () => {
   const result = await validateCanonicalIntegrity(await loadSchemaBundle(), fixtureRoot("valid"));
   const scopeRecords = result.index.records.filter((record) => record.id === "scope-rule");
   assert.deepEqual(scopeRecords.map((record) => record.kind).sort(), ["Rule", "Skill"]);
+});
+
+test("reference parsing is strict only when a semantic field declares a reference", () => {
+  const malformed = parseEntityReference("Agent:bad id", "/spec/agent");
+  assert.equal(malformed && "message" in malformed ? malformed.message : "", "reference id must be kebab-case");
+  const provenance = collectEntityReferences({ metadata: { provenanceRefs: ["source:upstream-research"] } }, "Directive");
+  assert.deepEqual(provenance, { references: [], issues: [] });
+});
+
+test("canonical ordering is locale-independent and root symlinks are unsafe", () => {
+  assert.equal(compareDeterministic("Z", "a"), -1);
+  assert.equal(compareDeterministic("a", "Z"), 1);
+  assert.equal(compareDeterministic("same", "same"), 0);
+  assert.equal(isCanonicalRootSymlink({ isSymbolicLink: () => true }), true);
+  assert.equal(isCanonicalRootSymlink({ isSymbolicLink: () => false }), false);
 });

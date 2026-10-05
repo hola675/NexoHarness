@@ -29,8 +29,6 @@ export const SUPPORTED_KINDS = [
 export type CanonicalKind = (typeof SUPPORTED_KINDS)[number];
 export type CanonicalDocument = Record<string, unknown>;
 
-export const ENTITY_REFERENCE_PATTERN = /^(Directive|Policy|Agent|Skill|Rule|Workflow|Contract|Capability|Profile|Enforcement|Evaluation|Observation|ImprovementProposal):[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:@[0-9]+\.[0-9]+\.[0-9]+)?$/;
-
 export interface SchemaRegistry {
   apiVersion: string;
   version: string;
@@ -172,33 +170,7 @@ function customDocumentIssues(document: CanonicalDocument): ValidationIssue[] {
   return issues;
 }
 
-export function collectReferenceIssues(value: unknown, knownIds: Set<string>, path = ""): ValidationIssue[] {
-  const issues: ValidationIssue[] = [];
-  if (Array.isArray(value)) {
-    value.forEach((item, index) => issues.push(...collectReferenceIssues(item, knownIds, `${path}/${index}`)));
-    return issues;
-  }
-  if (value && typeof value === "object") {
-    for (const [key, nested] of Object.entries(value)) {
-      issues.push(...collectReferenceIssues(nested, knownIds, `${path}/${key}`));
-    }
-    return issues;
-  }
-  if (typeof value !== "string" || !/^[A-Za-z][A-Za-z0-9]*:/.test(value)) return issues;
-  if (/^https?:/i.test(value)) return issues;
-  if (!ENTITY_REFERENCE_PATTERN.test(value)) {
-    issues.push({ path: path || "/", message: "malformed entity reference" });
-  } else {
-    const [kind, idWithVersion] = value.split(":");
-    const id = idWithVersion.split("@")[0];
-    if (!knownIds.has(`${kind}:${id}`)) {
-      issues.push({ path: path || "/", message: `unknown entity reference ${value}` });
-    }
-  }
-  return issues;
-}
-
-export function validateDocument(bundle: SchemaBundle, document: CanonicalDocument, knownIds?: Set<string>): ValidationIssue[] {
+export function validateDocument(bundle: SchemaBundle, document: CanonicalDocument): ValidationIssue[] {
   const kind = document.kind;
   if (typeof kind !== "string" || !bundle.validators.has(kind)) {
     return [{ path: "/kind", message: `unsupported canonical kind ${String(kind)}` }];
@@ -207,7 +179,6 @@ export function validateDocument(bundle: SchemaBundle, document: CanonicalDocume
   const valid = validator(document);
   const issues = formatValidationIssues(validator.errors);
   if (valid) issues.push(...customDocumentIssues(document));
-  if (knownIds) issues.push(...collectReferenceIssues(document, knownIds));
   return issues;
 }
 
@@ -254,11 +225,10 @@ export async function validateFixtures(bundle?: SchemaBundle): Promise<{ valid: 
   }
 
   const validDocuments = await Promise.all(validPaths.map(async (path) => [path, await readFixture(path)] as const));
-  const knownIds = new Set(validDocuments.map(([, document]) => `${String(document.kind)}:${String((document.metadata as Record<string, unknown>)?.id)}`));
   const validKinds = new Set<string>();
   for (const [path, document] of validDocuments) {
     validKinds.add(String(document.kind));
-    const issues = validateDocument(bundle, document, knownIds);
+    const issues = validateDocument(bundle, document);
     if (issues.length > 0) {
       throw new Error(`Valid fixture ${relative(repositoryRoot, path)} failed:\n${issues.map((issue) => `${issue.path} ${issue.message}`).join("\n")}`);
     }
@@ -269,7 +239,7 @@ export async function validateFixtures(bundle?: SchemaBundle): Promise<{ valid: 
   for (const path of invalidPaths) {
     const document = await readFixture(path);
     invalidKinds.add(String(document.kind));
-    const issues = validateDocument(bundle, document, knownIds);
+    const issues = validateDocument(bundle, document);
     const expectedPath = expectedInvalidPath(relative(join(fixtureRoot, "invalid"), path));
     if (issues.length === 0 || !issues.some((issue) => issue.path === expectedPath)) {
       throw new Error(`Invalid fixture ${relative(repositoryRoot, path)} did not fail at ${expectedPath}. Issues: ${JSON.stringify(issues)}`);

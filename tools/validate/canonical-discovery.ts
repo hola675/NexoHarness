@@ -1,4 +1,4 @@
-import { readdir, stat } from "node:fs/promises";
+import { lstat, readdir } from "node:fs/promises";
 import { dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -39,6 +39,14 @@ export interface DiscoveryIssue {
   message: string;
 }
 
+export function compareDeterministic(left: string, right: string): number {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+
+export function isCanonicalRootSymlink(details: { isSymbolicLink(): boolean }): boolean {
+  return details.isSymbolicLink();
+}
+
 function expectedExtension(format: CanonicalFormat): string[] {
   return format === "markdown" ? [".md"] : [".yaml", ".yml"];
 }
@@ -51,7 +59,7 @@ async function walkRoot(root: CanonicalRoot, rootPath: string, files: Discovered
     issues.push({ code: "MALFORMED_MANIFEST", file: relative(repositoryRoot, rootPath), path: "/", message: `canonical root cannot be read: ${String(error)}` });
     return;
   }
-  for (const entry of entries.sort((left, right) => left.name.localeCompare(right.name))) {
+  for (const entry of entries.sort((left, right) => compareDeterministic(left.name, right.name))) {
     const path = join(rootPath, entry.name);
     const relativeFile = relative(repositoryRoot, path).replaceAll("\\", "/");
     if (entry.name === ".gitkeep") continue;
@@ -81,7 +89,11 @@ export async function discoverCanonicalFiles(rootDirectory = repositoryRoot): Pr
   for (const root of CANONICAL_ROOTS) {
     const rootPath = join(rootDirectory, root.path);
     try {
-      const details = await stat(rootPath);
+      const details = await lstat(rootPath);
+      if (isCanonicalRootSymlink(details)) {
+        issues.push({ code: "FORMAT_MISMATCH", file: root.path, path: "/", message: "canonical root must not be a symbolic link" });
+        continue;
+      }
       if (!details.isDirectory()) {
         issues.push({ code: "MALFORMED_MANIFEST", file: root.path, path: "/", message: "canonical root is not a directory" });
         continue;
@@ -92,7 +104,7 @@ export async function discoverCanonicalFiles(rootDirectory = repositoryRoot): Pr
     }
     await walkRoot(root, rootPath, files, issues);
   }
-  files.sort((left, right) => left.relativeFile.localeCompare(right.relativeFile));
-  issues.sort((left, right) => `${left.file}:${left.path}`.localeCompare(`${right.file}:${right.path}`));
+  files.sort((left, right) => compareDeterministic(left.relativeFile, right.relativeFile));
+  issues.sort((left, right) => compareDeterministic(`${left.file}:${left.path}`, `${right.file}:${right.path}`));
   return { files, issues };
 }

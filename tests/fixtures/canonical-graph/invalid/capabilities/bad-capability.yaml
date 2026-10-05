@@ -1,0 +1,10 @@
+apiVersion: nexoharness.dev/v1alpha1
+kind: Capability
+metadata:
+  id: bad-capability
+  title: Invalid Capability
+  version: 0.1.0
+  status: draft
+spec:
+  name: repository.search
+  effect: read
