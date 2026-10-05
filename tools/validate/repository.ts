@@ -33,12 +33,16 @@ export const requiredCoreFiles = [
 
 export const requiredDocumentationFiles = [
   "docs/architecture.md",
+  "docs/orchestration.md",
+  "docs/shared-runtime.md",
+  "docs/continuous-improvement.md",
   "docs/schema-system.md",
   "docs/versioning.md",
   "docs/validation.md",
   "docs/validation-performance.md",
   "docs/canonical-format.md",
   "docs/decisions/0001-canonical-manifest-model.md",
+  "docs/decisions/0002-orchestration-shared-runtime.md",
   "docs/principles.md",
   "docs/terminology.md",
   "docs/source-of-truth.md",

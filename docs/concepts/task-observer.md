@@ -1,8 +1,10 @@
 # Task Observer
 
-## Purpose
+## Purpose and responsibilities
 
 Use real task execution evidence to improve NexoHarness without allowing execution outcomes to silently rewrite the system.
+
+Task Observer has two logical responsibilities: **Evidence Observation** and **Improvement Analysis**. It does not own execution, grant authority, select permissions or promote canonical behavior. The Orchestrator may consume admissible learned runtime state; the Observer provides evidence and proposals for that separate control plane.
 
 ## Inputs
 
@@ -23,6 +25,8 @@ Execution supports only declared fields such as agent references, delegation cou
 Unavailable telemetry remains absent; it is never fabricated.
 
 Future observations may also evaluate validation efficiency: validation duration, test-suite duration, test count, failure count, retry count when available, remediation count, repeated validation and unnecessary duplicate work. This is future input only and does not expand the current Observation schema.
+
+Future signal families may include task class, complexity and risk; workflow and responsibility identities; delegation, remediation and fallbacks; completion, verification and review outcomes; duration, repeated validation and duplicate work; missing, excessive when measurable or stale context; and missing or degraded capabilities. Unavailable telemetry remains absent.
 
 ## Privacy contract
 
@@ -48,6 +52,8 @@ EVAL_CANDIDATE
 ```
 
 Observer output must not directly modify canonical files.
+
+The Observer analyzes evidence, not execution instructions. Learned runtime patterns are non-canonical recommendations and may only affect already-authorized choices within the Adaptation Envelope.
 
 ## Promotion gate
 

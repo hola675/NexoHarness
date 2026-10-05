@@ -6,7 +6,8 @@
 - 0.0.5 Core Directive & Execution Model — COMPLETE
 - 0.1 Canonical schemas — CERTIFIED
 - 0.1.5 Versioning & Release Automation — CERTIFIED
-- 0.2 Validation Framework & Reference Integrity — IN PROGRESS
+- 0.2 Validation Framework & Reference Integrity — CERTIFIED
+- 0.3 Orchestration, Shared Runtime & Continuous Improvement Architecture — IN PROGRESS
 
 ## Codex Target
 

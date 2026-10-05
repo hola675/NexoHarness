@@ -51,3 +51,13 @@ The following vocabulary is canonical and platform-neutral.
 | Provenance | Recorded origin, license, attribution and adaptation history. |
 | Canonical Index | Deterministic repository index keyed by `Kind:id`. |
 | Validation Diagnostic | Structured validation error containing code, source file, path and message. |
+| Orchestration | Coordination of task interpretation, proportional workflow, bounded responsibility and completion. |
+| Orchestrator | Logical control-plane responsibility for coordinating execution; not automatically an Agent. |
+| Shared Runtime State | NexoHarness-scoped operational evidence and recommendations, separate from canonical source. |
+| Learned Runtime State | Non-canonical observations and patterns that remain advisory and subordinate to explicit authority. |
+| Adaptation Envelope | The set of choices already authorized by canonical behavior and higher-priority instructions, within which runtime evidence may influence selection. |
+| Operational Learning | Evidence-based runtime ranking or selection among already-authorized choices. |
+| Workstyle State | Advisory learned preferences scoped to a user or workspace. |
+| Project State | Learned operational context scoped to one project by default. |
+| Task State | Ephemeral objective, constraints, findings and evidence for the current execution. |
+| Canonical Improvement | A governed change to intended NexoHarness behavior requiring evaluation, regression comparison, independent review, explicit approval and promotion. |
