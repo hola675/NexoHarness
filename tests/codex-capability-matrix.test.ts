@@ -23,7 +23,7 @@ test("Phase 1.0 records a sourced, surface-specific Codex capability study witho
   assert.match(sources, /2026-10-05/);
   assert.match(sources, /rust-v0\.160\.0/);
   assert.match(sources, /3f1ccb7ceb814e54314826f68d61c892e2f5a48e/);
-  assert.match(adr, /^- \*\*Status:\*\* Proposed$/m);
+  assert.match(adr, /^- \*\*Status:\*\* Accepted$/m);
   assert.match(adr, /Codex Local — CLI/);
   for (const surface of ["Codex IDE", "desktop app", "Codex Cloud", "Agents API"]) {
     assert.match(detailed, new RegExp(surface, "i"));

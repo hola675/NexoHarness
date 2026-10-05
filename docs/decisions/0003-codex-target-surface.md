@@ -1,6 +1,6 @@
 # ADR 0003: Codex V1 Target Surface
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-05
 - **Research snapshot:** Codex CLI 0.160.0; upstream `openai/codex` main `3f1ccb7ceb814e54314826f68d61c892e2f5a48e` observed 2026-10-05
 
@@ -47,7 +47,7 @@ Re-fetch and pin current stable release, main SHA, docs, license/provenance and 
 3. whenever the supported Codex version is upgraded; and
 4. whenever a relied-on feature changes maturity, configuration, surface availability or enforcement behavior.
 
-For each recheck, separate stable release evidence from main-only evidence, document OS/account/managed configuration, and record unknowns rather than assuming parity. Independent review is required before changing this ADR status from Proposed.
+For each recheck, separate stable release evidence from main-only evidence, document OS/account/managed configuration, and record unknowns rather than assuming parity. Any future revision to this accepted decision requires independent review.
 
 ## Consequences
 
