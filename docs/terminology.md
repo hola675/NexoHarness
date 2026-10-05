@@ -49,3 +49,5 @@ The following vocabulary is canonical and platform-neutral.
 | Entity Status | Lifecycle state of a canonical entity: draft, experimental, stable or deprecated. |
 | Completion Status | Runtime outcome state such as PASS, FAIL or BLOCKED. |
 | Provenance | Recorded origin, license, attribution and adaptation history. |
+| Canonical Index | Deterministic repository index keyed by `Kind:id`. |
+| Validation Diagnostic | Structured validation error containing code, source file, path and message. |

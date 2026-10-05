@@ -46,6 +46,7 @@ Generated output: `dist/`
 - [Lifecycle](docs/lifecycle.md)
 - [Execution model](docs/execution-model.md)
 - [Schema system](docs/schema-system.md)
+- [Validation framework](docs/validation.md)
 - [Versioning and release governance](docs/versioning.md)
 - [Component coordination](docs/concepts/directives.md)
 - [Nexo Core Directive](core/directives/core-directive.md)

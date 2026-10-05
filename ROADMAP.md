@@ -5,8 +5,8 @@
 - 0.0 Repository constitution — COMPLETE
 - 0.0.5 Core Directive & Execution Model — COMPLETE
 - 0.1 Canonical schemas — CERTIFIED
-- 0.1.5 Versioning & Release Automation — IN PROGRESS
-- 0.2 Validation framework
+- 0.1.5 Versioning & Release Automation — CERTIFIED
+- 0.2 Validation Framework & Reference Integrity — IN PROGRESS
 
 ## Kilo Model
 

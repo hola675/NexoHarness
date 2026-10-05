@@ -6,11 +6,11 @@ This document is the authoritative high-level architecture for NexoHarness.
 
 ### Canonical Definition Layer
 
-The harness-neutral source defines `core/` (including schemas, the Nexo Core Directive, execution protocol and policies), `agents/`, `skills/`, `rules/`, `workflows/`, `capabilities/` and `profiles/`. These directories describe behavior, responsibilities and abstract requirements without depending on a target harness.
+The harness-neutral source defines `core/` (including schemas, Contract definitions, the Nexo Core Directive, execution protocol and policies), `agents/`, `skills/`, `rules/`, `workflows/`, `capabilities/` and `profiles/`. These directories describe behavior, responsibilities and abstract requirements without depending on a target harness. Phase 0.2 validates these roots as one canonical repository index.
 
 ### Behavior Assurance Layer
 
-`contracts/` (planned within the canonical model), `enforcement/`, `evals/` and `tests/` make behavior inspectable, enforceable and testable. A documented rule is not certified until evidence demonstrates its behavior.
+`core/contracts/`, `enforcement/`, `evals/` and `tests/` make behavior inspectable, enforceable and testable. A documented rule is not certified until evidence demonstrates its behavior.
 
 ### Observation Layer
 
@@ -70,4 +70,4 @@ The canonical model requests capabilities, contracts and behaviors. An adapter s
 
 The root `AGENTS.md` guides agents developing NexoHarness; `core/directives/core-directive.md` is the canonical product directive intended for future installed agents. They are deliberately distinct.
 
-Phase 0.0.5 documents these boundaries and the universal execution model only; it does not implement runtime agents, schemas, adapters or an installer.
+Phase 0.2 adds repository-wide canonical discovery and reference integrity validation only; it does not implement runtime agents, schemas, adapters or an installer.

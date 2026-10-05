@@ -1,0 +1,12 @@
+apiVersion: nexoharness.dev/v1alpha1
+kind: Profile
+metadata:
+  id: core-profile
+  title: Core Profile
+  version: 0.1.0
+  status: draft
+spec:
+  capabilities:
+    - Capability:repository-search
+  constraints:
+    - Use approved providers.

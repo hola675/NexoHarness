@@ -1,0 +1,11 @@
+apiVersion: nexoharness.dev/v1alpha1
+kind: Capability
+metadata:
+  id: repository-search
+  title: Repository Search
+  version: 0.1.0
+  status: draft
+spec:
+  name: repository.search
+  purpose: Search repository content.
+  effect: read

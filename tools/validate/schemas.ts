@@ -198,7 +198,7 @@ export function collectReferenceIssues(value: unknown, knownIds: Set<string>, pa
   return issues;
 }
 
-export function validateDocument(bundle: SchemaBundle, document: CanonicalDocument, knownIds = new Set<string>()): ValidationIssue[] {
+export function validateDocument(bundle: SchemaBundle, document: CanonicalDocument, knownIds?: Set<string>): ValidationIssue[] {
   const kind = document.kind;
   if (typeof kind !== "string" || !bundle.validators.has(kind)) {
     return [{ path: "/kind", message: `unsupported canonical kind ${String(kind)}` }];
@@ -207,7 +207,7 @@ export function validateDocument(bundle: SchemaBundle, document: CanonicalDocume
   const valid = validator(document);
   const issues = formatValidationIssues(validator.errors);
   if (valid) issues.push(...customDocumentIssues(document));
-  issues.push(...collectReferenceIssues(document, knownIds));
+  if (knownIds) issues.push(...collectReferenceIssues(document, knownIds));
   return issues;
 }
 

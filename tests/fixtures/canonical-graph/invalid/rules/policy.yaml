@@ -1,0 +1,13 @@
+apiVersion: nexoharness.dev/v1alpha1
+kind: Policy
+metadata:
+  id: misplaced-policy
+  title: Misplaced Policy
+  version: 0.1.0
+  status: draft
+spec:
+  summary: Wrong source root.
+  appliesTo:
+    - validation
+  decisions:
+    - Fail placement.

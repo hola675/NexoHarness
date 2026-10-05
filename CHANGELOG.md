@@ -4,6 +4,7 @@
 
 ### Added
 
+- Repository-wide canonical discovery, indexing and reference integrity validation.
 - Versioning and certification tag governance.
 - GitHub CI and release automation.
 - Exact-SHA phase-close promotion tooling.

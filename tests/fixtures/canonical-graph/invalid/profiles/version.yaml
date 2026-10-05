@@ -1,0 +1,12 @@
+apiVersion: nexoharness.dev/v1alpha1
+kind: Profile
+metadata:
+  id: version-profile
+  title: Version Profile
+  version: 0.1.0
+  status: draft
+spec:
+  capabilities:
+    - Capability:repository-search@9.9.9
+  constraints:
+    - Version mismatch.

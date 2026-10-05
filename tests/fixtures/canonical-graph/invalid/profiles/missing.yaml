@@ -1,0 +1,12 @@
+apiVersion: nexoharness.dev/v1alpha1
+kind: Profile
+metadata:
+  id: missing-profile
+  title: Missing Profile
+  version: 0.1.0
+  status: draft
+spec:
+  capabilities:
+    - Capability:does-not-exist
+  constraints:
+    - Invalid reference.

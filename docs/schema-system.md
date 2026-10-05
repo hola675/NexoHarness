@@ -53,7 +53,7 @@ Frontmatter must begin with `---`, contain a closing `---`, parse as one YAML ob
 
 `core/schemas/registry.json` maps each supported `kind` to exactly one schema. The validator loads the registry, parses every schema, resolves references, compiles every schema under Draft 2020-12 and validates fixtures and canonical entities.
 
-Validation reports the file and field path for failures. It does not silently skip malformed canonical entities. Current reference validation checks syntax and known logical IDs where the repository contains the target entity. Full repository graph resolution is deferred to Phase 0.2.
+Validation reports the file and field path for failures. It does not silently skip malformed canonical entities. Phase 0.2 adds deterministic repository-wide discovery, indexing, typed reference checks and version-aware resolution without treating runtime observer artifacts as canonical source.
 
 ## Canonical versus harness schemas
 
