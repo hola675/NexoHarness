@@ -60,21 +60,11 @@ Validation reports the file and field path for failures. It does not silently sk
 A canonical schema describes NexoHarness behavior and contracts. It is not a schema for a target harness.
 
 ```text
-Agent canonical schema
-    ↓
-Kilo adapter
-    ↓
-Kilo agent frontmatter
+                  ┌→ Codex adapter → Codex output
+Agent canonical ──┼→ Claude Code adapter → Claude Code output
+                  └→ Kilo Code adapter → Kilo Code output
 ```
 
-Future translation follows the same boundary:
-
-```text
-Agent canonical schema
-    ↓
-Claude adapter
-    ↓
-Claude-native configuration
-```
+Codex is first, Claude Code second, and Kilo Code third. Each adapter consumes the canonical schema independently; adapter outputs are never source inputs for another adapter.
 
 Canonical schemas must not encode harness names, provider IDs, model IDs or concrete tool configuration. Adapters own translation and provider selection.

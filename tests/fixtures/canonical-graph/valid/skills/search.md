@@ -7,7 +7,7 @@ metadata:
   version: 0.1.0
   status: draft
 spec:
-  purpose: Search relevant files.
+  purpose: "Agent: this procedure explains responsibility."
   activationConditions:
     - Context is required.
   procedure:

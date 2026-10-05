@@ -2,9 +2,13 @@
 
 NexoHarness is a portable, testable engineering harness for AI coding agents. It defines harness-neutral canonical behavior and translates it into native configurations through adapters.
 
-## Current Target
+## Current Adapter Priority
 
-Kilo Code first. Claude Code follows canonical model certification and is not implemented in Phase 0.0.5.
+1. Codex — first certification target
+2. Claude Code
+3. Kilo Code
+
+All adapters consume the same harness-neutral canonical source.
 
 ## Source of Truth
 

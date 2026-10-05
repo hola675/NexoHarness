@@ -7,3 +7,6 @@ temp/
 # Generated distribution output; never canonical input.
 # Revisit this decision explicitly if a future release needs committed artifacts.
 dist/
+
+# Serena cache and machine-local project state.
+.serena/

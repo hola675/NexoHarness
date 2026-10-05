@@ -8,12 +8,12 @@
 - 0.1.5 Versioning & Release Automation — CERTIFIED
 - 0.2 Validation Framework & Reference Integrity — IN PROGRESS
 
-## Kilo Model
+## Codex Target
 
-- 1.0 Kilo capability matrix
-- 1.1 Kilo adapter
-- 1.2 Installer/uninstaller/doctor
-- 1.3 Isolated Kilo fixture
+- 1.0 Codex capability matrix
+- 1.1 Codex adapter
+- 1.2 Codex installer / uninstaller / doctor
+- 1.3 Isolated Codex fixture
 
 ## Behavior Core
 
@@ -23,7 +23,7 @@
 - 2.3 Bounded workflow
 - 2.4 Complex workflow
 
-## Agents
+## Agents / Orchestration
 
 - 3.0 Core agent architecture
 - 3.1 Context
@@ -54,14 +54,22 @@
 
 - 6.0 Structural certification
 - 6.1 Behavioral certification
-- 6.2 Kilo integration certification
+- 6.2 Codex integration certification
 - 6.3 Rollback certification
-- 6.4 Kilo V1
+- 6.4 Codex V1
 
-## Claude
+## Claude Code
 
-- 7.0 Capability matrix
+- 7.0 Claude capability matrix
 - 7.1 Claude adapter
-- 7.2 Enforcement translation
-- 7.3 Cross-harness parity
+- 7.2 Claude enforcement translation
+- 7.3 Codex / Claude cross-harness parity
 - 7.4 Claude V1
+
+## Kilo Code
+
+- 8.0 Kilo capability matrix
+- 8.1 Kilo adapter
+- 8.2 Kilo enforcement translation
+- 8.3 Cross-harness parity
+- 8.4 Kilo V1

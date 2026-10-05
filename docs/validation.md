@@ -58,7 +58,7 @@ The logical key is `Kind:id`; the optional versioned identity is `Kind:id@versio
 
 ## Reference resolution
 
-References use `Kind:id` or `Kind:id@version`. The shared reference parser validates values only when they occur in declared semantic reference fields. Arbitrary strings, including colon-containing provenance values, are never heuristically promoted to references. The repository index resolves unversioned references to the unique current entity and versioned references only when the target metadata version matches.
+References use `Kind:id` or `Kind:id@version`. References are discovered only from declared reference-bearing fields. Arbitrary prose that resembles `Kind:id` is not a dependency edge. The shared semantic relationship table in `references.ts` is the single source of truth for reference extraction, syntax checking, allowed target kinds and resolution. Unversioned references resolve to the unique current entity; versioned references resolve only when the target metadata version matches.
 
 Failures are distinct:
 

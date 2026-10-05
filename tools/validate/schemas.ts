@@ -3,11 +3,11 @@ import { dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import type { ErrorObject, ValidateFunction } from "ajv";
+import { hasProhibitedCanonicalCoupling } from "./harness-neutrality.ts";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const schemaRoot = join(repositoryRoot, "core", "schemas");
 const fixtureRoot = join(repositoryRoot, "tests", "fixtures", "schemas");
-const prohibitedCanonicalCoupling = /Kilo|Claude|Context7|Serena|DBHub|Playwright|GitMCP|Cloudflare MCP|modelId|providerId/i;
 export const CANONICAL_API_VERSION = "nexoharness.dev/v1alpha1";
 
 export const SUPPORTED_KINDS = [
@@ -98,7 +98,7 @@ export async function loadSchemaBundle(): Promise<SchemaBundle> {
     throw new Error("common.schema.json apiVersion definition diverges from the canonical API version.");
   }
 
-  if (prohibitedCanonicalCoupling.test(JSON.stringify(common))) {
+  if (hasProhibitedCanonicalCoupling(JSON.stringify(common))) {
     throw new Error("common.schema.json contains prohibited harness or provider coupling.");
   }
   const ajv = new Ajv2020({ allErrors: true, strict: true });
@@ -120,7 +120,7 @@ export async function loadSchemaBundle(): Promise<SchemaBundle> {
     if (!schemaKind || typeof schemaKind !== "object" || (schemaKind as Record<string, unknown>).const !== kind) {
       throw new Error(`${relative(repositoryRoot, schemaFile)} does not declare kind ${kind}.`);
     }
-    if (prohibitedCanonicalCoupling.test(JSON.stringify(schema))) {
+    if (hasProhibitedCanonicalCoupling(JSON.stringify(schema))) {
       throw new Error(`${relative(repositoryRoot, schemaFile)} contains prohibited harness or provider coupling.`);
     }
     ajv.addSchema(schema);

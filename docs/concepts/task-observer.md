@@ -22,6 +22,8 @@ Execution supports only declared fields such as agent references, delegation cou
 
 Unavailable telemetry remains absent; it is never fabricated.
 
+Future observations may also evaluate validation efficiency: validation duration, test-suite duration, test count, failure count, retry count when available, remediation count, repeated validation and unnecessary duplicate work. This is future input only and does not expand the current Observation schema.
+
 ## Privacy contract
 
 Every Observation declares:

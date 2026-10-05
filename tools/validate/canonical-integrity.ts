@@ -5,10 +5,10 @@ import { parseAllDocuments } from "yaml";
 import { compareDeterministic, discoverCanonicalFiles, type CanonicalFormat, type DiscoveryIssue } from "./canonical-discovery.ts";
 import { parseFrontmatter } from "./frontmatter.ts";
 import { collectEntityReferences, declaredReferenceValues, parseEntityReference } from "./references.ts";
+import { hasProhibitedCanonicalCoupling } from "./harness-neutrality.ts";
 import { loadSchemaBundle, validateDocument, type CanonicalDocument, type SchemaBundle } from "./schemas.ts";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-const prohibitedCanonicalCoupling = /Kilo|Claude|Context7|Serena|DBHub|Playwright|GitMCP|Cloudflare MCP|modelId|providerId/i;
 
 export type DiagnosticCode =
   | "DUPLICATE_IDENTITY"
@@ -138,7 +138,7 @@ export async function validateCanonicalIntegrity(bundle?: SchemaBundle, rootDire
     let document: CanonicalDocument;
     try {
       const content = await readFile(entry.file, "utf8");
-      if (prohibitedCanonicalCoupling.test(content)) {
+      if (hasProhibitedCanonicalCoupling(content)) {
         diagnostics.push(diagnostic("SCHEMA_VALIDATION_FAILED", entry.relativeFile, "/", "canonical entity contains prohibited harness or provider coupling"));
       }
       document = entry.root.format === "markdown" ? parseFrontmatter(content, entry.file).data : await parseYamlManifest(content);

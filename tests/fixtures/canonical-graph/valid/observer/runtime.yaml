@@ -1,0 +1,5 @@
+kind: Observation
+metadata:
+  id: runtime-only-observation
+spec:
+  resultStatus: success

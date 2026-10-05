@@ -18,7 +18,15 @@ The Task Observer will consume structured telemetry and execution signals, ident
 
 ### Translation Layer
 
-`adapters/` translate canonical definitions into harness-native configurations. The first certified target is Kilo Code. Claude Code is a future target after canonical model certification.
+`adapters/` translate canonical definitions into harness-native configurations. Codex is the first certification target, Claude Code is second, and Kilo Code is third.
+
+```text
+                 ┌→ Codex
+Canonical Source ├→ Claude Code
+                 └→ Kilo Code
+```
+
+All targets compile independently from canonical definitions. No target adapter may become the source for another target adapter.
 
 ### Distribution Layer
 
@@ -54,7 +62,9 @@ Dependencies flow toward outputs and evidence. Generated output does not flow ba
 ## Canonical translation boundary
 
 ```text
-Canonical Source → Adapter → Harness-native Output
+                 ┌→ Codex Adapter → Codex output
+Canonical Source ├→ Claude Adapter → Claude Code output
+                 └→ Kilo Adapter → Kilo output
 ```
 
 The canonical model requests capabilities, contracts and behaviors. An adapter selects native representations, providers and enforcement mechanisms for a target. The canonical model must remain usable if a provider or harness changes.

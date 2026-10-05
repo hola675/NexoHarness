@@ -36,6 +36,7 @@ export const requiredDocumentationFiles = [
   "docs/schema-system.md",
   "docs/versioning.md",
   "docs/validation.md",
+  "docs/validation-performance.md",
   "docs/canonical-format.md",
   "docs/decisions/0001-canonical-manifest-model.md",
   "docs/principles.md",
@@ -53,6 +54,8 @@ export const requiredDocumentationFiles = [
   "docs/concepts/evaluations.md",
   "docs/concepts/task-observer.md",
   "docs/adapters/kilo.md",
+  "docs/adapters/codex.md",
+  "docs/adapters/claude-code.md",
   "docs/research/methodology.md",
   "docs/research/upstream-sources.md",
 ];

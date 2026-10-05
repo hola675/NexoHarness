@@ -8,5 +8,6 @@ metadata:
 spec:
   capabilities:
     - Capability:repository-search
+    - Capability:repository-search@0.1.0
   constraints:
     - Use approved providers.

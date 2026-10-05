@@ -10,14 +10,15 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "verify": "npm run typecheck && npm run validate && npm test && git diff --check",
+    "verify": "node --experimental-strip-types tools/validate/verify-performance.ts",
+    "verify:core": "npm run typecheck && npm run validate && npm test && git diff --check",
     "validate": "npm run validate:repository && npm run validate:schemas && npm run validate:integrity",
     "validate:repository": "node --experimental-strip-types tools/validate/repository.ts",
     "validate:schemas": "node --experimental-strip-types tools/validate/schemas.ts",
     "validate:canonical": "node --experimental-strip-types tools/validate/canonical.ts",
     "validate:integrity": "node --experimental-strip-types tools/validate/canonical-integrity.ts",
     "phase:close": "node --experimental-strip-types tools/release/phase-close.ts",
-    "test": "node --test --experimental-strip-types tests/repository.test.ts tests/release.test.ts tests/integrity.test.ts"
+    "test": "node --test --experimental-strip-types tests/repository.test.ts tests/release.test.ts tests/integrity.test.ts tests/verify-performance.test.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
