@@ -7,10 +7,10 @@ import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
 const read = (path: string) => readFile(resolve(root, path), "utf8");
 
-test("roadmap certifies Phase 0.2 and places Phase 0.3 before Codex Phase 1.0", async () => {
+test("roadmap certifies Phases 0.2 and 0.3 before Codex Phase 1.0", async () => {
   const roadmap = await read("ROADMAP.md");
   assert.match(roadmap, /0\.2 Validation Framework & Reference Integrity — CERTIFIED/);
-  const phase03 = roadmap.indexOf("0.3 Orchestration, Shared Runtime & Continuous Improvement Architecture — IN PROGRESS");
+  const phase03 = roadmap.indexOf("0.3 Orchestration, Shared Runtime & Continuous Improvement Architecture — CERTIFIED");
   const codex10 = roadmap.indexOf("1.0 Codex capability matrix");
   assert.ok(phase03 >= 0 && phase03 < codex10);
 });

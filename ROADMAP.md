@@ -7,11 +7,11 @@
 - 0.1 Canonical schemas — CERTIFIED
 - 0.1.5 Versioning & Release Automation — CERTIFIED
 - 0.2 Validation Framework & Reference Integrity — CERTIFIED
-- 0.3 Orchestration, Shared Runtime & Continuous Improvement Architecture — IN PROGRESS
+- 0.3 Orchestration, Shared Runtime & Continuous Improvement Architecture — CERTIFIED
 
 ## Codex Target
 
-- 1.0 Codex capability matrix
+- 1.0 Codex capability matrix — IN PROGRESS
 - 1.1 Codex adapter
 - 1.2 Codex installer / uninstaller / doctor
 - 1.3 Isolated Codex fixture

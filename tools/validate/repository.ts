@@ -43,6 +43,7 @@ export const requiredDocumentationFiles = [
   "docs/canonical-format.md",
   "docs/decisions/0001-canonical-manifest-model.md",
   "docs/decisions/0002-orchestration-shared-runtime.md",
+  "docs/decisions/0003-codex-target-surface.md",
   "docs/principles.md",
   "docs/terminology.md",
   "docs/source-of-truth.md",
@@ -59,9 +60,13 @@ export const requiredDocumentationFiles = [
   "docs/concepts/task-observer.md",
   "docs/adapters/kilo.md",
   "docs/adapters/codex.md",
+  "docs/adapters/codex-capability-matrix.md",
   "docs/adapters/claude-code.md",
   "docs/research/methodology.md",
   "docs/research/upstream-sources.md",
+  "research/codex/sources.md",
+  "research/codex/capability-matrix.md",
+  "research/codex/gaps.md",
 ];
 
 export const requiredCanonicalDirectories = [
