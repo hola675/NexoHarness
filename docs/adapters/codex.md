@@ -17,6 +17,6 @@ Implementation status:
 - Filesystem distribution: **NOT YET**
 - Generated Codex artifacts: **NOT YET**
 - Installer and user-file reconciliation: **NOT YET — Phase 1.2**
-- Runtime loading probe: **NOT YET**
+- Runtime loading probe: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence; see report)**
 
-The adapter consumes explicitly selected, validated, harness-neutral canonical records and produces an internal compilation representation, including instruction candidates projected from validated Directive Markdown bodies. The pure AGENTS.md renderer consumes only that compilation and returns an in-memory UTF-8 artifact with source provenance and an explicit byte budget. The file is prompt-level advisory guidance; Codex loading behavior has not been locally probed. The adapter does not reopen canonical files, write or install files, own runtime authority, or redefine canonical behavior.
+The adapter consumes explicitly selected, validated, harness-neutral canonical records and produces an internal compilation representation, including instruction candidates projected from validated Directive Markdown bodies. The pure AGENTS.md renderer consumes only that compilation and returns an in-memory UTF-8 artifact with source provenance and an explicit byte budget. Root generated `AGENTS.md` loading has been observed locally on Codex CLI 0.160.0; the bounded probe and its controls are recorded in [the runtime evidence](../../research/codex/probes/agents-md-0.160.0.md). This observation does not establish complete AGENTS.md semantics. The file is prompt-level advisory guidance; the adapter does not reopen canonical files, write or install files, own runtime authority, or redefine canonical behavior.

@@ -20,7 +20,7 @@ test("Phase 1.1-A design boundaries remain in force during core implementation",
   assert.match(adapterDoc, /Phase 1\.1-B adapter core implementation: \*\*EXISTS\*\*/);
   assert.match(adapterDoc, /Pure AGENTS\.md renderer: \*\*EXISTS/);
   assert.match(adapterDoc, /Filesystem distribution: \*\*NOT YET\*\*/);
-  assert.match(adapterDoc, /Runtime loading probe: \*\*NOT YET\*\*/);
+  assert.match(adapterDoc, /Runtime loading probe: \*\*OBSERVED LOCALLY — Codex CLI 0\.160\.0/);
   assert.match(contract, /Phase 1\.1-A defines design only/);
   assert.match(contract, /CLI 0\.160\.0/);
   assert.match(contract, /rust-v0\.160\.0/);
