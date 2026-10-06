@@ -44,7 +44,7 @@ test("Phase 1.0 records a sourced, surface-specific Codex capability study witho
   assert.match(matrix, /GOOD FIT|PARTIAL FIT|POOR FIT/);
   assert.match(gaps, /NO GAP[\s\S]*TRANSLATION GAP[\s\S]*ENFORCEMENT GAP[\s\S]*RUNTIME GAP[\s\S]*TELEMETRY GAP[\s\S]*VERSION \/ MATURITY GAP[\s\S]*UNKNOWN/);
 
-  assert.equal(existsSync(resolve(root, "adapters/codex")), false);
+  assert.equal(existsSync(resolve(root, "adapters/codex")), true);
   assert.equal(existsSync(resolve(root, "dist/codex")), false);
   assert.equal(existsSync(resolve(root, "agents/codex")), false);
 });

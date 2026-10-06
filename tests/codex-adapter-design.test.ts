@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { test } from "node:test";
 
 const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
@@ -8,7 +8,7 @@ const adapterDoc = read("../docs/adapters/codex.md");
 const adr = read("../docs/decisions/0004-codex-adapter-translation-contract.md");
 const roadmap = read("../ROADMAP.md");
 
-test("Phase 1.1-A keeps the Codex adapter at design status", () => {
+test("Phase 1.1-A design boundaries remain in force during core implementation", () => {
   assert.match(roadmap, /1\.0 Codex capability matrix — CERTIFIED/);
   assert.match(roadmap, /1\.1 Codex adapter — IN PROGRESS/);
   assert.match(adr, /Status: Accepted/);
@@ -17,7 +17,8 @@ test("Phase 1.1-A keeps the Codex adapter at design status", () => {
   assert.match(contract, /Design authority:\*\* ADR 0004, Accepted\./);
   assert.doesNotMatch(adr, /ADR 0004 remains Proposed|currently Proposed|^## Proposed decision$/im);
   assert.doesNotMatch(contract, /ADR 0004 remains Proposed|currently Proposed|^## Proposed decision$/im);
-  assert.match(adapterDoc, /Adapter implementation: \*\*NOT YET\*\*/);
+  assert.match(adapterDoc, /Phase 1\.1-B adapter core implementation: \*\*EXISTS\*\*/);
+  assert.match(adapterDoc, /Codex native renderers: \*\*NOT YET\*\*/);
   assert.match(contract, /Phase 1\.1-A defines design only/);
   assert.match(contract, /CLI 0\.160\.0/);
   assert.match(contract, /rust-v0\.160\.0/);
@@ -61,9 +62,13 @@ test("advisory policy prose cannot satisfy required enforcement", () => {
   assert.match(policyRow, /compilation blocks rather than claiming preservation/);
 });
 
-test("Phase 1.1-A defines documentation only and adds no adapter artifacts", () => {
-  assert.equal(existsSync(new URL("../adapters/codex", import.meta.url)), false);
+test("Phase 1.1-B adds adapter core without renderers, distribution, or installer behavior", () => {
+  assert.equal(existsSync(new URL("../adapters/codex/index.ts", import.meta.url)), true);
+  assert.equal(existsSync(new URL("../adapters/codex/model.ts", import.meta.url)), true);
+  assert.equal(existsSync(new URL("../adapters/codex/compile.ts", import.meta.url)), true);
+  assert.equal(existsSync(new URL("../adapters/codex/manifest.ts", import.meta.url)), true);
   assert.equal(existsSync(new URL("../dist/codex", import.meta.url)), false);
   assert.equal(existsSync(new URL("../installer/codex", import.meta.url)), false);
+  assert.deepEqual(readdirSync(new URL("../adapters/codex", import.meta.url)).sort(), ["compile.ts", "index.ts", "manifest.ts", "model.ts"]);
 });
 

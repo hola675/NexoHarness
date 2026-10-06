@@ -11,8 +11,10 @@ Design references:
 
 Implementation status:
 
-- Adapter implementation: **NOT YET**
+- Phase 1.1-B adapter core implementation: **EXISTS**
+- Implemented: **IR, pure compilation core, diagnostics, deterministic manifest/provenance helpers**
+- Codex native renderers: **NOT YET**
 - Generated Codex artifacts: **NOT YET**
-- Installer and user-file reconciliation: **Phase 1.2**
+- Installer and user-file reconciliation: **NOT YET — Phase 1.2**
 
-The future adapter consumes validated, harness-neutral canonical input and produces deterministic target output. It does not own runtime authority, install files, or redefine canonical behavior.
+The adapter core consumes explicitly selected, validated, harness-neutral canonical records and produces an internal compilation representation. It does not render native files, install files, own runtime authority, or redefine canonical behavior.
