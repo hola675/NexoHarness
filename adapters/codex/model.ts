@@ -72,6 +72,13 @@ export interface CanonicalSelection {
   allowDegradation?: boolean;
 }
 
+export interface InstructionCandidate {
+  source: CanonicalSourceRef;
+  kind: "Directive";
+  requirement: RequirementLevel;
+  content: string;
+}
+
 export interface AuthorityRequirement {
   dimension: AuthorityDimension;
   requirement: RequirementLevel;
@@ -96,6 +103,7 @@ export type CompilationDiagnosticCode =
   | "NEXO_RUNTIME_REQUIRED"
   | "AGENT_AUTHORITY_CONFLICT"
   | "DUPLICATE_AUTHORITY_REQUIREMENT"
+  | "SOURCE_CONTENT_MISSING"
   | "AUTHORITY_MAPPING_PARTIAL"
   | "AUTHORITY_UNREPRESENTABLE"
   | "SOURCE_REFERENCE_INVALID"
@@ -148,6 +156,7 @@ export interface CodexCompilation {
   };
   sourceRefs: CanonicalSourceRef[];
   translations: TranslationEntry[];
+  instructionCandidates: InstructionCandidate[];
   authorityMappings: AuthorityMapping[];
   runtimeDependencies: RuntimeDependency[];
   diagnostics: CompilationDiagnostic[];

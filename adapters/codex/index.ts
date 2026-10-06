@@ -21,6 +21,7 @@ export type {
   CodexCompilation,
   DiagnosticSeverity,
   EnforcementStrength,
+  InstructionCandidate,
   PolicyEnforcementRequirement,
   RequirementLevel,
   RuntimeDependency,

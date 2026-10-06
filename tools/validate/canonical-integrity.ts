@@ -38,6 +38,7 @@ export interface CanonicalEntityRecord {
   status: string;
   file: string;
   format: CanonicalFormat;
+  markdownBody?: string;
   document: CanonicalDocument;
 }
 
@@ -136,12 +137,19 @@ export async function validateCanonicalIntegrity(bundle?: SchemaBundle, rootDire
 
   for (const entry of discovered.files) {
     let document: CanonicalDocument;
+    let markdownBody: string | undefined;
     try {
       const content = await readFile(entry.file, "utf8");
       if (hasProhibitedCanonicalCoupling(content)) {
         diagnostics.push(diagnostic("SCHEMA_VALIDATION_FAILED", entry.relativeFile, "/", "canonical entity contains prohibited harness or provider coupling"));
       }
-      document = entry.root.format === "markdown" ? parseFrontmatter(content, entry.file).data : await parseYamlManifest(content);
+      if (entry.root.format === "markdown") {
+        const parsed = parseFrontmatter(content, entry.file);
+        document = parsed.data;
+        markdownBody = parsed.body.replace(/\r\n?/g, "\n");
+      } else {
+        document = await parseYamlManifest(content);
+      }
     } catch (error) {
       diagnostics.push(diagnostic("MALFORMED_MANIFEST", entry.relativeFile, "/", String(error)));
       continue;
@@ -168,6 +176,7 @@ export async function validateCanonicalIntegrity(bundle?: SchemaBundle, rootDire
       status: String(metadata.status),
       file: entry.relativeFile,
       format: entry.root.format,
+      ...(markdownBody !== undefined ? { markdownBody } : {}),
       document,
     });
   }

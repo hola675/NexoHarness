@@ -72,3 +72,8 @@ test("Phase 1.1-B adds adapter core without renderers, distribution, or installe
   assert.deepEqual(readdirSync(new URL("../adapters/codex", import.meta.url)).sort(), ["compile.ts", "index.ts", "manifest.ts", "model.ts"]);
 });
 
+test("Codex compiler consumes validated records without parsing or discovering canonical files", () => {
+  const compiler = read("../adapters/codex/compile.ts");
+  assert.doesNotMatch(compiler, /parseFrontmatter|parseAllDocuments|discoverCanonicalFiles|readFile/);
+});
+

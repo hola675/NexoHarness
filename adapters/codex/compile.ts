@@ -176,6 +176,7 @@ export function compileCodex(request: {
     .sort((left, right) => compareOrdinal(left.source.ref, right.source.ref));
 
   const runtimeDependencies: RuntimeDependency[] = [];
+  const instructionCandidates: CodexCompilation["instructionCandidates"] = [];
   const translations: TranslationEntry[] = ordered.map(({ item, source }) => {
     const disposition = KIND_DISPOSITIONS[source.kind];
     const degradationAllowed = item.requirement === "OPTIONAL" && item.allowDegradation === true;
@@ -193,6 +194,21 @@ export function compileCodex(request: {
           ? `${source.kind} requires Nexo runtime and is omitted under explicit optional degradation.`
           : `${source.kind} requires Nexo runtime, which is not available in this adapter compilation.`,
       });
+    }
+    if (source.kind === "Directive") {
+      const body = item.entity.markdownBody;
+      if (typeof body !== "string" || body.trim().length === 0) {
+        diagnostics.push({
+          code: "SOURCE_CONTENT_MISSING",
+          severity: degradationAllowed ? "WARNING" : "BLOCKING",
+          sourceRef: source.ref,
+          message: degradationAllowed
+            ? "Optional Directive has no validated Markdown body and is omitted under explicit degradation."
+            : "Selected Directive requires a non-empty validated Markdown body for instruction rendering.",
+        });
+      } else {
+        instructionCandidates.push({ source, kind: "Directive", requirement: item.requirement, content: body });
+      }
     }
     return { source, disposition, requirement: item.requirement, degradationAllowed, targetArtifact };
   });
@@ -365,6 +381,7 @@ export function compileCodex(request: {
     adapter: { ...CODEX_ADAPTER },
     sourceRefs: ordered.map(({ source }) => source),
     translations,
+    instructionCandidates,
     authorityMappings: allAuthorityMappings,
     runtimeDependencies: runtimeDependencies.sort((left, right) => compareOrdinal(left.sourceRef, right.sourceRef)),
     diagnostics: sortedDiagnostics,

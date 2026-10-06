@@ -18,7 +18,8 @@ function record(kind: CanonicalKind, id: string, file = `core/test/${id}.yaml`, 
     version: "0.1.0",
     status: "draft",
     file,
-    format: "yaml",
+    format: file.endsWith(".md") ? "markdown" : "yaml",
+    ...(file.endsWith(".md") ? { markdownBody: `# ${id}\n` } : {}),
     document: {
       apiVersion: "nexoharness.dev/v1alpha1",
       kind,
@@ -391,4 +392,39 @@ test("compiler consumes caller-selected records produced by canonical validation
   const compilation = compileCodex({ selection: [selected(entity)] });
   assert.equal(compilation.usable, true);
   assert.equal(compilation.sourceRefs[0].ref, "Directive:core-directive@0.1.0");
+});
+
+test("validated core and execution Directive bodies reach ordered instruction candidates", async () => {
+  const validated = await validateCanonicalIntegrity();
+  const core = validated.index.byKey.get("Directive:core-directive");
+  const protocol = validated.index.byKey.get("Directive:execution-protocol");
+  assert.ok(core?.markdownBody);
+  assert.ok(protocol?.markdownBody);
+  const compilation = compileCodex({ selection: [selected(protocol), selected(core)] });
+  assert.deepEqual(compilation.instructionCandidates.map(({ source, requirement }) => [source.ref, source.version, requirement]), [
+    ["Directive:core-directive@0.1.0", "0.1.0", "REQUIRED"],
+    ["Directive:execution-protocol@0.1.0", "0.1.0", "REQUIRED"],
+  ]);
+  assert.equal(compilation.instructionCandidates[0].content, core.markdownBody);
+  assert.equal(compilation.instructionCandidates[1].content, protocol.markdownBody);
+  assert.deepEqual(
+    compileCodex({ selection: [selected(core), selected(protocol)] }).instructionCandidates,
+    compilation.instructionCandidates,
+  );
+});
+
+test("required Directive with missing validated content blocks and optional degradation warns", () => {
+  const missing = record("Directive", "missing-content", "core/directives/missing-content.md");
+  delete missing.markdownBody;
+  (missing.document.metadata as Record<string, unknown>).description = "Do not use this as instruction content.";
+  (missing.document.spec as Record<string, unknown>).summary = "Do not fabricate the missing body from this summary.";
+  const required = compileCodex({ selection: [selected(missing)] });
+  assert.equal(required.instructionCandidates.length, 0);
+  assert.equal(required.diagnostics.some(({ code, severity }) => code === "SOURCE_CONTENT_MISSING" && severity === "BLOCKING"), true);
+
+  const denied = compileCodex({ selection: [selected(missing, "OPTIONAL", false)] });
+  assert.equal(denied.diagnostics.some(({ code, severity }) => code === "SOURCE_CONTENT_MISSING" && severity === "BLOCKING"), true);
+  const allowed = compileCodex({ selection: [selected(missing, "OPTIONAL", true)] });
+  assert.equal(allowed.instructionCandidates.length, 0);
+  assert.equal(allowed.diagnostics.some(({ code, severity }) => code === "SOURCE_CONTENT_MISSING" && severity === "WARNING"), true);
 });

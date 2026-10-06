@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { CANONICAL_ROOTS, compareDeterministic, discoverCanonicalFiles, isCanonicalRootSymlink } from "../tools/validate/canonical-discovery.ts";
 import { validateCanonicalIntegrity } from "../tools/validate/canonical-integrity.ts";
+import { parseFrontmatter } from "../tools/validate/frontmatter.ts";
 import { hasProhibitedCanonicalCoupling } from "../tools/validate/harness-neutrality.ts";
 import { collectEntityReferences, parseEntityReference } from "../tools/validate/references.ts";
 import { loadSchemaBundle } from "../tools/validate/schemas.ts";
@@ -32,6 +33,23 @@ test("canonical discovery is recursive, typed and deterministic", async () => {
   assert.equal(first.files.find((file) => file.relativeFile.endsWith("capabilities/repository-search.yaml"))?.root.kind, "Capability");
   assert.equal(first.files.some((file) => file.relativeFile.includes("observer")), false);
   assert.equal(first.files.some((file) => file.relativeFile === "observer/runtime.yaml"), false);
+});
+
+test("canonical index retains normalized Markdown bodies and leaves YAML without one", async () => {
+  const result = await validateCanonicalIntegrity();
+  for (const id of ["core-directive", "execution-protocol"]) {
+    const record = result.index.byKey.get(`Directive:${id}`);
+    assert.ok(record);
+    assert.equal(record.format, "markdown");
+    const source = await readFile(resolve(root, record.file), "utf8");
+    const parsed = parseFrontmatter(source, resolve(root, record.file));
+    assert.equal(record.markdownBody, parsed.body.replace(/\r\n?/g, "\n"));
+  }
+  const fixtureResult = await validateCanonicalIntegrity(await loadSchemaBundle(), fixtureRoot("valid"));
+  const yamlRecord = fixtureResult.index.records.find((record) => record.format === "yaml");
+  assert.ok(yamlRecord);
+  assert.equal(yamlRecord.format, "yaml");
+  assert.equal("markdownBody" in yamlRecord, false);
 });
 
 test("an actual observer runtime fixture is excluded from canonical discovery", async () => {
