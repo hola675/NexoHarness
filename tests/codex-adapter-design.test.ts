@@ -7,6 +7,7 @@ const contract = read("../docs/adapters/codex-translation-contract.md");
 const adapterDoc = read("../docs/adapters/codex.md");
 const adr = read("../docs/decisions/0004-codex-adapter-translation-contract.md");
 const roadmap = read("../ROADMAP.md");
+const roleEvidence = read("../research/codex/probes/custom-agent-roles-0.160.0.md");
 
 test("Phase 1.1-A design boundaries remain in force during core implementation", () => {
   assert.match(roadmap, /1\.0 Codex capability matrix — CERTIFIED/);
@@ -26,7 +27,28 @@ test("Phase 1.1-A design boundaries remain in force during core implementation",
   assert.match(contract, /Phase 1\.1-A defines design only/);
   assert.match(contract, /CLI 0\.160\.0/);
   assert.match(contract, /rust-v0\.160\.0/);
-  assert.match(contract, /OBSERVED_LOCAL is none/);
+  assert.match(contract, /Phase 1\.0 recorded `OBSERVED_LOCAL` as none/);
+  assert.match(contract, /Subsequent Phase 1\.1 probes establish only their explicitly bounded local observations/);
+  assert.match(adapterDoc, /Configured custom agent role and role-specific developer instructions/);
+  assert.match(contract, /role-specific `developer_instructions`/);
+  assert.match(contract, /custom agent role evidence/);
+});
+
+test("custom agent role evidence preserves source, observation, and inference boundaries", () => {
+  for (const statement of [
+    "## RELEASE_PINNED_SOURCE",
+    "## OBSERVED_LOCAL",
+    "## INFERENCE",
+    "agent/control/api.rs",
+    "thread_manager.rs",
+    "session/mod.rs",
+    "Negative child model request directly observed: **NO**",
+    "Historical pre-run/post-run role-file hash continuity: **NOT ESTABLISHED**",
+    "ROLE != AUTHORITY",
+    "Total actual children: 2",
+  ]) assert.ok(roleEvidence.includes(statement), `Missing custom-role evidence boundary: ${statement}`);
+  assert.match(roleEvidence, /the configured role was applied to that child's effective `SessionConfiguration` before startup/);
+  assert.doesNotMatch(roleEvidence, /negative child model request (?:was )?directly observed[^\n]*(?:YES|true)/i);
 });
 
 test("translation contract preserves canonical and runtime ownership", () => {
