@@ -88,7 +88,7 @@ test("advisory policy prose cannot satisfy required enforcement", () => {
   assert.match(policyRow, /compilation blocks rather than claiming preservation/);
 });
 
-test("Phase 1.1-C1 adds only the pure AGENTS renderer without distribution or installer behavior", () => {
+test("Codex adapter contains only pure compiler and renderers without distribution or installer behavior", () => {
   assert.equal(existsSync(new URL("../adapters/codex/index.ts", import.meta.url)), true);
   assert.equal(existsSync(new URL("../adapters/codex/model.ts", import.meta.url)), true);
   assert.equal(existsSync(new URL("../adapters/codex/compile.ts", import.meta.url)), true);
@@ -97,7 +97,7 @@ test("Phase 1.1-C1 adds only the pure AGENTS renderer without distribution or in
   assert.equal(existsSync(new URL("../adapters/codex/render-skills.ts", import.meta.url)), true);
   assert.equal(existsSync(new URL("../dist/codex", import.meta.url)), false);
   assert.equal(existsSync(new URL("../installer/codex", import.meta.url)), false);
-  assert.deepEqual(readdirSync(new URL("../adapters/codex", import.meta.url)).sort(), ["compile.ts", "index.ts", "manifest.ts", "model.ts", "render-agents.ts", "render-skills.ts"]);
+  assert.deepEqual(readdirSync(new URL("../adapters/codex", import.meta.url)).sort(), ["compile.ts", "index.ts", "manifest.ts", "model.ts", "render-agent-roles.ts", "render-agents.ts", "render-skills.ts"]);
 });
 
 test("Codex compiler consumes validated records without parsing or discovering canonical files", () => {

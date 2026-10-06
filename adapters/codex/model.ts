@@ -123,6 +123,20 @@ export interface CodexSkillsRenderResult {
   usable: boolean;
 }
 
+export interface GeneratedCodexAgentRoleArtifact {
+  path: string;
+  content: string;
+  encoding: "UTF-8";
+  sourceRefs: string[];
+}
+
+export interface CodexAgentRolesRenderResult {
+  artifacts: GeneratedCodexAgentRoleArtifact[];
+  diagnostics: CompilationDiagnostic[];
+  usable: boolean;
+  deploymentEligible: boolean;
+}
+
 export interface CodexRenderResult {
   artifact?: GeneratedCodexArtifact;
   diagnostics: CompilationDiagnostic[];
@@ -166,7 +180,8 @@ export type CompilationDiagnosticCode =
   | "POLICY_ENFORCEMENT_UNSATISFIED"
   | "SKILL_NAME_UNREPRESENTABLE"
   | "SKILL_CONTENT_INVALID"
-  | "AGENT_CONTENT_INVALID";
+  | "AGENT_CONTENT_INVALID"
+  | "AGENT_ROLE_UNREPRESENTABLE";
 
 export type DiagnosticSeverity = "INFO" | "WARNING" | "ERROR" | "BLOCKING";
 

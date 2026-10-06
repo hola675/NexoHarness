@@ -13,11 +13,11 @@ Implementation status:
 
 - Phase 1.1-B adapter core implementation: **EXISTS**
 - AgentCandidate compiler projection: **EXISTS**
-- Custom Agent role renderer: **NOT YET**
-- Implemented: **IR, pure compilation core, validated canonical Directive content projection, deterministic in-memory AGENTS.md renderer, diagnostics, manifest/provenance helpers**
+- Custom Agent role renderer: **EXISTS — pure in-memory non-deployable previews; contract accepted in [ADR 0005](../decisions/0005-codex-agent-role-rendering.md)**
+- Implemented: **IR, pure compilation core, validated canonical Directive content projection, deterministic in-memory AGENTS.md renderer, diagnostics, manifest/provenance helpers, deterministic in-memory Agent role previews**
 - Pure AGENTS.md renderer: **EXISTS — in-memory artifact only**
 - Filesystem distribution: **NOT YET**
-- Generated Codex artifacts: **NOT YET**
+- Generated Codex artifacts: **IN MEMORY ONLY — no filesystem distribution**
 - Installer and user-file reconciliation: **NOT YET — Phase 1.2**
 - Runtime loading probe: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence; see report)**
 - Repository Skill discovery, explicit invocation, and SKILL.md body visibility: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence: research/codex/probes/skills-0.160.0.md)**

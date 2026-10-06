@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Implement pure Codex Agent role rendering with non-deployable previews, preserved compiler authority diagnostics and accepted ADR 0005; no installation or runtime probe.
 - Project validated canonical Agent role semantics into a deterministic, authority-separated AgentCandidate IR for the Codex adapter.
 - Add a pure deterministic in-memory Codex repository Skill renderer from validated structured Skill fields for Phase 1.1-C2.
 - Add a pure deterministic in-memory Codex AGENTS.md renderer with explicit UTF-8 byte budgeting and candidate provenance for Phase 1.1-C1.

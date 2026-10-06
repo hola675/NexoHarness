@@ -59,6 +59,19 @@ test("Phase 0.3 architecture decision is accepted", async () => {
   assert.match(decision, /^- \*\*Status:\*\* Accepted$/m);
 });
 
+test("Codex Agent role rendering decision is accepted and fail-closed", async () => {
+  const decision = await read("docs/decisions/0005-codex-agent-role-rendering.md");
+  assert.match(decision, /^- Status: Accepted$/m);
+  assert.match(decision, /Select \*\*Option B/);
+  assert.match(decision, /RENDERABLE != DEPLOYABLE/);
+  assert.match(decision, /ROLE != AUTHORITY/);
+  assert.match(decision, /CAPABILITY != TOOL/);
+  assert.match(decision, /TESTABLE != DEPLOYABLE/);
+  assert.match(decision, /existing AGENTS.md and Skill renderers retain their strict usability gates/);
+  assert.doesNotMatch(decision, /Status: Proposed/);
+  assert.equal(existsSync(resolve(root, "adapters/codex/render-agent-roles.ts")), true);
+});
+
 test("Phase 0.3 adds no Pack or Composition kind or runtime implementation", async () => {
   const registry = await read("core/schemas/registry.json");
   assert.doesNotMatch(registry, /"(?:Pack|Composition)"\s*:/);
