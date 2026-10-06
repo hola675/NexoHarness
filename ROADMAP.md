@@ -11,8 +11,8 @@
 
 ## Codex Target
 
-- 1.0 Codex capability matrix — IN PROGRESS
-- 1.1 Codex adapter
+- 1.0 Codex capability matrix — CERTIFIED
+- 1.1 Codex adapter — IN PROGRESS
 - 1.2 Codex installer / uninstaller / doctor
 - 1.3 Isolated Codex fixture
 

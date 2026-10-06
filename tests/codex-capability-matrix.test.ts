@@ -18,7 +18,7 @@ test("Phase 1.0 records a sourced, surface-specific Codex capability study witho
   ]);
 
   assert.match(roadmap, /0\.3 Orchestration, Shared Runtime & Continuous Improvement Architecture — CERTIFIED/);
-  assert.match(roadmap, /1\.0 Codex capability matrix — IN PROGRESS/);
+  assert.match(roadmap, /1\.0 Codex capability matrix — CERTIFIED/);
   assert.match(sources, /Apache License 2\.0/);
   assert.match(sources, /2026-10-05/);
   assert.match(sources, /rust-v0\.160\.0/);

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Define the Codex adapter translation contract and its canonical, authority, provenance, determinism and installation boundaries for Phase 1.1-A.
 - Research the local Codex CLI capability surface, pin the stable and upstream baselines, and document capability gaps for Phase 1.0.
 - Define the harness-neutral orchestration, shared runtime and continuous improvement architecture for Phase 0.3.
 - Fix Windows certification subprocess portability by invoking npm through Node and its npm CLI path without a shell.

@@ -18,7 +18,7 @@
     "validate:canonical": "node --experimental-strip-types tools/validate/canonical.ts",
     "validate:integrity": "node --experimental-strip-types tools/validate/canonical-integrity.ts",
     "phase:close": "node --experimental-strip-types tools/release/phase-close.ts",
-    "test": "node --test --experimental-strip-types tests/repository.test.ts tests/release.test.ts tests/integrity.test.ts tests/verify-performance.test.ts tests/architecture.test.ts tests/codex-capability-matrix.test.ts"
+    "test": "node --test --experimental-strip-types tests/repository.test.ts tests/release.test.ts tests/integrity.test.ts tests/verify-performance.test.ts tests/architecture.test.ts tests/codex-capability-matrix.test.ts tests/codex-adapter-design.test.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
