@@ -48,6 +48,14 @@ function compareOrdinal(left: string, right: string): number {
   return left < right ? -1 : left > right ? 1 : 0;
 }
 
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function isOptionalNonEmptyString(value: unknown): value is string | undefined {
+  return value === undefined || (typeof value === "string" && value.trim().length > 0);
+}
+
 function sortDiagnostics(items: CompilationDiagnostic[]): CompilationDiagnostic[] {
   return items.sort((left, right) =>
     compareOrdinal(
@@ -178,6 +186,7 @@ export function compileCodex(request: {
   const runtimeDependencies: RuntimeDependency[] = [];
   const instructionCandidates: CodexCompilation["instructionCandidates"] = [];
   const skillCandidates: CodexCompilation["skillCandidates"] = [];
+  const agentCandidates: CodexCompilation["agentCandidates"] = [];
   const translations: TranslationEntry[] = ordered.map(({ item, source }) => {
     const disposition = KIND_DISPOSITIONS[source.kind];
     const degradationAllowed = item.requirement === "OPTIONAL" && item.allowDegradation === true;
@@ -235,6 +244,43 @@ export function compileCodex(request: {
           activationConditions: [...activationConditions] as string[],
           procedure: [...procedure] as string[],
           ...(references ? { references: [...references] as string[] } : {}),
+        });
+      }
+    }
+    if (source.kind === "Agent") {
+      const rawSpec = item.entity.document.spec;
+      const spec = rawSpec && typeof rawSpec === "object" && !Array.isArray(rawSpec)
+        ? rawSpec as Record<string, unknown>
+        : undefined;
+      const responsibility = spec?.responsibility;
+      const triggers = spec?.triggers;
+      const capabilities = spec?.capabilities;
+      const constraints = spec?.constraints;
+      const handoff = spec?.handoff;
+      const failureBehavior = spec?.failureBehavior;
+      const verification = spec?.verification;
+      if (typeof responsibility !== "string" || responsibility.trim().length === 0 ||
+        !isStringArray(triggers) || !isStringArray(capabilities) || !isStringArray(constraints) ||
+        !isOptionalNonEmptyString(handoff) || !isOptionalNonEmptyString(failureBehavior) ||
+        (verification !== undefined && !isStringArray(verification))) {
+        diagnostics.push({
+          code: "AGENT_CONTENT_INVALID",
+          severity: "BLOCKING",
+          sourceRef: source.ref,
+          message: "Selected Agent must provide non-empty responsibility, string arrays for triggers, capabilities and constraints, and valid optional handoff, failureBehavior and verification fields.",
+        });
+      } else {
+        agentCandidates.push({
+          source,
+          requirement: item.requirement,
+          roleName: source.id,
+          responsibility,
+          triggers: [...triggers],
+          capabilityRefs: [...capabilities],
+          constraints: [...constraints],
+          ...(handoff !== undefined ? { handoff } : {}),
+          ...(failureBehavior !== undefined ? { failureBehavior } : {}),
+          ...(verification !== undefined ? { verification: [...verification] } : {}),
         });
       }
     }
@@ -411,6 +457,7 @@ export function compileCodex(request: {
     translations,
     instructionCandidates,
     skillCandidates,
+    agentCandidates,
     authorityMappings: allAuthorityMappings,
     runtimeDependencies: runtimeDependencies.sort((left, right) => compareOrdinal(left.sourceRef, right.sourceRef)),
     diagnostics: sortedDiagnostics,

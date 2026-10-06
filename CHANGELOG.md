@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Project validated canonical Agent role semantics into a deterministic, authority-separated AgentCandidate IR for the Codex adapter.
 - Add a pure deterministic in-memory Codex repository Skill renderer from validated structured Skill fields for Phase 1.1-C2.
 - Add a pure deterministic in-memory Codex AGENTS.md renderer with explicit UTF-8 byte budgeting and candidate provenance for Phase 1.1-C1.
 - Preserve validated canonical Markdown bodies through the index and project selected Directive content into Codex instruction candidates for Phase 1.1-C0.

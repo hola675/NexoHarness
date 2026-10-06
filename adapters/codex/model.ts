@@ -90,6 +90,19 @@ export interface SkillCandidate {
   references?: string[];
 }
 
+export interface AgentCandidate {
+  source: CanonicalSourceRef;
+  requirement: RequirementLevel;
+  roleName: string;
+  responsibility: string;
+  triggers: string[];
+  capabilityRefs: string[];
+  constraints: string[];
+  handoff?: string;
+  failureBehavior?: string;
+  verification?: string[];
+}
+
 export interface GeneratedCodexArtifact {
   path: "AGENTS.md";
   content: string;
@@ -152,7 +165,8 @@ export type CompilationDiagnosticCode =
   | "DUPLICATE_SOURCE_IDENTITY"
   | "POLICY_ENFORCEMENT_UNSATISFIED"
   | "SKILL_NAME_UNREPRESENTABLE"
-  | "SKILL_CONTENT_INVALID";
+  | "SKILL_CONTENT_INVALID"
+  | "AGENT_CONTENT_INVALID";
 
 export type DiagnosticSeverity = "INFO" | "WARNING" | "ERROR" | "BLOCKING";
 
@@ -202,6 +216,7 @@ export interface CodexCompilation {
   translations: TranslationEntry[];
   instructionCandidates: InstructionCandidate[];
   skillCandidates: SkillCandidate[];
+  agentCandidates: AgentCandidate[];
   authorityMappings: AuthorityMapping[];
   runtimeDependencies: RuntimeDependency[];
   diagnostics: CompilationDiagnostic[];

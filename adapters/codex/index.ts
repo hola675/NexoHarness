@@ -12,6 +12,7 @@ export {
 } from "./model.ts";
 export type {
   AgentAuthorityMode,
+  AgentCandidate,
   AuthorityCrosswalk,
   AuthorityDimension,
   AuthorityMapping,

@@ -12,6 +12,8 @@ Design references:
 Implementation status:
 
 - Phase 1.1-B adapter core implementation: **EXISTS**
+- AgentCandidate compiler projection: **EXISTS**
+- Custom Agent role renderer: **NOT YET**
 - Implemented: **IR, pure compilation core, validated canonical Directive content projection, deterministic in-memory AGENTS.md renderer, diagnostics, manifest/provenance helpers**
 - Pure AGENTS.md renderer: **EXISTS — in-memory artifact only**
 - Filesystem distribution: **NOT YET**

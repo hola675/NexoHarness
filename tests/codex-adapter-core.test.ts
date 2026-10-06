@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { validateCanonicalIntegrity } from "../tools/validate/canonical-integrity.ts";
 import type { CanonicalEntityRecord } from "../tools/validate/canonical-integrity.ts";
 import type { CanonicalKind } from "../tools/validate/schemas.ts";
+import type { AgentCandidate } from "../adapters/codex/index.ts";
 import { buildCodexManifest, compileCodex, evaluateAuthorityCrosswalk, evaluateUntranslatedDisposition, KIND_DISPOSITIONS, serializeCodexManifest, sha256Content, CODEX_ADAPTER, CODEX_TARGET } from "../adapters/codex/index.ts";
 
 const kinds = [
@@ -305,6 +306,107 @@ test("optional Workflow can be omitted only with explicit degradation", () => {
 test("Skill selection does not derive authority mappings", () => {
   const compilation = compileCodex({ selection: [selected(record("Skill", "bounded-skill"))] });
   assert.deepEqual(compilation.authorityMappings, []);
+});
+
+function validAgent(id: string, authority: Record<string, unknown> = { sourceModification: "none", delegation: "none", commandExecution: "none", externalMutation: "none" }): CanonicalEntityRecord {
+  return record("Agent", id, `agents/${id}.yaml`, {
+    responsibility: "Review changes for correctness.",
+    authority,
+    triggers: ["review request", "pull request"],
+    capabilities: ["Capability:code-review@1.0.0", "Capability:test-runner@2.0.0"],
+    constraints: ["Do not modify source without approval."],
+    handoff: "Escalate unresolved findings.",
+    failureBehavior: "Report unavailable evidence.",
+    verification: ["Check affected tests."],
+  });
+}
+
+test("valid Agent projects exactly the authority-free AgentCandidate semantics", () => {
+  const compilation = compileCodex({ selection: [selected(validAgent("reviewer"))] });
+  assert.equal(compilation.agentCandidates.length, 1);
+  assert.deepEqual(compilation.agentCandidates[0], {
+    source: { kind: "Agent", id: "reviewer", version: "0.1.0", ref: "Agent:reviewer@0.1.0", path: "agents/reviewer.yaml" },
+    requirement: "REQUIRED",
+    roleName: "reviewer",
+    responsibility: "Review changes for correctness.",
+    triggers: ["review request", "pull request"],
+    capabilityRefs: ["Capability:code-review@1.0.0", "Capability:test-runner@2.0.0"],
+    constraints: ["Do not modify source without approval."],
+    handoff: "Escalate unresolved findings.",
+    failureBehavior: "Report unavailable evidence.",
+    verification: ["Check affected tests."],
+  } satisfies AgentCandidate);
+});
+
+test("AgentCandidate excludes authority dimensions and target-specific execution fields", () => {
+  const candidate = compileCodex({ selection: [selected(validAgent("reviewer"))] }).agentCandidates[0];
+  for (const forbidden of ["authority", "sourceModification", "delegation", "commandExecution", "externalMutation", "permissions", "sandbox", "tools", "provider", "model", "config_file", "developer_instructions"]) {
+    assert.equal(Object.hasOwn(candidate, forbidden), false, forbidden);
+  }
+});
+
+test("changing Agent authority changes mappings but not AgentCandidate", () => {
+  const content = validAgent("authority-check");
+  const alternate = structuredClone(content);
+  (alternate.document.spec as Record<string, unknown>).authority = { sourceModification: "allowed", delegation: "scoped", commandExecution: "allowed", externalMutation: "allowed" };
+  const left = compileCodex({ selection: [selected(content)] });
+  const right = compileCodex({ selection: [selected(alternate)] });
+  assert.deepEqual(left.agentCandidates, right.agentCandidates);
+  assert.notDeepEqual(left.authorityMappings, right.authorityMappings);
+});
+
+test("Agent capabilities remain verbatim abstract capability references", () => {
+  const candidate = compileCodex({ selection: [selected(validAgent("capability-boundary"))] }).agentCandidates[0];
+  assert.deepEqual(candidate.capabilityRefs, ["Capability:code-review@1.0.0", "Capability:test-runner@2.0.0"]);
+  assert.equal(JSON.stringify(candidate).includes("tool"), false);
+  assert.equal(Object.hasOwn(candidate, "provider"), false);
+});
+
+test("AgentCandidate ordering is deterministic under reversed selection", () => {
+  const agents = [selected(validAgent("zeta")), selected(validAgent("alpha"))];
+  const forward = compileCodex({ selection: agents }).agentCandidates;
+  const reverse = compileCodex({ selection: [...agents].reverse() }).agentCandidates;
+  assert.deepEqual(forward, reverse);
+  assert.deepEqual(forward.map(({ roleName }) => roleName), ["alpha", "zeta"]);
+});
+
+test("optional Agent semantics remain absent when unspecified", () => {
+  const agent = record("Agent", "minimal", "agents/minimal.yaml", {
+    responsibility: "Review changes.", triggers: [], capabilities: [], constraints: [],
+    authority: { sourceModification: "none", delegation: "none", commandExecution: "none", externalMutation: "none" },
+  });
+  const candidate = compileCodex({ selection: [selected(agent)] }).agentCandidates[0];
+  assert.equal(Object.hasOwn(candidate, "handoff"), false);
+  assert.equal(Object.hasOwn(candidate, "failureBehavior"), false);
+  assert.equal(Object.hasOwn(candidate, "verification"), false);
+});
+
+test("malformed Agent semantic content is blocking and creates no candidate", () => {
+  const malformed: Array<[string, unknown]> = [
+    ["responsibility", " "], ["triggers", "single trigger"], ["capabilities", null],
+    ["constraints", { value: "not an array" }], ["handoff", 3], ["failureBehavior", ""], ["verification", "verify"],
+  ];
+  for (const [field, value] of malformed) {
+    const agent = validAgent(`invalid-${field.toLowerCase()}`);
+    (agent.document.spec as Record<string, unknown>)[field] = value;
+    const compilation = compileCodex({ selection: [selected(agent)] });
+    const diagnostic = compilation.diagnostics.find(({ code }) => code === "AGENT_CONTENT_INVALID");
+    assert.equal(diagnostic?.severity, "BLOCKING", field);
+    assert.equal(diagnostic?.sourceRef, `Agent:${agent.id}@0.1.0`, field);
+    assert.deepEqual(compilation.agentCandidates, [], field);
+    assert.equal(compilation.usable, false, field);
+  }
+});
+
+test("Agent compilation copies arrays and does not mutate canonical records", () => {
+  const agent = validAgent("immutable");
+  const before = structuredClone(agent);
+  const candidate = compileCodex({ selection: [selected(agent)] }).agentCandidates[0];
+  assert.deepEqual(agent, before);
+  assert.notEqual(candidate.triggers, (agent.document.spec as Record<string, unknown>).triggers);
+  assert.notEqual(candidate.capabilityRefs, (agent.document.spec as Record<string, unknown>).capabilities);
+  assert.notEqual(candidate.constraints, (agent.document.spec as Record<string, unknown>).constraints);
+  assert.notEqual(candidate.verification, (agent.document.spec as Record<string, unknown>).verification);
 });
 
 test("Agent canonical authority modes are preserved independently of role", () => {
