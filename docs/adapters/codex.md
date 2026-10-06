@@ -19,6 +19,7 @@ Implementation status:
 - Installer and user-file reconciliation: **NOT YET — Phase 1.2**
 - Runtime loading probe: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence; see report)**
 - Repository Skill discovery, explicit invocation, and SKILL.md body visibility: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence: research/codex/probes/skills-0.160.0.md)**
+- Nexo-generated repository Skill artifact, explicit invocation, and generated purpose/procedure visibility: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence: [generated Skill probe](../../research/codex/probes/generated-skill-0.160.0.md))**
 - Pure Nexo Skill renderer: **EXISTS — in-memory artifact only**
 - Skill file distribution and installer integration: **NOT YET**
 
