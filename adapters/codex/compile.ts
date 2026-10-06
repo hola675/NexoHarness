@@ -65,12 +65,15 @@ export function evaluateUntranslatedDisposition(
   disposition: "UNSUPPORTED" | "UNKNOWN",
   requirement: "REQUIRED" | "OPTIONAL",
   sourceRef?: string,
+  allowDegradation = false,
 ): CompilationDiagnostic {
   return {
     code: disposition === "UNKNOWN" ? "TARGET_FEATURE_UNKNOWN" : "TARGET_FEATURE_UNSUPPORTED",
-    severity: "BLOCKING",
+    severity: requirement === "OPTIONAL" && allowDegradation ? "WARNING" : "BLOCKING",
     ...(sourceRef ? { sourceRef } : {}),
-    message: `${requirement} semantics are ${disposition === "UNKNOWN" ? "unresolved" : "unsupported"} for the target.`,
+    message: requirement === "OPTIONAL" && allowDegradation
+      ? `Optional ${disposition === "UNKNOWN" ? "unresolved" : "unsupported"} semantics are omitted under explicit degradation.`
+      : `${requirement} semantics are ${disposition === "UNKNOWN" ? "unresolved" : "unsupported"} for the target.`,
   };
 }
 
@@ -179,7 +182,7 @@ export function compileCodex(request: {
     const targetArtifact = disposition === "NO_TARGET_ARTIFACT" || disposition === "NEXO_RUNTIME_ONLY" ||
       disposition === "UNSUPPORTED" || disposition === "UNKNOWN" ? "NONE" : "CANDIDATE";
     if (disposition === "UNSUPPORTED" || disposition === "UNKNOWN") {
-      diagnostics.push(evaluateUntranslatedDisposition(disposition, item.requirement, source.ref));
+      diagnostics.push(evaluateUntranslatedDisposition(disposition, item.requirement, source.ref, degradationAllowed));
     } else if (disposition === "NEXO_RUNTIME_ONLY") {
       runtimeDependencies.push({ sourceRef: source.ref, kind: source.kind as "Workflow" | "Contract", requirement: item.requirement, satisfied: false });
       diagnostics.push({
@@ -216,7 +219,26 @@ export function compileCodex(request: {
     }
   }
 
-  const requestedAuthorityMappings: AuthorityMapping[] = [...(request.authorityRequirements ?? [])]
+  const callerAuthorityRequirements = request.authorityRequirements ?? [];
+  const callerAuthoritySlots = new Set<string>();
+  const duplicateAuthoritySlots = new Set<string>();
+  for (const requirement of callerAuthorityRequirements) {
+    if (!AUTHORITY_DIMENSIONS.includes(requirement.dimension)) continue;
+    const slot = JSON.stringify([requirement.sourceRef ?? null, requirement.dimension]);
+    if (callerAuthoritySlots.has(slot)) duplicateAuthoritySlots.add(slot);
+    callerAuthoritySlots.add(slot);
+  }
+  for (const slot of [...duplicateAuthoritySlots].sort(compareOrdinal)) {
+    const [sourceRef, dimension] = JSON.parse(slot) as [string | null, AuthorityDimension];
+    diagnostics.push({
+      code: "DUPLICATE_AUTHORITY_REQUIREMENT",
+      severity: "BLOCKING",
+      ...(sourceRef ? { sourceRef } : {}),
+      message: `Caller authority requirement is duplicated for ${dimension}${sourceRef ? ` at ${sourceRef}` : " in global scope"}. Duplicate semantic slots are rejected, including identical requests.`,
+    });
+  }
+
+  const requestedAuthorityMappings: AuthorityMapping[] = [...callerAuthorityRequirements]
     .filter((requirement) => {
       const valid = AUTHORITY_DIMENSIONS.includes(requirement.dimension) &&
         (requirement.requirement === "REQUIRED" || requirement.requirement === "OPTIONAL") &&
@@ -274,8 +296,8 @@ export function compileCodex(request: {
     });
 
   const allAuthorityMappings = [...authorityMappings, ...requestedAuthorityMappings].sort((left, right) => compareOrdinal(
-    `${left.sourceRef ?? ""}|${left.dimension}|${left.requirement}|${left.canonicalMode ?? ""}`,
-    `${right.sourceRef ?? ""}|${right.dimension}|${right.requirement}|${right.canonicalMode ?? ""}`,
+    JSON.stringify([left.sourceRef ?? null, left.dimension, left.canonicalMode ?? null, left.requestedMode ?? null, left.requirement, left.degradationAllowed, left.crosswalk]),
+    JSON.stringify([right.sourceRef ?? null, right.dimension, right.canonicalMode ?? null, right.requestedMode ?? null, right.requirement, right.degradationAllowed, right.crosswalk]),
   ));
 
   for (const mapping of allAuthorityMappings) {

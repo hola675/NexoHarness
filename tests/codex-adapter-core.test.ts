@@ -147,6 +147,43 @@ test("required UNSUPPORTED and UNKNOWN dispositions block with distinct diagnost
   assert.equal(unknown.code, "TARGET_FEATURE_UNKNOWN");
 });
 
+test("optional UNSUPPORTED and UNKNOWN require explicit degradation and retain distinct codes", () => {
+  const cases = [
+    ["UNSUPPORTED", false, "TARGET_FEATURE_UNSUPPORTED", "BLOCKING"],
+    ["UNKNOWN", false, "TARGET_FEATURE_UNKNOWN", "BLOCKING"],
+    ["UNSUPPORTED", true, "TARGET_FEATURE_UNSUPPORTED", "WARNING"],
+    ["UNKNOWN", true, "TARGET_FEATURE_UNKNOWN", "WARNING"],
+  ] as const;
+  for (const [disposition, allowDegradation, code, severity] of cases) {
+    const diagnostic = evaluateUntranslatedDisposition(disposition, "OPTIONAL", "Agent:optional@0.1.0", allowDegradation);
+    assert.equal(diagnostic.code, code);
+    assert.equal(diagnostic.severity, severity);
+  }
+});
+
+test("duplicate identical caller authority requests are rejected", () => {
+  const duplicate = { dimension: "sourceModification" as const, requirement: "REQUIRED" as const };
+  const compilation = compileCodex({ selection: [], authorityRequirements: [duplicate, { ...duplicate }] });
+  assert.equal(compilation.usable, false);
+  assert.equal(compilation.diagnostics.some(({ code, severity }) => code === "DUPLICATE_AUTHORITY_REQUIREMENT" && severity === "BLOCKING"), true);
+});
+
+test("conflicting caller authority requests are blocked and input order does not affect output", () => {
+  const agent = record("Agent", "deterministic", "agents/deterministic.md", {
+    authority: { sourceModification: "allowed", delegation: "allowed", commandExecution: "allowed", externalMutation: "allowed" },
+  });
+  const selection = [selected(agent, "OPTIONAL", true)];
+  const leftRequest = [
+    { dimension: "sourceModification" as const, requirement: "OPTIONAL" as const, allowDegradation: true, sourceRef: "Agent:deterministic@0.1.0", requestedMode: "scoped" as const },
+    { dimension: "sourceModification" as const, requirement: "OPTIONAL" as const, allowDegradation: false, sourceRef: "Agent:deterministic@0.1.0", requestedMode: "allowed" as const },
+  ];
+  const left = compileCodex({ selection, authorityRequirements: leftRequest });
+  const right = compileCodex({ selection, authorityRequirements: [...leftRequest].reverse() });
+  assert.deepEqual(left, right);
+  assert.equal(left.usable, false);
+  assert.equal(left.diagnostics.some(({ code, severity }) => code === "DUPLICATE_AUTHORITY_REQUIREMENT" && severity === "BLOCKING"), true);
+});
+
 test("optional PARTIAL authority requires explicit degradation and a warning", () => {
   const denied = compileCodex({ selection: [], authorityRequirements: [{ dimension: "commandExecution", requirement: "OPTIONAL" }] });
   assert.equal(denied.usable, false);
