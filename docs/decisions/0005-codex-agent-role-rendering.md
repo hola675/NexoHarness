@@ -145,4 +145,6 @@ This decision does not define installer reconciliation implementation, capabilit
 
 ## Review gate
 
-ADR 0005 is **Accepted** for C4-B1. It complements ADR 0004; the existing AGENTS.md and Skill renderers retain their strict usability gates. C4-C runtime verification has not been run. TARGET CAPABILITY != AUTHORIZATION. Internal generated-bundle collisions fail atomically; filesystem reconciliation remains Phase 1.2.
+ADR 0005 and the C4-B1 implementation originally landed together in `c333d22c8ceec9a5eef48e61a63880b76961aa40`, before the intended independent-review gate. A subsequent independent review, recorded in [Codex C4-B1 Independent Review](../reviews/codex-c4-b1-independent-review.md), approved the ADR substance and renderer implementation with no CRITICAL or MAJOR technical findings. The governance sequence deviation remains part of the historical record; the original ordering was non-compliant.
+
+ADR 0005 remains **Accepted** based on that subsequent review. The review's minor findings are recorded in the review record. Manifest deployment eligibility must be made explicit before any Phase 1.2 consumer or installer relies on generated manifests. C4-C runtime verification has **NOT YET** been run. This decision complements ADR 0004; the existing AGENTS.md and Skill renderers retain their strict usability gates. TARGET CAPABILITY != AUTHORIZATION. Internal generated-bundle collisions fail atomically; filesystem reconciliation remains Phase 1.2.

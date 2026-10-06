@@ -72,6 +72,23 @@ test("Codex Agent role rendering decision is accepted and fail-closed", async ()
   assert.equal(existsSync(resolve(root, "adapters/codex/render-agent-roles.ts")), true);
 });
 
+test("ADR 0005 records its later independent review and governance deviation", async () => {
+  const decision = await read("docs/decisions/0005-codex-agent-role-rendering.md");
+  const reviewPath = "docs/reviews/codex-c4-b1-independent-review.md";
+  assert.match(decision, /^- Status: Accepted$/m);
+  assert.equal(existsSync(resolve(root, reviewPath)), true);
+
+  const review = await read(reviewPath);
+  assert.match(review, /c333d22c8ceec9a5eef48e61a63880b76961aa40/);
+  assert.match(review, /original ordering was non-compliant/i);
+  assert.match(review, /ADR 0005 substance: \*\*APPROVED\*\*/);
+  assert.match(review, /C4-B1 implementation: \*\*APPROVED\*\*/);
+  assert.match(review, /ROLE != AUTHORITY/);
+  assert.match(review, /CAPABILITY != TOOL/);
+  assert.match(review, /TESTABLE != DEPLOYABLE/);
+  assert.match(review, /before Phase 1\.2/);
+});
+
 test("Phase 0.3 adds no Pack or Composition kind or runtime implementation", async () => {
   const registry = await read("core/schemas/registry.json");
   assert.doesNotMatch(registry, /"(?:Pack|Composition)"\s*:/);
