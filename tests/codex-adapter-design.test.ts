@@ -43,7 +43,17 @@ test("authority dimensions cannot be silently upgraded or downgraded", () => {
   assert.match(contract, /\| commandExecution \|[^\n]*\| PARTIAL \|/);
   assert.match(contract, /\| externalMutation \|[^\n]*\| PARTIAL \|/);
   assert.match(contract, /No mapping is STRONG by default/);
-  assert.match(contract, /compilation fails or emits a blocking incompatibility/);
+  assert.match(contract, /required authority boundary classified PARTIAL, ADVISORY, UNREPRESENTABLE or unresolved UNKNOWN cannot produce a usable artifact; compilation fails or emits a BLOCKING incompatibility/);
+  assert.match(contract, /PARTIAL mapping for optional, non-required behavior may be represented only as explicit degradation with diagnostics when the canonical selection permits the loss/);
+});
+
+test("advisory policy prose cannot satisfy required enforcement", () => {
+  const policyRow = contract.split("\n").find((line) => line.startsWith("| Policy —"));
+  assert.ok(policyRow, "Policy mapping row must exist");
+  assert.match(policyRow, /may be translated into generated instructions/);
+  assert.match(policyRow, /Instruction text is advisory/);
+  assert.match(policyRow, /Prose alone cannot satisfy a required policy that needs runtime or hard enforcement/);
+  assert.match(policyRow, /compilation blocks rather than claiming preservation/);
 });
 
 test("Phase 1.1-A defines documentation only and adds no adapter artifacts", () => {
