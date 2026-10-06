@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { validateCanonicalIntegrity } from "../tools/validate/canonical-integrity.ts";
 import type { CanonicalEntityRecord } from "../tools/validate/canonical-integrity.ts";
 import type { CanonicalKind } from "../tools/validate/schemas.ts";
-import { buildCodexManifest, compileCodex, evaluateAuthorityCrosswalk, KIND_DISPOSITIONS, serializeCodexManifest, sha256Content, CODEX_ADAPTER, CODEX_TARGET } from "../adapters/codex/index.ts";
+import { buildCodexManifest, compileCodex, evaluateAuthorityCrosswalk, evaluateUntranslatedDisposition, KIND_DISPOSITIONS, serializeCodexManifest, sha256Content, CODEX_ADAPTER, CODEX_TARGET } from "../adapters/codex/index.ts";
 
 const kinds = [
   "Directive", "Policy", "Agent", "Skill", "Rule", "Workflow", "Contract", "Capability",
@@ -136,6 +136,15 @@ test("every non-STRONG required authority crosswalk is blocking", () => {
     const diagnostic = evaluateAuthorityCrosswalk(crosswalk, "REQUIRED");
     assert.equal(diagnostic?.severity, "BLOCKING", crosswalk);
   }
+});
+
+test("required UNSUPPORTED and UNKNOWN dispositions block with distinct diagnostics", () => {
+  const unsupported = evaluateUntranslatedDisposition("UNSUPPORTED", "REQUIRED", "Agent:unsupported@0.1.0");
+  const unknown = evaluateUntranslatedDisposition("UNKNOWN", "REQUIRED", "Agent:unknown@0.1.0");
+  assert.equal(unsupported.severity, "BLOCKING");
+  assert.equal(unsupported.code, "TARGET_FEATURE_UNSUPPORTED");
+  assert.equal(unknown.severity, "BLOCKING");
+  assert.equal(unknown.code, "TARGET_FEATURE_UNKNOWN");
 });
 
 test("optional PARTIAL authority requires explicit degradation and a warning", () => {
@@ -271,6 +280,20 @@ test("Agent canonical authority modes are preserved independently of role", () =
     ["delegation", "scoped", "Agent:reviewer@0.1.0"],
     ["externalMutation", "none", "Agent:reviewer@0.1.0"],
     ["sourceModification", "none", "Agent:reviewer@0.1.0"],
+  ]);
+});
+
+test("Agent preserves all four explicit none authority boundaries", () => {
+  const agent = record("Agent", "no-authority", "agents/no-authority.md", {
+    responsibility: "May modify source, delegate, run commands, and make external changes.",
+    authority: { sourceModification: "none", delegation: "none", commandExecution: "none", externalMutation: "none" },
+  });
+  const compilation = compileCodex({ selection: [selected(agent)] });
+  assert.deepEqual(compilation.authorityMappings.map(({ dimension, canonicalMode }) => [dimension, canonicalMode]), [
+    ["commandExecution", "none"],
+    ["delegation", "none"],
+    ["externalMutation", "none"],
+    ["sourceModification", "none"],
   ]);
 });
 

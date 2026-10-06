@@ -61,6 +61,19 @@ function crosswalkFor(dimension: AuthorityDimension): AuthorityCrosswalk {
   return AUTHORITY_CROSSWALK[dimension];
 }
 
+export function evaluateUntranslatedDisposition(
+  disposition: "UNSUPPORTED" | "UNKNOWN",
+  requirement: "REQUIRED" | "OPTIONAL",
+  sourceRef?: string,
+): CompilationDiagnostic {
+  return {
+    code: disposition === "UNKNOWN" ? "TARGET_FEATURE_UNKNOWN" : "TARGET_FEATURE_UNSUPPORTED",
+    severity: "BLOCKING",
+    ...(sourceRef ? { sourceRef } : {}),
+    message: `${requirement} semantics are ${disposition === "UNKNOWN" ? "unresolved" : "unsupported"} for the target.`,
+  };
+}
+
 function satisfiesPolicyEnforcement(requirement: PolicyEnforcementRequirement): boolean {
   if (requirement.nexoRuntimeEnforcement && requirement.requiredStrength === "RUNTIME_GATE") return true;
   if (requirement.verifiedTargetStrength === "HARD_ENFORCEMENT") return true;
@@ -166,12 +179,7 @@ export function compileCodex(request: {
     const targetArtifact = disposition === "NO_TARGET_ARTIFACT" || disposition === "NEXO_RUNTIME_ONLY" ||
       disposition === "UNSUPPORTED" || disposition === "UNKNOWN" ? "NONE" : "CANDIDATE";
     if (disposition === "UNSUPPORTED" || disposition === "UNKNOWN") {
-      diagnostics.push({
-        code: disposition === "UNKNOWN" ? "TARGET_FEATURE_UNKNOWN" : "TARGET_FEATURE_UNSUPPORTED",
-        severity: "BLOCKING",
-        sourceRef: source.ref,
-        message: `Selected ${source.kind} has no verified target translation.`,
-      });
+      diagnostics.push(evaluateUntranslatedDisposition(disposition, item.requirement, source.ref));
     } else if (disposition === "NEXO_RUNTIME_ONLY") {
       runtimeDependencies.push({ sourceRef: source.ref, kind: source.kind as "Workflow" | "Contract", requirement: item.requirement, satisfied: false });
       diagnostics.push({

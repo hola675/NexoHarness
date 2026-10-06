@@ -1,4 +1,4 @@
-export { compileCodex, evaluateAuthorityCrosswalk } from "./compile.ts";
+export { compileCodex, evaluateAuthorityCrosswalk, evaluateUntranslatedDisposition } from "./compile.ts";
 export { buildCodexManifest, serializeCodexManifest, sha256Content } from "./manifest.ts";
 export {
   AUTHORITY_DIMENSIONS,
@@ -9,6 +9,7 @@ export {
   TRANSLATION_CLASSES,
 } from "./model.ts";
 export type {
+  AgentAuthorityMode,
   AuthorityCrosswalk,
   AuthorityDimension,
   AuthorityMapping,
@@ -22,6 +23,7 @@ export type {
   EnforcementStrength,
   PolicyEnforcementRequirement,
   RequirementLevel,
+  RuntimeDependency,
   TranslationClass,
   TranslationEntry,
 } from "./model.ts";
