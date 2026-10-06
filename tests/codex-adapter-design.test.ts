@@ -18,7 +18,9 @@ test("Phase 1.1-A design boundaries remain in force during core implementation",
   assert.doesNotMatch(adr, /ADR 0004 remains Proposed|currently Proposed|^## Proposed decision$/im);
   assert.doesNotMatch(contract, /ADR 0004 remains Proposed|currently Proposed|^## Proposed decision$/im);
   assert.match(adapterDoc, /Phase 1\.1-B adapter core implementation: \*\*EXISTS\*\*/);
-  assert.match(adapterDoc, /Codex native renderers: \*\*NOT YET\*\*/);
+  assert.match(adapterDoc, /Pure AGENTS\.md renderer: \*\*EXISTS/);
+  assert.match(adapterDoc, /Filesystem distribution: \*\*NOT YET\*\*/);
+  assert.match(adapterDoc, /Runtime loading probe: \*\*NOT YET\*\*/);
   assert.match(contract, /Phase 1\.1-A defines design only/);
   assert.match(contract, /CLI 0\.160\.0/);
   assert.match(contract, /rust-v0\.160\.0/);
@@ -62,14 +64,15 @@ test("advisory policy prose cannot satisfy required enforcement", () => {
   assert.match(policyRow, /compilation blocks rather than claiming preservation/);
 });
 
-test("Phase 1.1-B adds adapter core without renderers, distribution, or installer behavior", () => {
+test("Phase 1.1-C1 adds only the pure AGENTS renderer without distribution or installer behavior", () => {
   assert.equal(existsSync(new URL("../adapters/codex/index.ts", import.meta.url)), true);
   assert.equal(existsSync(new URL("../adapters/codex/model.ts", import.meta.url)), true);
   assert.equal(existsSync(new URL("../adapters/codex/compile.ts", import.meta.url)), true);
   assert.equal(existsSync(new URL("../adapters/codex/manifest.ts", import.meta.url)), true);
+  assert.equal(existsSync(new URL("../adapters/codex/render-agents.ts", import.meta.url)), true);
   assert.equal(existsSync(new URL("../dist/codex", import.meta.url)), false);
   assert.equal(existsSync(new URL("../installer/codex", import.meta.url)), false);
-  assert.deepEqual(readdirSync(new URL("../adapters/codex", import.meta.url)).sort(), ["compile.ts", "index.ts", "manifest.ts", "model.ts"]);
+  assert.deepEqual(readdirSync(new URL("../adapters/codex", import.meta.url)).sort(), ["compile.ts", "index.ts", "manifest.ts", "model.ts", "render-agents.ts"]);
 });
 
 test("Codex compiler consumes validated records without parsing or discovering canonical files", () => {

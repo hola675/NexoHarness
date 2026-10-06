@@ -79,6 +79,20 @@ export interface InstructionCandidate {
   content: string;
 }
 
+export interface GeneratedCodexArtifact {
+  path: "AGENTS.md";
+  content: string;
+  encoding: "UTF-8";
+  sourceRefs: string[];
+}
+
+export interface CodexRenderResult {
+  artifact?: GeneratedCodexArtifact;
+  diagnostics: CompilationDiagnostic[];
+  usable: boolean;
+  byteLength?: number;
+}
+
 export interface AuthorityRequirement {
   dimension: AuthorityDimension;
   requirement: RequirementLevel;
@@ -104,6 +118,10 @@ export type CompilationDiagnosticCode =
   | "AGENT_AUTHORITY_CONFLICT"
   | "DUPLICATE_AUTHORITY_REQUIREMENT"
   | "SOURCE_CONTENT_MISSING"
+  | "INSTRUCTION_BUDGET_UNKNOWN"
+  | "INSTRUCTION_BUDGET_EXCEEDED"
+  | "NO_RENDERABLE_INSTRUCTIONS"
+  | "COMPILATION_UNUSABLE"
   | "AUTHORITY_MAPPING_PARTIAL"
   | "AUTHORITY_UNREPRESENTABLE"
   | "SOURCE_REFERENCE_INVALID"
