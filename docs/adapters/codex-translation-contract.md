@@ -1,7 +1,7 @@
 # Codex Adapter Translation Contract
 
 **Status:** Design input for Phase 1.1-A; implementation is not authorized by this document.  
-**Design authority:** ADR 0004, currently Proposed.  
+**Design authority:** ADR 0004, Accepted.
 **Certified source decision:** ADR 0003, Accepted.  
 **Target:** Codex Local CLI / local Codex harness.  
 **Research baseline:** Codex CLI 0.160.0, tag rust-v0.160.0; snapshot 2026-10-05.  

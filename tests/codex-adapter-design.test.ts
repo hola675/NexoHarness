@@ -11,7 +11,12 @@ const roadmap = read("../ROADMAP.md");
 test("Phase 1.1-A keeps the Codex adapter at design status", () => {
   assert.match(roadmap, /1\.0 Codex capability matrix — CERTIFIED/);
   assert.match(roadmap, /1\.1 Codex adapter — IN PROGRESS/);
-  assert.match(adr, /Status: Proposed/);
+  assert.match(adr, /Status: Accepted/);
+  assert.match(adr, /^## Decision$/m);
+  assert.doesNotMatch(adr, /^## Proposed decision$/m);
+  assert.match(contract, /Design authority:\*\* ADR 0004, Accepted\./);
+  assert.doesNotMatch(adr, /ADR 0004 remains Proposed|currently Proposed|^## Proposed decision$/im);
+  assert.doesNotMatch(contract, /ADR 0004 remains Proposed|currently Proposed|^## Proposed decision$/im);
   assert.match(adapterDoc, /Adapter implementation: \*\*NOT YET\*\*/);
   assert.match(contract, /Phase 1\.1-A defines design only/);
   assert.match(contract, /CLI 0\.160\.0/);
