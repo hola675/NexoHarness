@@ -1,5 +1,6 @@
 export { compileCodex, evaluateAuthorityCrosswalk, evaluateUntranslatedDisposition } from "./compile.ts";
 export { renderCodexAgents } from "./render-agents.ts";
+export { renderCodexSkills } from "./render-skills.ts";
 export { buildCodexManifest, serializeCodexManifest, sha256Content } from "./manifest.ts";
 export {
   AUTHORITY_DIMENSIONS,
@@ -24,7 +25,10 @@ export type {
   DiagnosticSeverity,
   EnforcementStrength,
   GeneratedCodexArtifact,
+  GeneratedCodexSkillArtifact,
+  CodexSkillsRenderResult,
   InstructionCandidate,
+  SkillCandidate,
   PolicyEnforcementRequirement,
   RequirementLevel,
   RuntimeDependency,

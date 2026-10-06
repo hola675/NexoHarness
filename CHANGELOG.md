@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add a pure deterministic in-memory Codex repository Skill renderer from validated structured Skill fields for Phase 1.1-C2.
 - Add a pure deterministic in-memory Codex AGENTS.md renderer with explicit UTF-8 byte budgeting and candidate provenance for Phase 1.1-C1.
 - Preserve validated canonical Markdown bodies through the index and project selected Directive content into Codex instruction candidates for Phase 1.1-C0.
 - Implement the pure Codex adapter compilation core, internal IR, fail-closed diagnostics, and deterministic manifest/provenance helpers for Phase 1.1-B.

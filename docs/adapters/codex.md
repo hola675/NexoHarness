@@ -19,6 +19,9 @@ Implementation status:
 - Installer and user-file reconciliation: **NOT YET — Phase 1.2**
 - Runtime loading probe: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence; see report)**
 - Repository Skill discovery, explicit invocation, and SKILL.md body visibility: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence: research/codex/probes/skills-0.160.0.md)**
-- Nexo Skill renderer: **NOT YET**
+- Pure Nexo Skill renderer: **EXISTS — in-memory artifact only**
+- Skill file distribution and installer integration: **NOT YET**
 
 The adapter consumes explicitly selected, validated, harness-neutral canonical records and produces an internal compilation representation, including instruction candidates projected from validated Directive Markdown bodies. The pure AGENTS.md renderer consumes only that compilation and returns an in-memory UTF-8 artifact with source provenance and an explicit byte budget. Root generated `AGENTS.md` loading has been observed locally on Codex CLI 0.160.0; the bounded probe and its controls are recorded in [the runtime evidence](../../research/codex/probes/agents-md-0.160.0.md). This observation does not establish complete AGENTS.md semantics. The file is prompt-level advisory guidance; the adapter does not reopen canonical files, write or install files, own runtime authority, or redefine canonical behavior.
+
+The pure Skill renderer consumes explicitly selected Skill candidates projected from validated structured fields and returns deterministic `.agents/skills/<id>/SKILL.md` artifacts in memory. It does not read canonical files, include `markdownBody`, materialize referenced resources, write files, or grant authority; references are presented as canonical text only. Distribution and installation remain out of scope.

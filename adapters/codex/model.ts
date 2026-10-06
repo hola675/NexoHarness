@@ -79,11 +79,35 @@ export interface InstructionCandidate {
   content: string;
 }
 
+export interface SkillCandidate {
+  source: CanonicalSourceRef;
+  requirement: RequirementLevel;
+  name: string;
+  description: string;
+  purpose: string;
+  activationConditions: string[];
+  procedure: string[];
+  references?: string[];
+}
+
 export interface GeneratedCodexArtifact {
   path: "AGENTS.md";
   content: string;
   encoding: "UTF-8";
   sourceRefs: string[];
+}
+
+export interface GeneratedCodexSkillArtifact {
+  path: string;
+  content: string;
+  encoding: "UTF-8";
+  sourceRefs: string[];
+}
+
+export interface CodexSkillsRenderResult {
+  artifacts: GeneratedCodexSkillArtifact[];
+  diagnostics: CompilationDiagnostic[];
+  usable: boolean;
 }
 
 export interface CodexRenderResult {
@@ -126,7 +150,9 @@ export type CompilationDiagnosticCode =
   | "AUTHORITY_UNREPRESENTABLE"
   | "SOURCE_REFERENCE_INVALID"
   | "DUPLICATE_SOURCE_IDENTITY"
-  | "POLICY_ENFORCEMENT_UNSATISFIED";
+  | "POLICY_ENFORCEMENT_UNSATISFIED"
+  | "SKILL_NAME_UNREPRESENTABLE"
+  | "SKILL_CONTENT_INVALID";
 
 export type DiagnosticSeverity = "INFO" | "WARNING" | "ERROR" | "BLOCKING";
 
@@ -175,6 +201,7 @@ export interface CodexCompilation {
   sourceRefs: CanonicalSourceRef[];
   translations: TranslationEntry[];
   instructionCandidates: InstructionCandidate[];
+  skillCandidates: SkillCandidate[];
   authorityMappings: AuthorityMapping[];
   runtimeDependencies: RuntimeDependency[];
   diagnostics: CompilationDiagnostic[];

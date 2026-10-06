@@ -177,6 +177,7 @@ export function compileCodex(request: {
 
   const runtimeDependencies: RuntimeDependency[] = [];
   const instructionCandidates: CodexCompilation["instructionCandidates"] = [];
+  const skillCandidates: CodexCompilation["skillCandidates"] = [];
   const translations: TranslationEntry[] = ordered.map(({ item, source }) => {
     const disposition = KIND_DISPOSITIONS[source.kind];
     const degradationAllowed = item.requirement === "OPTIONAL" && item.allowDegradation === true;
@@ -208,6 +209,33 @@ export function compileCodex(request: {
         });
       } else {
         instructionCandidates.push({ source, kind: "Directive", requirement: item.requirement, content: body });
+      }
+    }
+    if (source.kind === "Skill") {
+      const spec = item.entity.document.spec as Record<string, unknown> | undefined;
+      const purpose = spec?.purpose;
+      const activationConditions = spec?.activationConditions;
+      const procedure = spec?.procedure;
+      const references = spec?.references;
+      if (source.id.length > 64) {
+        diagnostics.push({ code: "SKILL_NAME_UNREPRESENTABLE", severity: "BLOCKING", sourceRef: source.ref, message: "Canonical Skill metadata.id exceeds the Codex target limit of 64 characters; the name is not truncated." });
+      }
+      if (typeof purpose !== "string" || purpose.trim().length === 0 ||
+        !Array.isArray(activationConditions) || !activationConditions.every((value) => typeof value === "string") ||
+        !Array.isArray(procedure) || !procedure.every((value) => typeof value === "string") ||
+        (references !== undefined && (!Array.isArray(references) || !references.every((value) => typeof value === "string")))) {
+        diagnostics.push({ code: "SKILL_CONTENT_INVALID", severity: "BLOCKING", sourceRef: source.ref, message: "Selected Skill must provide validated purpose, activationConditions, procedure, and optional string references." });
+      } else if (source.id.length <= 64) {
+        skillCandidates.push({
+          source,
+          requirement: item.requirement,
+          name: source.id,
+          description: purpose,
+          purpose,
+          activationConditions: [...activationConditions] as string[],
+          procedure: [...procedure] as string[],
+          ...(references ? { references: [...references] as string[] } : {}),
+        });
       }
     }
     return { source, disposition, requirement: item.requirement, degradationAllowed, targetArtifact };
@@ -382,6 +410,7 @@ export function compileCodex(request: {
     sourceRefs: ordered.map(({ source }) => source),
     translations,
     instructionCandidates,
+    skillCandidates,
     authorityMappings: allAuthorityMappings,
     runtimeDependencies: runtimeDependencies.sort((left, right) => compareOrdinal(left.sourceRef, right.sourceRef)),
     diagnostics: sortedDiagnostics,
