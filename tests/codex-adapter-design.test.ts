@@ -21,6 +21,8 @@ test("Phase 1.1-A design boundaries remain in force during core implementation",
   assert.match(adapterDoc, /Pure AGENTS\.md renderer: \*\*EXISTS/);
   assert.match(adapterDoc, /Filesystem distribution: \*\*NOT YET\*\*/);
   assert.match(adapterDoc, /Runtime loading probe: \*\*OBSERVED LOCALLY — Codex CLI 0\.160\.0/);
+  assert.match(adapterDoc, /Repository Skill discovery, explicit invocation, and SKILL\.md body visibility: \*\*OBSERVED LOCALLY — Codex CLI 0\.160\.0/);
+  assert.match(adapterDoc, /Nexo Skill renderer: \*\*NOT YET\*\*/);
   assert.match(contract, /Phase 1\.1-A defines design only/);
   assert.match(contract, /CLI 0\.160\.0/);
   assert.match(contract, /rust-v0\.160\.0/);
