@@ -1,8 +1,9 @@
 import type { CanonicalEntityRecord } from "../../tools/validate/canonical-integrity.ts";
-import { AUTHORITY_DIMENSIONS, CODEX_ADAPTER, CODEX_TARGET, KIND_DISPOSITIONS, type AuthorityCrosswalk, type AuthorityDimension, type AuthorityMapping, type AuthorityRequirement, type CanonicalSelection, type CanonicalSourceRef, type CompilationDiagnostic, type CodexCompilation, type PolicyEnforcementRequirement, type TranslationEntry } from "./model.ts";
+import { AUTHORITY_DIMENSIONS, CODEX_ADAPTER, CODEX_TARGET, KIND_DISPOSITIONS, type AgentAuthorityMode, type AuthorityCrosswalk, type AuthorityDimension, type AuthorityMapping, type AuthorityRequirement, type CanonicalSelection, type CanonicalSourceRef, type CompilationDiagnostic, type CodexCompilation, type PolicyEnforcementRequirement, type RuntimeDependency, type TranslationEntry } from "./model.ts";
 
 const idPattern = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const versionPattern = /^[0-9]+\.[0-9]+\.[0-9]+$/;
+const AUTHORITY_MODE_RANK: Readonly<Record<AgentAuthorityMode, number>> = { none: 0, scoped: 1, allowed: 2 };
 
 const AUTHORITY_CROSSWALK: Readonly<Record<AuthorityDimension, AuthorityCrosswalk>> = {
   sourceModification: "PARTIAL",
@@ -158,9 +159,12 @@ export function compileCodex(request: {
     .filter((entry, index): entry is { item: CanonicalSelection; source: CanonicalSourceRef } => Boolean(entry.source) && validRequirements[index])
     .sort((left, right) => compareOrdinal(left.source.ref, right.source.ref));
 
+  const runtimeDependencies: RuntimeDependency[] = [];
   const translations: TranslationEntry[] = ordered.map(({ item, source }) => {
     const disposition = KIND_DISPOSITIONS[source.kind];
     const degradationAllowed = item.requirement === "OPTIONAL" && item.allowDegradation === true;
+    const targetArtifact = disposition === "NO_TARGET_ARTIFACT" || disposition === "NEXO_RUNTIME_ONLY" ||
+      disposition === "UNSUPPORTED" || disposition === "UNKNOWN" ? "NONE" : "CANDIDATE";
     if (disposition === "UNSUPPORTED" || disposition === "UNKNOWN") {
       diagnostics.push({
         code: disposition === "UNKNOWN" ? "TARGET_FEATURE_UNKNOWN" : "TARGET_FEATURE_UNSUPPORTED",
@@ -168,28 +172,47 @@ export function compileCodex(request: {
         sourceRef: source.ref,
         message: `Selected ${source.kind} has no verified target translation.`,
       });
-    } else if ((disposition === "NEXO_RUNTIME_ONLY" || disposition === "NO_TARGET_ARTIFACT") && !degradationAllowed) {
+    } else if (disposition === "NEXO_RUNTIME_ONLY") {
+      runtimeDependencies.push({ sourceRef: source.ref, kind: source.kind as "Workflow" | "Contract", requirement: item.requirement, satisfied: false });
       diagnostics.push({
-        code: "TARGET_FEATURE_UNSUPPORTED",
-        severity: "BLOCKING",
+        code: "NEXO_RUNTIME_REQUIRED",
+        severity: degradationAllowed ? "WARNING" : "BLOCKING",
         sourceRef: source.ref,
-        message: `${source.kind} is ${disposition}; compilation cannot claim target support without explicit optional degradation.`,
-      });
-    } else if (disposition === "NEXO_RUNTIME_ONLY" || disposition === "NO_TARGET_ARTIFACT") {
-      diagnostics.push({
-        code: "TARGET_FEATURE_UNSUPPORTED",
-        severity: "WARNING",
-        sourceRef: source.ref,
-        message: `${source.kind} is omitted from target artifacts under explicitly permitted optional degradation.`,
+        message: degradationAllowed
+          ? `${source.kind} requires Nexo runtime and is omitted under explicit optional degradation.`
+          : `${source.kind} requires Nexo runtime, which is not available in this adapter compilation.`,
       });
     }
-    return { source, disposition, requirement: item.requirement, degradationAllowed };
+    return { source, disposition, requirement: item.requirement, degradationAllowed, targetArtifact };
   });
 
-  const authorityMappings: AuthorityMapping[] = [...(request.authorityRequirements ?? [])]
+  const authorityMappings: AuthorityMapping[] = [];
+  for (const { item, source } of ordered) {
+    if (source.kind !== "Agent") continue;
+    const spec = item.entity.document.spec as Record<string, unknown> | undefined;
+    const authority = spec?.authority as Record<string, unknown> | undefined;
+    for (const dimension of AUTHORITY_DIMENSIONS) {
+      const mode = authority?.[dimension];
+      if (mode !== "none" && mode !== "scoped" && mode !== "allowed") {
+        diagnostics.push({ code: "SOURCE_REFERENCE_INVALID", severity: "BLOCKING", sourceRef: source.ref, message: `Agent spec.authority.${dimension} must be none, scoped, or allowed.` });
+        continue;
+      }
+      authorityMappings.push({
+        dimension,
+        canonicalMode: mode,
+        crosswalk: crosswalkFor(dimension),
+        requirement: item.requirement,
+        degradationAllowed: item.requirement === "OPTIONAL" && item.allowDegradation === true,
+        sourceRef: source.ref,
+      });
+    }
+  }
+
+  const requestedAuthorityMappings: AuthorityMapping[] = [...(request.authorityRequirements ?? [])]
     .filter((requirement) => {
       const valid = AUTHORITY_DIMENSIONS.includes(requirement.dimension) &&
-        (requirement.requirement === "REQUIRED" || requirement.requirement === "OPTIONAL");
+        (requirement.requirement === "REQUIRED" || requirement.requirement === "OPTIONAL") &&
+        (requirement.requestedMode === undefined || requirement.requestedMode === "none" || requirement.requestedMode === "scoped" || requirement.requestedMode === "allowed");
       if (!valid) {
         diagnostics.push({
           code: "SOURCE_REFERENCE_INVALID",
@@ -218,6 +241,18 @@ export function compileCodex(request: {
           message: "An OPTIONAL authority mapping cannot weaken an explicitly REQUIRED canonical selection.",
         });
       }
+      const canonicalAgentMapping = selectedSource?.source.kind === "Agent"
+        ? authorityMappings.find((mapping) => mapping.sourceRef === requirement.sourceRef && mapping.dimension === requirement.dimension && mapping.canonicalMode !== undefined)
+        : undefined;
+      if (canonicalAgentMapping && requirement.requestedMode !== undefined &&
+        AUTHORITY_MODE_RANK[requirement.requestedMode] > AUTHORITY_MODE_RANK[canonicalAgentMapping.canonicalMode!]) {
+        diagnostics.push({
+          code: "AGENT_AUTHORITY_CONFLICT",
+          severity: "BLOCKING",
+          sourceRef: requirement.sourceRef,
+          message: `Requested ${requirement.dimension} mode ${requirement.requestedMode} exceeds canonical Agent ceiling ${canonicalAgentMapping.canonicalMode}.`,
+        });
+      }
       const selectionAllowsDegradation = !requirement.sourceRef ||
         (selectedSource?.item.requirement === "OPTIONAL" && selectedSource.item.allowDegradation === true);
       return {
@@ -225,15 +260,17 @@ export function compileCodex(request: {
         crosswalk: crosswalkFor(requirement.dimension),
         requirement: requirement.requirement,
         degradationAllowed: requirement.requirement === "OPTIONAL" && requirement.allowDegradation === true && selectionAllowsDegradation,
+        ...(requirement.requestedMode ? { requestedMode: requirement.requestedMode } : {}),
         ...(requirement.sourceRef && sourceRefIsSelected ? { sourceRef: requirement.sourceRef } : {}),
       };
-    })
-    .sort((left, right) => compareOrdinal(
-      `${left.sourceRef ?? ""}|${left.dimension}|${left.requirement}`,
-      `${right.sourceRef ?? ""}|${right.dimension}|${right.requirement}`,
-    ));
+    });
 
-  for (const mapping of authorityMappings) {
+  const allAuthorityMappings = [...authorityMappings, ...requestedAuthorityMappings].sort((left, right) => compareOrdinal(
+    `${left.sourceRef ?? ""}|${left.dimension}|${left.requirement}|${left.canonicalMode ?? ""}`,
+    `${right.sourceRef ?? ""}|${right.dimension}|${right.requirement}|${right.canonicalMode ?? ""}`,
+  ));
+
+  for (const mapping of allAuthorityMappings) {
     const diagnostic = evaluateAuthorityCrosswalk(mapping.crosswalk, mapping.requirement, mapping.degradationAllowed);
     if (diagnostic) diagnostics.push({
       ...diagnostic,
@@ -298,7 +335,8 @@ export function compileCodex(request: {
     adapter: { ...CODEX_ADAPTER },
     sourceRefs: ordered.map(({ source }) => source),
     translations,
-    authorityMappings,
+    authorityMappings: allAuthorityMappings,
+    runtimeDependencies: runtimeDependencies.sort((left, right) => compareOrdinal(left.sourceRef, right.sourceRef)),
     diagnostics: sortedDiagnostics,
     usable,
   };

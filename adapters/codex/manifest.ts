@@ -12,6 +12,7 @@ export interface CodexManifest {
   adapter: { id: string; version: string };
   target: { surface: string; version: string; tag: string };
   sourceRefs: CanonicalSourceRef[];
+  runtimeDependencies: CodexCompilation["runtimeDependencies"];
   artifacts: ManifestArtifact[];
   diagnostics: CompilationDiagnostic[];
 }
@@ -63,6 +64,7 @@ export function buildCodexManifest(
     adapter: { ...compilation.adapter },
     target: { ...compilation.target },
     sourceRefs,
+    runtimeDependencies: [...compilation.runtimeDependencies].sort((left, right) => compareOrdinal(left.sourceRef, right.sourceRef)),
     artifacts: manifestArtifacts,
     diagnostics,
   };

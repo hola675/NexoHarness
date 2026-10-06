@@ -222,20 +222,37 @@ test("policy assessment cannot override a selection that forbids degradation", (
   assert.equal(compilation.usable, false);
 });
 
-test("Observation has NO_TARGET_ARTIFACT disposition", () => {
-  const compilation = compileCodex({ selection: [selected(record("Observation", "signal"), "OPTIONAL", true)] });
+test("Observation has NO_TARGET_ARTIFACT without unsupported diagnostics or degradation", () => {
+  const compilation = compileCodex({ selection: [selected(record("Observation", "signal"))] });
   assert.equal(compilation.translations[0].disposition, "NO_TARGET_ARTIFACT");
-  assert.equal(compilation.diagnostics.some((item) => item.severity === "WARNING"), true);
+  assert.equal(compilation.translations[0].targetArtifact, "NONE");
+  assert.equal(compilation.diagnostics.some((item) => item.code === "TARGET_FEATURE_UNSUPPORTED"), false);
+  assert.equal(compilation.usable, true);
 });
 
-test("ImprovementProposal has NO_TARGET_ARTIFACT disposition", () => {
-  const compilation = compileCodex({ selection: [selected(record("ImprovementProposal", "proposal"), "OPTIONAL", true)] });
+test("ImprovementProposal has intentional NO_TARGET_ARTIFACT disposition", () => {
+  const compilation = compileCodex({ selection: [selected(record("ImprovementProposal", "proposal"))] });
   assert.equal(compilation.translations[0].disposition, "NO_TARGET_ARTIFACT");
+  assert.equal(compilation.translations[0].targetArtifact, "NONE");
+  assert.equal(compilation.diagnostics.some((item) => item.code === "TARGET_FEATURE_UNSUPPORTED"), false);
+  assert.equal(compilation.usable, true);
 });
 
-test("Workflow remains NEXO_RUNTIME_ONLY", () => {
-  const compilation = compileCodex({ selection: [selected(record("Workflow", "workflow"), "OPTIONAL", true)] });
+test("required Workflow records an unsatisfied Nexo runtime dependency", () => {
+  const compilation = compileCodex({ selection: [selected(record("Workflow", "workflow"))] });
   assert.equal(compilation.translations[0].disposition, "NEXO_RUNTIME_ONLY");
+  assert.equal(compilation.translations[0].targetArtifact, "NONE");
+  assert.deepEqual(compilation.runtimeDependencies, [{ sourceRef: "Workflow:workflow@0.1.0", kind: "Workflow", requirement: "REQUIRED", satisfied: false }]);
+  assert.equal(compilation.diagnostics.some((item) => item.code === "NEXO_RUNTIME_REQUIRED" && item.severity === "BLOCKING"), true);
+  assert.equal(compilation.diagnostics.some((item) => item.code === "TARGET_FEATURE_UNSUPPORTED"), false);
+});
+
+test("optional Workflow can be omitted only with explicit degradation", () => {
+  const denied = compileCodex({ selection: [selected(record("Workflow", "workflow"), "OPTIONAL", false)] });
+  const allowed = compileCodex({ selection: [selected(record("Workflow", "workflow"), "OPTIONAL", true)] });
+  assert.equal(denied.diagnostics.some((item) => item.code === "NEXO_RUNTIME_REQUIRED" && item.severity === "BLOCKING"), true);
+  assert.equal(allowed.diagnostics.some((item) => item.code === "NEXO_RUNTIME_REQUIRED" && item.severity === "WARNING"), true);
+  assert.equal(allowed.usable, true);
 });
 
 test("Skill selection does not derive authority mappings", () => {
@@ -243,13 +260,31 @@ test("Skill selection does not derive authority mappings", () => {
   assert.deepEqual(compilation.authorityMappings, []);
 });
 
-test("Agent role or embedded authority does not silently create adapter authority mappings", () => {
+test("Agent canonical authority modes are preserved independently of role", () => {
   const agent = record("Agent", "reviewer", "agents/reviewer.md", {
-    responsibility: "Review changes.",
-    authority: { sourceModification: "none", delegation: "none", commandExecution: "none", externalMutation: "none" },
+    responsibility: "May modify source, delegate, run commands, and make external changes.",
+    authority: { sourceModification: "none", delegation: "scoped", commandExecution: "allowed", externalMutation: "none" },
   });
   const compilation = compileCodex({ selection: [selected(agent)] });
-  assert.deepEqual(compilation.authorityMappings, []);
+  assert.deepEqual(compilation.authorityMappings.map(({ dimension, canonicalMode, sourceRef }) => [dimension, canonicalMode, sourceRef]), [
+    ["commandExecution", "allowed", "Agent:reviewer@0.1.0"],
+    ["delegation", "scoped", "Agent:reviewer@0.1.0"],
+    ["externalMutation", "none", "Agent:reviewer@0.1.0"],
+    ["sourceModification", "none", "Agent:reviewer@0.1.0"],
+  ]);
+});
+
+test("caller authority cannot widen an Agent canonical ceiling", () => {
+  const agent = record("Agent", "bounded", "agents/bounded.md", {
+    responsibility: "Coordinate review.",
+    authority: { sourceModification: "none", delegation: "scoped", commandExecution: "none", externalMutation: "none" },
+  });
+  const compilation = compileCodex({
+    selection: [selected(agent)],
+    authorityRequirements: [{ dimension: "delegation", requirement: "REQUIRED", sourceRef: "Agent:bounded@0.1.0", requestedMode: "allowed" }],
+  });
+  assert.equal(compilation.authorityMappings.find(({ dimension, canonicalMode }) => dimension === "delegation" && canonicalMode !== undefined)?.canonicalMode, "scoped");
+  assert.equal(compilation.diagnostics.some((item) => item.code === "AGENT_AUTHORITY_CONFLICT" && item.severity === "BLOCKING"), true);
 });
 
 test("any BLOCKING diagnostic makes the compilation unusable", () => {

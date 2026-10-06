@@ -40,6 +40,7 @@ export const AUTHORITY_DIMENSIONS = [
 export type AuthorityDimension = (typeof AUTHORITY_DIMENSIONS)[number];
 export type AuthorityCrosswalk = "STRONG" | "PARTIAL" | "ADVISORY" | "UNREPRESENTABLE" | "UNKNOWN";
 export type RequirementLevel = "REQUIRED" | "OPTIONAL";
+export type AgentAuthorityMode = "none" | "scoped" | "allowed";
 
 export const KIND_DISPOSITIONS: Readonly<Record<CanonicalKind, TranslationClass>> = Object.freeze({
   Directive: "COMPOSED_TRANSLATION",
@@ -76,6 +77,7 @@ export interface AuthorityRequirement {
   requirement: RequirementLevel;
   allowDegradation?: boolean;
   sourceRef?: string;
+  requestedMode?: AgentAuthorityMode;
 }
 
 export interface PolicyEnforcementRequirement {
@@ -91,6 +93,8 @@ export type CompilationDiagnosticCode =
   | "TARGET_VERSION_UNVERIFIED"
   | "TARGET_FEATURE_UNKNOWN"
   | "TARGET_FEATURE_UNSUPPORTED"
+  | "NEXO_RUNTIME_REQUIRED"
+  | "AGENT_AUTHORITY_CONFLICT"
   | "AUTHORITY_MAPPING_PARTIAL"
   | "AUTHORITY_UNREPRESENTABLE"
   | "SOURCE_REFERENCE_INVALID"
@@ -111,6 +115,7 @@ export interface TranslationEntry {
   disposition: TranslationClass;
   requirement: RequirementLevel;
   degradationAllowed: boolean;
+  targetArtifact: "CANDIDATE" | "NONE";
 }
 
 export interface AuthorityMapping {
@@ -118,7 +123,16 @@ export interface AuthorityMapping {
   crosswalk: AuthorityCrosswalk;
   requirement: RequirementLevel;
   degradationAllowed: boolean;
+  canonicalMode?: AgentAuthorityMode;
+  requestedMode?: AgentAuthorityMode;
   sourceRef?: string;
+}
+
+export interface RuntimeDependency {
+  sourceRef: string;
+  kind: "Workflow" | "Contract";
+  requirement: RequirementLevel;
+  satisfied: false;
 }
 
 export interface CodexCompilation {
@@ -134,6 +148,7 @@ export interface CodexCompilation {
   sourceRefs: CanonicalSourceRef[];
   translations: TranslationEntry[];
   authorityMappings: AuthorityMapping[];
+  runtimeDependencies: RuntimeDependency[];
   diagnostics: CompilationDiagnostic[];
   usable: boolean;
 }
