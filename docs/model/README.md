@@ -29,22 +29,22 @@
 
 ## Document map
 
-The following model documents are the approved set for this frontier. None are created as empty placeholders in R1-A; each is authored only in the phase that actually writes its content, to avoid speculative, unreviewed structure.
+The following model documents are the approved set for this frontier. Documents marked **PLANNED** are not created as empty placeholders; each is authored only in the phase that actually writes its content, to avoid speculative, unreviewed structure.
 
-- `charter.md` — mission, scope and non-goals of NexoHarness as an organization/system.
-- `vocabulary.md` — organization-facing vocabulary (Role, Competency, Handoff, Division) and its explicit relationship to existing technical terminology in `docs/terminology.md` and `docs/concepts/directives.md`.
-- `work-lifecycle.md` — how work moves through NexoHarness at the organizational level, building on `docs/lifecycle.md`'s build lifecycle.
-- `knowledge-experience.md` — organizational view of shared operational knowledge, building on `docs/shared-runtime.md`.
-- `learning-evolution.md` — organizational view of continuous improvement, building on `docs/continuous-improvement.md` and `core/policies/self-improvement.md`.
-- `workforce.md` — organizational Role concept and its explicit, non-schema relationship to the technical Agent Kind.
-- `governance-authority.md` — organizational governance and authority framing, explicitly subordinate to `core/policies/precedence.md` and the other `core/policies/*` entries.
-- `assurance-certification.md` — organizational view of evidence and certification, building on `core/policies/evidence.md` and `core/policies/completion.md`.
-- `capability-runtime.md` — organizational view of capability provisioning, building on `docs/concepts/capabilities.md`.
-- `operations-orchestration.md` — organizational control-plane view, building on `docs/orchestration.md` and `docs/execution-model.md`.
-- `canonical-information.md` — organizational view of the canonical source of truth, building on `docs/source-of-truth.md` and `docs/canonical-format.md`.
-- `profiles-context-configuration.md` — organizational view of context/profile configuration, building on `docs/concepts/profiles.md`.
-- `evaluation-quality.md` — organizational view of evidence and quality, building on `docs/concepts/evaluations.md`.
-- `distribution-release.md` — organizational view of distribution and release, building on `docs/versioning.md`'s release mechanics.
+- [`charter.md`](charter.md) — **ACTIVE.** Mission, scope and non-goals of NexoHarness as an organization/system.
+- [`vocabulary.md`](vocabulary.md) — **ACTIVE.** Organization-facing vocabulary (Role, Competency, Handoff, Division) and its explicit relationship to existing technical terminology in `docs/terminology.md` and `docs/concepts/directives.md`.
+- `work-lifecycle.md` — **PLANNED.** How work moves through NexoHarness at the organizational level, building on `docs/lifecycle.md`'s build lifecycle.
+- `knowledge-experience.md` — **PLANNED.** Organizational view of shared operational knowledge, building on `docs/shared-runtime.md`.
+- `learning-evolution.md` — **PLANNED.** Organizational view of continuous improvement, building on `docs/continuous-improvement.md` and `core/policies/self-improvement.md`.
+- `workforce.md` — **PLANNED.** Organizational Role concept and its explicit, non-schema relationship to the technical Agent Kind.
+- `governance-authority.md` — **PLANNED.** Organizational governance and authority framing, explicitly subordinate to `core/policies/precedence.md` and the other `core/policies/*` entries.
+- `assurance-certification.md` — **PLANNED.** Organizational view of evidence and certification, building on `core/policies/evidence.md` and `core/policies/completion.md`.
+- `capability-runtime.md` — **PLANNED.** Organizational view of capability provisioning, building on `docs/concepts/capabilities.md`.
+- `operations-orchestration.md` — **PLANNED.** Organizational control-plane view, building on `docs/orchestration.md` and `docs/execution-model.md`.
+- `canonical-information.md` — **PLANNED.** Organizational view of the canonical source of truth, building on `docs/source-of-truth.md` and `docs/canonical-format.md`.
+- `profiles-context-configuration.md` — **PLANNED.** Organizational view of context/profile configuration, building on `docs/concepts/profiles.md`.
+- `evaluation-quality.md` — **PLANNED.** Organizational view of evidence and quality, building on `docs/concepts/evaluations.md`.
+- `distribution-release.md` — **PLANNED.** Organizational view of distribution and release, building on `docs/versioning.md`'s release mechanics.
 
 Each future document must declare, in its own front section, which existing `docs/concepts/`, `docs/decisions/`, `core/policies/` or `docs/adapters/` material it builds on, and must not restate that material's authority incompatibly. See the full reconciliation findings in [`docs/reviews/r1-documentation-authority-audit.md`](../reviews/r1-documentation-authority-audit.md).
 

@@ -1,5 +1,7 @@
 # Principles
 
+> **Authority note:** these principles are being reconciled and consolidated under [`docs/model/charter.md`](model/charter.md), the organizational/system constitution. This document is preserved in full during that reconciliation; it is not yet superseded, since not all of its content has been migrated.
+
 These stable identifiers name the initial NexoHarness principles. They describe intent and expected behavior, not implementation details.
 
 ## NH-P001 — Context Before Action

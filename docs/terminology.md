@@ -1,5 +1,7 @@
 # Terminology
 
+> **Authority note:** organizational and cross-layer terminology is being reconciled under [`docs/model/vocabulary.md`](model/vocabulary.md). Technical terms below that are not yet migrated remain preserved here until a later, explicit split; this document is not superseded.
+
 The following vocabulary is canonical and platform-neutral.
 
 | Term | Definition |
