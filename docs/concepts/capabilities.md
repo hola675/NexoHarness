@@ -1,5 +1,7 @@
 # Capabilities
 
+> **Boundary note:** this document remains the TECHNICAL_NORMATIVE source for the Capability Kind (identity, semantic request, effect). [`docs/model/capability-runtime.md`](../model/capability-runtime.md) provides the organizational/runtime framing around it (Capability Requirement, Runtime Snapshot, Provider, Binding, Runtime Resolution); it does not change the schema or the effects defined here.
+
 Capabilities are abstract operations that agents request. They separate canonical behavior from the tools, MCPs, plugins or CLIs that provide it.
 
 ## Identity versus semantic request
@@ -40,7 +42,7 @@ This classification describes the abstract effect only. It does not define concr
 - **Resolver:** selects an available provider and reports degradation or failure.
 - **Profile:** bundles capabilities and constraints for a context.
 
-Canonical behavior must not hardcode provider names. The canonical agent requests `browser.test`; an adapter and profile determine how that request is fulfilled.
+Canonical behavior must not hardcode provider names. The canonical agent requests `browser.test`; an adapter maps that request to target semantics, a profile constrains and selects the required capability context, and runtime resolution selects an available, valid binding. None of these grants authority or permission.
 
 ## Authority boundary
 

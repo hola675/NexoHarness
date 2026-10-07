@@ -35,6 +35,8 @@ The adapter owns semantic mapping, target feature gating, intermediate represent
 
 Target capability availability describes what Codex can do. Canonical authorization independently determines whether an action is permitted.
 
+Boundary note: this adapter performs target mapping and translation only. Selecting an actual runtime binding for a Capability from what is currently available and authorized is a future Runtime Resolver responsibility ([`docs/model/capability-runtime.md`](../model/capability-runtime.md)); no resolver or MCP implementation exists in the current Phase 1.1 adapter.
+
 ## 3. Translation and enforcement vocabularies
 
 Translation classes describe disposition, not the Phase 1.0 capability-support classes:

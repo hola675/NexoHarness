@@ -39,7 +39,7 @@ The following model documents are the approved set for this frontier. Documents 
 - `workforce.md` — **PLANNED.** Organizational Role concept and its explicit, non-schema relationship to the technical Agent Kind.
 - [`governance-authority.md`](governance-authority.md) — **ACTIVE.** Organizational governance and authority framing, explicitly subordinate to `core/policies/precedence.md` and the other `core/policies/*` entries.
 - [`assurance-certification.md`](assurance-certification.md) — **ACTIVE.** Organizational view of evidence and certification, building on `core/policies/evidence.md` and `core/policies/completion.md`.
-- `capability-runtime.md` — **PLANNED.** Organizational view of capability provisioning, building on `docs/concepts/capabilities.md`.
+- [`capability-runtime.md`](capability-runtime.md) — **ACTIVE.** Organizational view of capability provisioning, building on `docs/concepts/capabilities.md`.
 - [`operations-orchestration.md`](operations-orchestration.md) — **ACTIVE.** Organizational control-plane view, building on `docs/orchestration.md` and `docs/execution-model.md`.
 - `canonical-information.md` — **PLANNED.** Organizational view of the canonical source of truth, building on `docs/source-of-truth.md` and `docs/canonical-format.md`.
 - `profiles-context-configuration.md` — **PLANNED.** Organizational view of context/profile configuration, building on `docs/concepts/profiles.md`.

@@ -52,7 +52,7 @@ Nexo architecture├→ Claude adapter → Claude Code
                  └→ Kilo adapter → Kilo Code
 ```
 
-The planned installer packages generated output. `dist/` contains generated harness artifacts only and is never a source dependency.
+The planned installer packages generated output. `dist/` contains generated harness artifacts only and is never a source dependency. An adapter maps canonical semantics to one target; it is not a runtime resolver — selecting an available, authorized binding for a Capability at execution time is a separate future runtime responsibility (see [`docs/model/capability-runtime.md`](model/capability-runtime.md)).
 
 ## Research Layer
 
