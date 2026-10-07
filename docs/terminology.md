@@ -39,20 +39,23 @@ The following vocabulary is canonical and platform-neutral.
 | Behavioral Evaluation | An evaluation of observed agent behavior against an expectation. |
 | Structural Test | A test of repository shape, metadata or static invariants. |
 | Integration Test | A test of multiple components or a harness boundary together. |
-| Observation | A recorded fact about an execution or outcome. |
+| Observation | A recorded fact about an execution or outcome. Its schema is a canonical technical contract; its instances are runtime evidence, not canonical behavior. |
 | Signal | A structured measurement emitted during execution. |
 | Task Observer | The bounded subsystem that aggregates signals and proposes reviewed improvements. |
 | Observer | The runtime evidence collection and improvement-analysis role; it has no autonomous promotion authority. |
-| Improvement Proposal | A candidate change derived from observations and prepared for evaluation. |
-| Canonical Source | The authoritative, harness-neutral definitions from which outputs are generated. |
+| Improvement Proposal | A candidate change derived from observations and prepared for evaluation. Its instances are runtime governed evolution artifacts. It is not an approved change and is never promoted itself; an approved change derived from it is. |
+| Canonical Source | The authoritative, harness-neutral semantic definitions from which outputs are generated. Target-specific adapter source is authoritative implementation code, not harness-neutral semantic source. |
+| Information Class | The semantic role and authority of information: CANONICAL, RUNTIME, RESEARCH, GENERATED or VALIDATION (`docs/model/canonical-information.md`). It is independent of lifecycle status, evidence class, enforcement level and file location. |
+| Registered Kind | A technical document type whose shape is registered in `core/schemas/registry.json`. Registration does not imply a canonical authoring root. |
+| Canonical Authoring Kind | A registered Kind whose instances are authored under an approved canonical root and discovered by canonical integrity validation (11 of the 13 registered Kinds today; not Observation or ImprovementProposal). |
 | Generated Artifact | An output produced from canonical source and not edited manually. |
 | Distribution | A packaged set of generated artifacts for installation or use. |
 | Promotion | Explicit approval and movement of a candidate into canonical behavior. |
 | Regression | A previously satisfied behavior that fails after a change. |
-| Entity Status | Lifecycle state of a canonical entity: draft, experimental, stable or deprecated. |
+| Entity Status | Lifecycle state of a canonical entity: draft, experimental, stable or deprecated. Registered non-authoring Kinds (Observation, ImprovementProposal) carry the same field through the shared envelope, but its meaning for their instances is not yet defined. Entity Status is never an information class, an approval or a promotion. |
 | Completion Status | Runtime outcome state such as PASS, FAIL or BLOCKED. |
 | Provenance | Recorded origin, license, attribution and adaptation history. |
-| Canonical Index | Deterministic repository index keyed by `Kind:id`. |
+| Canonical Index | Deterministic index of the canonical authored entities discovered under canonical authoring roots, keyed by `Kind:id`. It does not index runtime artifacts. |
 | Validation Diagnostic | Structured validation error containing code, source file, path and message. |
 | Orchestration | Coordination of task interpretation, proportional workflow, bounded responsibility and completion. |
 | Orchestrator | Logical control-plane responsibility for coordinating execution; not automatically an Agent. |

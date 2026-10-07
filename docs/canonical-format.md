@@ -27,6 +27,8 @@ The envelope fields are:
 
 Entity IDs are machine-stable kebab-case values. References use `Kind:id` and may include a version suffix: `Capability:repository-search@0.1.0`.
 
+Registered non-authoring artifact Kinds may also reuse the canonical manifest envelope. Today these are `Observation` and `ImprovementProposal`, whose schemas reference the same `apiVersion` and `metadata` definitions. Using the envelope does not make an instance canonical behavior. Instances of these Kinds are runtime artifacts: they have no canonical authoring root and never enter the canonical index. Their `metadata.status` comes from the shared envelope, and its meaning for such instances is not yet defined. It must not be read as information class, approval or promotion ([Canonical Information](model/canonical-information.md)).
+
 ## Lifecycle and runtime status
 
 `metadata.status` is the entity lifecycle and uses only:

@@ -55,6 +55,8 @@ Frontmatter must begin with `---`, contain a closing `---`, parse as one YAML ob
 
 Validation reports the file and field path for failures. It does not silently skip malformed canonical entities. Phase 0.2 adds deterministic repository-wide discovery, indexing, typed reference checks and version-aware resolution without treating runtime observer artifacts as canonical source.
 
+Registering a schema Kind is a separate decision from adding a canonical authoring root. The registry currently maps **13 registered Kinds**, and canonical discovery (`CANONICAL_ROOTS` in `tools/validate/canonical-discovery.ts`) defines authoring roots for **11** of them. `Observation` and `ImprovementProposal` are registered so that their artifacts can be schema-validated, and each has valid and invalid fixtures. They have no canonical authoring root, though, and their instances never enter the canonical index. A registered schema is a canonical definition of a valid shape; the instances it validates carry their own information class ([Canonical Information](model/canonical-information.md)).
+
 ## Canonical versus harness schemas
 
 A canonical schema describes NexoHarness behavior and contracts. It is not a schema for a target harness.
