@@ -86,3 +86,7 @@ Runtime evidence may inform a recommendation or candidate, but cannot flow direc
 The root `AGENTS.md` guides agents developing NexoHarness; `core/directives/core-directive.md` is the canonical product directive intended for future installed agents. They are deliberately distinct.
 
 Phase 0.3 defines architecture only. It does not implement the Orchestrator, runtime persistence, Observer runtime, provider resolution, MCP integration or target adapters.
+
+## Organizational and system model
+
+This document is a high-level index: layer boundaries, dependency direction and source-of-truth navigation. The fuller organizational/system view — including an explicit NEXO ORGANIZATION layer above Canonical Definitions and an EXPERIENCE layer alongside Learning/Evolution — is being reconciled separately in [`docs/model/`](model/README.md). `docs/model/` explains organizational framing; it does not redefine the canonical Kinds, schemas or adapter contracts summarized above. Target order remains Codex, then Claude Code, then Kilo Code; current Codex implementation and C4-C runtime-verification status are tracked in [`docs/adapters/codex.md`](adapters/codex.md), not duplicated here.
