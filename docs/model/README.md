@@ -35,7 +35,7 @@ The following model documents are the approved set for this frontier. Documents 
 - [`vocabulary.md`](vocabulary.md) — **ACTIVE.** Organization-facing vocabulary (Role, Competency, Handoff, Division) and its explicit relationship to existing technical terminology in `docs/terminology.md` and `docs/concepts/directives.md`.
 - [`work-lifecycle.md`](work-lifecycle.md) — **ACTIVE.** How work moves through NexoHarness at the organizational level, building on `docs/lifecycle.md`'s build lifecycle.
 - [`knowledge-experience.md`](knowledge-experience.md) — **ACTIVE.** Organizational view of shared operational knowledge, building on `docs/shared-runtime.md`.
-- `learning-evolution.md` — **PLANNED.** Organizational view of continuous improvement, building on `docs/continuous-improvement.md` and `core/policies/self-improvement.md`.
+- [`learning-evolution.md`](learning-evolution.md) — **ACTIVE.** Organizational view of continuous improvement, building on `docs/continuous-improvement.md` and `core/policies/self-improvement.md`.
 - `workforce.md` — **PLANNED.** Organizational Role concept and its explicit, non-schema relationship to the technical Agent Kind.
 - `governance-authority.md` — **PLANNED.** Organizational governance and authority framing, explicitly subordinate to `core/policies/precedence.md` and the other `core/policies/*` entries.
 - `assurance-certification.md` — **PLANNED.** Organizational view of evidence and certification, building on `core/policies/evidence.md` and `core/policies/completion.md`.

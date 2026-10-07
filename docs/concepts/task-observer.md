@@ -1,5 +1,7 @@
 # Task Observer
 
+> **Boundary note:** this document remains the current TECHNICAL_NORMATIVE contract for the Observation Kind and the Observer's technical behavior. [`docs/model/learning-evolution.md`](../model/learning-evolution.md) and [`docs/model/knowledge-experience.md`](../model/knowledge-experience.md) provide the organizational/system framing around it (Diagnosis, Hypothesis, Candidate, Knowledge, promotion boundary); they do not alter or lower this document's technical authority.
+
 ## Purpose and responsibilities
 
 Use real task execution evidence to improve NexoHarness without allowing execution outcomes to silently rewrite the system.

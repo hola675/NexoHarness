@@ -1,5 +1,7 @@
 # Continuous Improvement Architecture
 
+> **Authority note:** this document is reconciled under [`docs/model/learning-evolution.md`](model/learning-evolution.md), the organizational Learning & Evolution model, which also develops Diagnosis, Hypothesis, Candidate, and the explicit review/approval/promotion boundary that this document does not. This document is preserved in full here; it is not superseded.
+
 ## Governed lifecycle
 
 This document elaborates the existing improvement boundary in `docs/lifecycle.md` and `core/policies/self-improvement.md`; it does not establish a competing promotion process.
