@@ -42,7 +42,7 @@ The following model documents are the approved set for this frontier. Documents 
 - [`capability-runtime.md`](capability-runtime.md) — **ACTIVE.** Organizational view of capability provisioning, building on `docs/concepts/capabilities.md`.
 - [`operations-orchestration.md`](operations-orchestration.md) — **ACTIVE.** Organizational control-plane view, building on `docs/orchestration.md` and `docs/execution-model.md`.
 - `canonical-information.md` — **PLANNED.** Organizational view of the canonical source of truth, building on `docs/source-of-truth.md` and `docs/canonical-format.md`.
-- `profiles-context-configuration.md` — **PLANNED.** Organizational view of context/profile configuration, building on `docs/concepts/profiles.md`.
+- [`profiles-context-configuration.md`](profiles-context-configuration.md) — **ACTIVE.** Organizational view of context/profile configuration, building on `docs/concepts/profiles.md`.
 - `evaluation-quality.md` — **PLANNED.** Organizational view of evidence and quality, building on `docs/concepts/evaluations.md`.
 - `distribution-release.md` — **PLANNED.** Organizational view of distribution and release, building on `docs/versioning.md`'s release mechanics.
 

@@ -1,6 +1,6 @@
 # Execution Model
 
-> **Authority note:** this document's operational use inside the control loop is reconciled under [`docs/model/operations-orchestration.md`](model/operations-orchestration.md). The full progressive-disclosure context model remains this document's responsibility and is preserved in full here; it is not yet superseded.
+> **Authority note:** this document's operational use inside the control loop is reconciled under [`docs/model/operations-orchestration.md`](model/operations-orchestration.md) (R1-C). Its full progressive-disclosure context model — context layers, target runtime context, and context efficiency — is now reconciled under [`docs/model/profiles-context-configuration.md`](model/profiles-context-configuration.md) (R1-I), which adds Context Assembly, trust classes, freshness, context budget, and the rule that required context is never silently truncated. This document is preserved in full here; it is not yet superseded.
 
 NexoHarness uses progressive disclosure across the full runtime architecture. Future agents should not load the entire canonical pack into every task.
 
