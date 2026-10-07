@@ -1,5 +1,7 @@
 # Validation Framework
 
+> **Boundary note:** this document remains the technical validation framework (discovery, parsing, schema validation, reference resolution, diagnostics). [`docs/model/assurance-certification.md`](model/assurance-certification.md) provides the organizational Assurance framing around it (Verification, Review, Evaluation, Certification); it does not alter this document's pipeline.
+
 Phase 0.2 validates the canonical repository as one deterministic system. It separates canonical authoring from runtime artifacts and checks both individual manifests and their relationships.
 
 ## Pipeline

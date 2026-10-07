@@ -25,7 +25,7 @@ status
 next_agent
 ```
 
-When a definition constrains completion outcomes, `allowedStatuses` uses only the canonical completion values:
+When a definition constrains completion outcomes, `allowedStatuses` uses only the canonical runtime artifact status values:
 
 ```text
 READY
@@ -35,6 +35,8 @@ BLOCKED
 INCOMPLETE
 ESCALATION_REQUIRED
 ```
+
+`READY` denotes that a Contract Instance (a handoff artifact) is prepared and ready for the next step — it is a pre-terminal handoff state, not a terminal Assignment outcome. This is why `core/policies/completion.md`'s completion-reporting vocabulary, which governs how an agent reports its own Assignment's outcome, is a strict 5-value subset that excludes `READY` (see [Assurance & Certification](../model/assurance-certification.md)).
 
 A **Contract Instance** is a runtime handoff that fills that shape and carries an actual completion status. The canonical Contract entity is a definition and must not claim a runtime status, a concrete `nextAgentRef` or routing decision.
 

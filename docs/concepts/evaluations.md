@@ -1,5 +1,7 @@
 # Evaluations
 
+> **Boundary note:** this document remains the TECHNICAL_NORMATIVE source for the Evaluation Kind and its methods/schema. [`docs/model/assurance-certification.md`](../model/assurance-certification.md) provides the organizational Assurance framing (Verification, Review, Certification) around it, including the Evaluation-Definition-versus-Run distinction; it does not alter the methods or schema defined here.
+
 NexoHarness uses multiple forms of evidence:
 
 - **Structural tests** check repository shape, metadata and static invariants.

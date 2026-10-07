@@ -29,7 +29,7 @@ Entity IDs are logical kebab-case identifiers, not filesystem paths. Entity refe
 
 ## Lifecycle and runtime status
 
-`metadata.status` uses the entity lifecycle values `draft`, `experimental`, `stable` and `deprecated`. Runtime completion statuses (`READY`, `PASS`, `FAIL`, `BLOCKED`, `INCOMPLETE`, `ESCALATION_REQUIRED`) are separate and must not substitute for entity lifecycle status.
+`metadata.status` uses the entity lifecycle values `draft`, `experimental`, `stable` and `deprecated`. Runtime completion statuses (`READY`, `PASS`, `FAIL`, `BLOCKED`, `INCOMPLETE`, `ESCALATION_REQUIRED`) are separate and must not substitute for entity lifecycle status. `READY` specifically denotes a pre-terminal handoff-readiness state for a runtime Contract Instance; it is not a terminal Assignment outcome, which is why `core/policies/completion.md`'s narrower completion-reporting vocabulary excludes it (see [Assurance & Certification](model/assurance-certification.md)).
 
 Canonical metadata requires `id`, `title`, `version` and `status`. `provenanceRefs` is optional for original NexoHarness work and uses a strict unique non-empty string array when present; provenance graph resolution is deferred.
 

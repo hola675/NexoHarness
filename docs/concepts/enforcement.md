@@ -1,5 +1,7 @@
 # Enforcement
 
+> **Boundary note:** these L1/L2/L3 levels are unchanged and describe *how an invariant is enforced*. This is a different axis from `core/policies/evidence.md`'s E0–E4 evidence classes, which describe *how a claim is evidenced* — `L3 != E3`. See [`docs/model/assurance-certification.md`](../model/assurance-certification.md) for the full Enforcement-level-versus-Evidence-class distinction.
+
 Enforcement describes how an invariant is communicated, detected or blocked.
 
 - **L1 — Instructional:** prompt or rule guidance tells an actor what to do.

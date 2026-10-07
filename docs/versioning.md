@@ -1,6 +1,6 @@
 # Versioning and Release Governance
 
-> **Authority note:** this document's independent-review, explicit-approval, and promotion-authority framing is reconciled under [`docs/model/governance-authority.md`](model/governance-authority.md). Its SemVer syntax, tag mechanics, and release workflow remain this document's own responsibility and are deferred to a future Distribution/Release model document (`docs/model/distribution-release.md`, currently PLANNED) — they are not rewritten here.
+> **Authority note:** this document's independent-review, explicit-approval, and promotion-authority framing is reconciled under [`docs/model/governance-authority.md`](model/governance-authority.md). [`docs/model/assurance-certification.md`](model/assurance-certification.md) explicitly separates Certification from Promotion and from Release — a phase certification tag here still represents a certification scoped to one revision, not an automatic release. Its SemVer syntax, tag mechanics, and release workflow remain this document's own responsibility and are deferred to a future Distribution/Release model document (`docs/model/distribution-release.md`, currently PLANNED) — they are not rewritten here.
 
 NexoHarness uses two distinct version systems.
 
