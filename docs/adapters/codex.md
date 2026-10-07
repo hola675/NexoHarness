@@ -19,7 +19,7 @@ Implementation status:
 - Filesystem distribution: **NOT YET**
 - Generated Codex artifacts: **IN MEMORY ONLY — no filesystem distribution**
 - Installer and user-file reconciliation: **NOT YET — Phase 1.2**
-- C4-C Agent-role runtime verification: **NOT YET RUN**
+- C4-C Agent-role runtime verification: **ATTEMPTED — latest known run R5-F2 is INVALID (runtime/request budget exceeded; provider fixture did not correctly route concurrent child traffic); research is FROZEN pending a separately authorized future attempt; no valid C4-C certification exists. Bounded observations and known fixture defects are recorded in [the R5-F2 record](../../research/codex/probes/c4c-runtime-r5-f2-0.160.0.md).**
 - Runtime loading probe: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence; see report)**
 - Repository Skill discovery, explicit invocation, and SKILL.md body visibility: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence: research/codex/probes/skills-0.160.0.md)**
 - Nexo-generated repository Skill artifact, explicit invocation, and generated purpose/procedure visibility: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence: [generated Skill probe](../../research/codex/probes/generated-skill-0.160.0.md))**
