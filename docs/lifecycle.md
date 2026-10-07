@@ -1,5 +1,7 @@
 # Lifecycle
 
+> **Authority note:** the build lifecycle below is being reconciled under [`docs/model/work-lifecycle.md`](model/work-lifecycle.md), the organizational/operational lifecycle model. The improvement lifecycle below is already authoritatively elaborated by [`docs/continuous-improvement.md`](continuous-improvement.md) and remains that document's responsibility, not `work-lifecycle.md`'s. This document is preserved in full; it is not yet superseded.
+
 NexoHarness has separate build and improvement lifecycles. The Nexo Execution Protocol supplies the universal task-level stages inside those lifecycles. Build steps produce validated distributions; improvement steps produce reviewed candidates.
 
 ## Build lifecycle

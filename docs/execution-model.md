@@ -1,5 +1,7 @@
 # Execution Model
 
+> **Authority note:** this document's operational use inside the control loop is reconciled under [`docs/model/operations-orchestration.md`](model/operations-orchestration.md). The full progressive-disclosure context model remains this document's responsibility and is preserved in full here; it is not yet superseded.
+
 NexoHarness uses progressive disclosure across the full runtime architecture. Future agents should not load the entire canonical pack into every task.
 
 ## ALWAYS-ON

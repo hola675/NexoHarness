@@ -1,5 +1,7 @@
 # Nexo Orchestration
 
+> **Authority note:** this document is reconciled under [`docs/model/operations-orchestration.md`](model/operations-orchestration.md), the organizational control-plane model. It is preserved in full here; it is not yet superseded.
+
 ## Responsibility
 
 Orchestration is a logical NexoHarness control-plane responsibility. It interprets the task, coordinates the Nexo Execution Protocol (NEP-1), selects a proportionate workflow and tracks completion. It does not require a dedicated process, service, or harness-native Orchestrator Agent.
