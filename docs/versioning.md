@@ -1,5 +1,7 @@
 # Versioning and Release Governance
 
+> **Authority note:** this document's independent-review, explicit-approval, and promotion-authority framing is reconciled under [`docs/model/governance-authority.md`](model/governance-authority.md). Its SemVer syntax, tag mechanics, and release workflow remain this document's own responsibility and are deferred to a future Distribution/Release model document (`docs/model/distribution-release.md`, currently PLANNED) — they are not rewritten here.
+
 NexoHarness uses two distinct version systems.
 
 ## Phase certification tags

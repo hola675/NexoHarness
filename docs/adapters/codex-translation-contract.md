@@ -86,7 +86,7 @@ The compiler must preserve, with explicit section boundaries and source referenc
 
 Conditional workflow, responsibility, rule, skill and capability context is included only when selected. The user objective and user-authored project/Codex instructions are external execution context, not canonical content for the compiler to absorb or own.
 
-Nexo semantic precedence remains authoritative:
+Nexo semantic precedence remains authoritative (`core/policies/precedence.md`):
 
 1. Critical safety and integrity.
 2. Explicit user objective and constraints.

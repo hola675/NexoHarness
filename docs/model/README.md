@@ -37,7 +37,7 @@ The following model documents are the approved set for this frontier. Documents 
 - [`knowledge-experience.md`](knowledge-experience.md) — **ACTIVE.** Organizational view of shared operational knowledge, building on `docs/shared-runtime.md`.
 - [`learning-evolution.md`](learning-evolution.md) — **ACTIVE.** Organizational view of continuous improvement, building on `docs/continuous-improvement.md` and `core/policies/self-improvement.md`.
 - `workforce.md` — **PLANNED.** Organizational Role concept and its explicit, non-schema relationship to the technical Agent Kind.
-- `governance-authority.md` — **PLANNED.** Organizational governance and authority framing, explicitly subordinate to `core/policies/precedence.md` and the other `core/policies/*` entries.
+- [`governance-authority.md`](governance-authority.md) — **ACTIVE.** Organizational governance and authority framing, explicitly subordinate to `core/policies/precedence.md` and the other `core/policies/*` entries.
 - `assurance-certification.md` — **PLANNED.** Organizational view of evidence and certification, building on `core/policies/evidence.md` and `core/policies/completion.md`.
 - `capability-runtime.md` — **PLANNED.** Organizational view of capability provisioning, building on `docs/concepts/capabilities.md`.
 - [`operations-orchestration.md`](operations-orchestration.md) — **ACTIVE.** Organizational control-plane view, building on `docs/orchestration.md` and `docs/execution-model.md`.
