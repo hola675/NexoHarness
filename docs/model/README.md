@@ -36,7 +36,7 @@ The following model documents are the approved set for this frontier. Documents 
 - [`work-lifecycle.md`](work-lifecycle.md) — **ACTIVE.** How work moves through NexoHarness at the organizational level, building on `docs/lifecycle.md`'s build lifecycle.
 - [`knowledge-experience.md`](knowledge-experience.md) — **ACTIVE.** Organizational view of shared operational knowledge, building on `docs/shared-runtime.md`.
 - [`learning-evolution.md`](learning-evolution.md) — **ACTIVE.** Organizational view of continuous improvement, building on `docs/continuous-improvement.md` and `core/policies/self-improvement.md`.
-- `workforce.md` — **PLANNED.** Organizational Role concept and its explicit, non-schema relationship to the technical Agent Kind.
+- [`workforce.md`](workforce.md) — **ACTIVE.** Organizational Role concept and its explicit, non-schema relationship to the technical Agent Kind.
 - [`governance-authority.md`](governance-authority.md) — **ACTIVE.** Organizational governance and authority framing, explicitly subordinate to `core/policies/precedence.md` and the other `core/policies/*` entries.
 - [`assurance-certification.md`](assurance-certification.md) — **ACTIVE.** Organizational view of evidence and certification, building on `core/policies/evidence.md` and `core/policies/completion.md`.
 - [`capability-runtime.md`](capability-runtime.md) — **ACTIVE.** Organizational view of capability provisioning, building on `docs/concepts/capabilities.md`.

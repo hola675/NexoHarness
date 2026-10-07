@@ -11,10 +11,11 @@ The following vocabulary is canonical and platform-neutral.
 | Core Directive | The canonical universal behavioral constitution for NexoHarness-controlled agents. |
 | Adapter | A translator from canonical definitions to a harness-native representation. |
 | Agent | A bounded actor with a responsibility, inputs, outputs, capabilities and constraints. |
-| Agent Role | The responsibility a future agent performs, such as reviewer or remediator. |
+| Agent Role | The technical/execution responsibility associated with an Agent, such as reviewer or remediator. Not an organizational Role; see Organizational Role. |
+| Organizational Role | A stable Workforce responsibility (e.g. Backend Engineer, Design Reviewer), defined in `docs/model/workforce.md`. It may be represented by an Agent only when an executable identity adds value. |
 | Agent Authority | Dimensional authorization describing allowed effects; it is not a role. |
-| Core Agent | A primary agent responsible for a central phase or responsibility. |
-| Specialist Agent | An agent focused on a narrow domain or capability. |
+| Core Agent | Legacy/technical term: an Agent holding a primary bounded execution responsibility. Not equivalent to a founding Workforce Role. |
+| Specialist Agent | Agent representation for a focused specialist responsibility, when such technical identity is warranted. Not a permanent organizational category. |
 | Skill | Reusable procedural knowledge that can support one or more agents. |
 | Rule | A behavioral invariant that can be validated or enforced. |
 | Policy | A set of related rules governing decisions or permissions. |

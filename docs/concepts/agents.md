@@ -1,28 +1,34 @@
 # Agent Concept
 
-Phase 0.0 does not define final production agents. It defines the contract an agent will need to satisfy.
+> **Boundary note:** this document remains the TECHNICAL_NORMATIVE source for the `Agent` Kind. [`docs/model/workforce.md`](../model/workforce.md) owns the organizational Workforce (Divisions, Roles, Competencies, Work Units) and the Agent creation gate. An organizational Role is not an Agent: a Role may be represented by an Agent only when an executable identity adds value.
+
+Phase 0.0 does not define final production agents. It defines the contract an agent will need to satisfy. `agents/` currently contains no production Agent.
 
 An agent has:
 
 - stable id
 - responsibility
 - triggers
-- inputs
-- output contract
-- capabilities
-- permissions
+- inputs *(conceptual contract expectation; not a field in `core/schemas/agent.schema.json`)*
+- output contract *(conceptual contract expectation; the schema carries only an optional free-text `handoff`)*
+- capabilities *(Capability references — needs and relationships, not grants)*
+- authority *(dimensional: `sourceModification`, `delegation`, `commandExecution`, `externalMutation`; this is canonical authority, not runtime permission)*
 - constraints
 - handoff behavior
 - failure behavior
 - verification expectations
 
-## Planned roles
+Authority is the canonical field; runtime Permission — what an environment actually allows — remains separate and is never carried by an Agent definition.
 
-- **Primary/core agent:** owns a bounded central responsibility.
-- **Specialist:** contributes focused domain expertise.
-- **Reviewer:** independently checks work against requirements and evidence.
-- **Remediator:** addresses diagnosed findings within bounded scope.
-- **Verifier:** confirms the result and records evidence.
+## Execution responsibility archetypes
+
+The following are execution responsibility archetypes — ways an actor participates in an Assignment. They are not the organizational Workforce, not permanent Workforce Roles, and not required Agent entities (see [`docs/model/workforce.md`](../model/workforce.md)):
+
+- **Primary/core:** holds the primary responsibility for a bounded Assignment or central execution responsibility.
+- **Specialist:** contributes focused expertise to an Assignment; a temporary responsibility or a property of a specialized Role.
+- **Reviewer:** independently checks work against requirements and evidence; a review responsibility, not approval authority.
+- **Remediator:** addresses diagnosed findings within bounded scope; a temporary responsibility.
+- **Verifier:** confirms the result and records evidence; verification is not review.
 
 An agent is **not**:
 
