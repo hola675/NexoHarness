@@ -254,6 +254,22 @@ No schema, registry, canonical root, validator, adapter, Observer or runtime sub
 
 **Sequence:** R1-M Distribution / Installation / Release remains PLANNED and is next. R1-N final reconciliation follows R1-M. Independent architecture review follows final reconciliation. **Fresh validation (2026-10-11):** `npm run typecheck` PASS; `npm run validate` PASS (repository checks, 13 schemas with 13 valid and 13 invalid fixtures, integrity for 8 entities); `npm test` PASS (162/162); `git diff --check` PASS; `npm run verify:core` PASS; local Markdown link check PASS. The final `verify:core` rerun is performed after recording this result.
 
+## R1-M update (2026-10-11)
+
+`docs/model/distribution-release.md` was created and is ACTIVE. It defines the generated, target-scoped Distribution and conceptual Distribution Bundle; preserves adapter generation versus installer reconciliation; distinguishes renderability, usability, deployability, installation, target runtime verification, scoped certification, and product release; and records deterministic/offline generation, generated manifest provenance and hash limits, explicit installation scope, ownership-aware collision boundaries, Doctor inspection, and release gates. No `Distribution` Kind, schema, directory, or runtime implementation was introduced.
+
+**Baseline:** `R1_M_BASELINE_SHA=5d13fa0a93c082935bc4b9a6505b57772970f9fb`; `main`, `HEAD`, and fetched `origin/main` matched, and the worktree was clean before editing.
+
+**Manifest eligibility blocker confirmed in source.** The Agent-role renderer returns `deploymentEligible`; `CodexManifest` currently contains `manifestVersion`, `encoding`, `adapter`, `target`, `sourceRefs`, `runtimeDependencies`, `artifacts`, and `diagnostics`, with no explicit eligibility field or source-revision field. Artifact hashes are SHA-256. Per ADR 0005, preview bytes rendered from an unusable compilation remain non-deployable. No Phase 1.2 manifest consumer or installer may trust the manifest alone until the representation is resolved. `adapters/codex/manifest.ts` and all runtime/schema code remain unchanged.
+
+**Current release boundary verified:** `installer/` contains only `.gitkeep`; `dist/` is absent; Codex renderers produce in-memory artifacts. No Installer, Uninstaller, or Doctor exists. `phase:close` validates the approved revision, runs fresh repository checks, creates and pushes the immutable phase-certification tag, but does not build or install a Codex distribution or prove target behavior. The separate Release workflow validates a tag and creates a GitHub Release with notes; it does not build/upload a Codex bundle or publish npm artifacts. The model preserves `docs/versioning.md` as owner of existing tag and workflow mechanics, and preserves ADR 0005 as accepted historical decision text.
+
+`docs/model/README.md` now lists Distribution / Release as ACTIVE. `docs/versioning.md`, `docs/source-of-truth.md`, `docs/architecture.md`, `docs/adapters/codex.md`, and `docs/adapters/codex-translation-contract.md` gained minimal links or boundary clarifications. No roadmap item, target implementation, generated output, schema, or Kind changed.
+
+The supplied R1-M text ended during item 22, immediately after “Installation scope Puede”. The document therefore records the explicit-scope requirement established by the received text and leaves a scope taxonomy and target-specific path-selection details deferred; no missing scope categories were inferred. No tests were run for this documentation-only change. `git diff --check` is the static whitespace check for the change.
+
+**Sequence:** R1-N final reconciliation follows R1-M, then independent architecture review, R1 certification, and R2.
+
 ## What this audit does not do
 
 - The initial R1-A audit did not create any of the 14 planned `docs/model/*.md` documents; only `docs/model/README.md` existed at that initial audit baseline.

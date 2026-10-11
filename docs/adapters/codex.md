@@ -6,6 +6,7 @@ Design references:
 
 - [Capability matrix](codex-capability-matrix.md)
 - [Translation contract](codex-translation-contract.md)
+- [Distribution, installation and release model](../model/distribution-release.md)
 - [ADR 0003: Codex target surface](../decisions/0003-codex-target-surface.md)
 - [ADR 0004: Translation contract](../decisions/0004-codex-adapter-translation-contract.md)
 
@@ -18,6 +19,7 @@ Implementation status:
 - Pure AGENTS.md renderer: **EXISTS — in-memory artifact only**
 - Filesystem distribution: **NOT YET**
 - Generated Codex artifacts: **IN MEMORY ONLY — no filesystem distribution**
+- Codex manifest: **IN MEMORY ONLY**; records manifest version, encoding, adapter, target, source refs, runtime dependencies, artifact paths/SHA-256 hashes, and compilation diagnostics. **Deployment eligibility is not explicitly represented — implementation blocker before any Phase 1.2 manifest consumer; do not trust the manifest alone.**
 - Installer and user-file reconciliation: **NOT YET — Phase 1.2**
 - C4-C Agent-role runtime verification: **ATTEMPTED — latest known run R5-F2 is INVALID (runtime/request budget exceeded; provider fixture did not correctly route concurrent child traffic); research is FROZEN pending a separately authorized future attempt; no valid C4-C certification exists. Bounded observations and known fixture defects are recorded in [the R5-F2 record](../../research/codex/probes/c4c-runtime-r5-f2-0.160.0.md).**
 - Runtime loading probe: **OBSERVED LOCALLY — Codex CLI 0.160.0 (bounded evidence; see report)**

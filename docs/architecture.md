@@ -52,7 +52,7 @@ Nexo architecture├→ Claude adapter → Claude Code
                  └→ Kilo adapter → Kilo Code
 ```
 
-The planned installer packages generated output. `dist/` contains generated harness artifacts only and is never a source dependency. An adapter maps canonical semantics to one target; it is not a runtime resolver — selecting an available, authorized binding for a Capability at execution time is a separate future runtime responsibility (see [`docs/model/capability-runtime.md`](model/capability-runtime.md)).
+`dist/` is reserved for generated harness artifacts and is never a source dependency. The Codex adapter currently renders in memory; the planned installer reconciles eligible generated output with an explicitly scoped target environment. Installation, doctor inspection, target-runtime verification, scoped certification, and product release are separate steps ([`docs/model/distribution-release.md`](model/distribution-release.md)). An adapter maps canonical semantics to one target; it is not a runtime resolver — selecting an available, authorized binding for a Capability at execution time is a separate future runtime responsibility (see [`docs/model/capability-runtime.md`](model/capability-runtime.md)).
 
 ## Research Layer
 

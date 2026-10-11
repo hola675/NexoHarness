@@ -29,6 +29,8 @@ NEXOHARNESS DEFINES ONCE. CODEX CONSUMES A GENERATED TRANSLATION.
 
 Validated canonical Nexo source → explicit canonical selection → Codex adapter → target-specific internal representation → deterministic Codex artifact rendering → generated distribution → installer/doctor (Phase 1.2) → target repository and Codex environment.
 
+The system boundary after rendering — including Distribution Bundle, manifest eligibility, installation scope, target verification, certification, and product publication — is reconciled in [`docs/model/distribution-release.md`](../model/distribution-release.md). This contract owns Codex translation semantics; it does not claim filesystem distribution or installation is implemented.
+
 The Nexo control plane or caller chooses task-relevant canonical entities, versions, workflow context, profile and requested target. The adapter consumes that explicit selection; it does not infer an objective, classify a task, choose permissions, or load every canonical entity. It reads validated canonical inputs only. It never reads dist/ as input or writes canonical source.
 
 The adapter owns semantic mapping, target feature gating, intermediate representation construction, deterministic rendering, generated provenance and compile-time diagnostics. The installer owns environment detection, target file discovery, collision reporting, installation, update/removal and post-install verification. ADAPTER GENERATES; INSTALLER RECONCILES. The adapter never installs, merges or overwrites user files.
@@ -163,6 +165,8 @@ Every future generated artifact and manifest identifies:
 - content hash with a defined algorithm and byte encoding.
 
 A future dist/codex/manifest.json is generated target metadata, not a canonical entity. It records artifact hashes and source refs. If the manifest has its own digest, compute it over canonical serialization with the digest field omitted to avoid recursive hashing. Do not include timestamps, machine paths, usernames, random IDs or secrets in deterministic content.
+
+The current implementation has an in-memory `CodexManifest` with the fields documented in the Distribution/Release model. In particular, it does not yet encode `deploymentEligible`; an installer or other Phase 1.2 consumer must not infer eligibility from the design requirements in this contract or trust the manifest alone until that representation is resolved.
 
 For identical canonical selections, source versions, adapter version, target baseline and target configuration, output bytes must be identical. Require stable ordering by canonical ID/path, explicit key order, UTF-8 encoding, LF line endings and a final newline. No random identifiers, implicit clocks, locale-dependent ordering, network-dependent lookups or host discovery are allowed during compilation. Compilation is offline; research/version updates are separate reviewed work.
 
