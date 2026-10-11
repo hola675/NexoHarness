@@ -67,7 +67,7 @@ No unresolved incompatible authority claim was found after the corrections below
 - The audit preserves the historical sequence: R1-A recorded a READY conflict; R1-G resolved it as a scope distinction; current status is **RESOLVED**. No historical R1-A entry was rewritten.
 - Current ACTIVE model documents that described `learning-evolution`, `profiles-context-configuration`, Assurance, or Distribution/Release as **PLANNED** were corrected to point to the documents now present and ACTIVE. The relevant runtime features remain unimplemented.
 - The Codex adapter status now distinguishes the defined R1.1-A translation contract from the existing R1.1-B adapter core. The architecture overview explicitly says the Installer is planned but not implemented. Workflow-family notes now distinguish schema support from the absence of authored production Workflow entities.
-- [`docs/adapters/codex.md`](../adapters/codex.md) records in-memory generation and previews, no filesystem distribution, no Installer integration, and the manifest eligibility blocker. `CodexCompilation`/renderer results expose `deploymentEligible`, but `CodexManifest` does not.
+- [`docs/adapters/codex.md`](../adapters/codex.md) records in-memory generation and previews, no filesystem distribution, no Installer integration, and the manifest eligibility blocker. `CodexAgentRolesRenderResult` exposes `deploymentEligible`; `CodexCompilation`, generic `CodexRenderResult`, and `CodexManifest` do not.
 - [`research/codex/probes/c4c-runtime-r5-f2-0.160.0.md`](../../research/codex/probes/c4c-runtime-r5-f2-0.160.0.md) remains `INVALID / FROZEN`; this is neither PASS, FAIL, nor certification.
 
 ## Canonical, runtime, generated, and implementation state
@@ -75,7 +75,7 @@ No unresolved incompatible authority claim was found after the corrections below
 | Class | Current verified state |
 |---|---|
 | DOCUMENTED | All 14 organizational/system models are ACTIVE. Technical concepts and target status remain in their designated docs. |
-| IMPLEMENTED | The repository contains 13 technical Kind schemas, validation tooling, and Codex Phase 1.1-B compilation and in-memory rendering code. The render result can express `deploymentEligible`; the manifest type and builder do not carry that field. |
+| IMPLEMENTED | The repository contains 13 technical Kind schemas, validation tooling, and Codex Phase 1.1-B compilation and in-memory rendering code. `CodexAgentRolesRenderResult` can express `deploymentEligible`; `CodexCompilation`, generic `CodexRenderResult`, and the manifest type and builder do not carry that field. |
 | STRUCTURALLY VALIDATED | The fresh `npm run validate` and `npm run verify:core` results are recorded below after execution. The source definitions are `SUPPORTED_KINDS` in `tools/validate/schemas.ts` and `CANONICAL_ROOTS` in `tools/validate/canonical-discovery.ts`. |
 | RUNTIME OBSERVED | Codex CLI 0.160.0 observations exist with bounded scope. C4-C R5-F2 is the latest known C4-C attempt and is INVALID/FROZEN. |
 | CERTIFIED | Codex Phase 1.0 research is documented as certified; C4-B1 has a separate independent review record. These do not establish C4-C runtime certification or R1's final architecture review. |
@@ -123,19 +123,13 @@ Fresh results are inserted after all reconciliation edits and validations comple
 | 14 model docs ACTIVE / 13 Kinds / 11 canonical roots | PASS — checked model status lines and validator source arrays. |
 | Technical paths unchanged; only authorized documentation paths changed | PASS — changed paths are documentation only. |
 | No removed/renamed references or new authority conflicts | PASS — no files were removed or renamed; link checks passed; no unresolved incompatible authority claim was found. |
+| Independent architecture review | PASS WITH FINDINGS on `4aa78b0b09d0522a67323ac8a95a091b999fc364`; one non-blocking type-description error in this report was corrected in the follow-up documentation change below. |
 
-## Claims for the independent architecture reviewer
+## Independent architecture review
 
-The next reviewer should independently verify:
+The independent reviewer examined commit `4aa78b0b09d0522a67323ac8a95a091b999fc364` against baseline `f45c58b509debe3b5fb8f2e6e5d81c121770fdcc` and returned **PASS WITH FINDINGS**. It confirmed the 14 ACTIVE model documents, the 51 legacy dispositions and their totals, the READY evidence and historical R1-A record, the 13-Kind/11-root counts, the documented implementation boundaries, and the retained R2/R3 clarifications and deployment blocker. It found one non-blocking wording error: `CodexCompilation` and generic `CodexRenderResult` were described as exposing `deploymentEligible`. This follow-up narrows the claim to `CodexAgentRolesRenderResult`, consistent with the source types. The review did not constitute R1 certification or authorize R2.
 
-1. Each model's authority stays within its stated organizational/system scope, and the technical Policy, Directive, schema, ADR, concept, adapter, review, and research owners retain their authority.
-2. The 14-entry inventory and current legacy disposition matrix are complete; the three `SUPERSEDE_CANDIDATE` documents have no unrecorded unique technical content or inbound references before any later retirement.
-3. The READY distinction is supported by the exact Policy, schema, Contract Instance semantics, and R1-G evidence, with the historical R1-A record intact.
-4. `SUPPORTED_KINDS` and `CANONICAL_ROOTS` still enumerate 13 and 11 respectively, and the canonical/runtime/generated boundaries match their source and implementation.
-5. The Codex renderer/compilation eligibility field does not silently imply that the manifest is deployable; the absence of Installer, Uninstaller, Doctor, and filesystem distribution is correctly stated.
-6. C4-C R5-F2 remains invalid/frozen and no runtime PASS or R1 certification is implied.
-7. The listed R2/R3 clarifications and the Phase 1.2 deployment-eligibility blocker are complete and have not been resolved indirectly by model wording.
-8. All required validation evidence is fresh and the change remains within the authorized documentation scope.
+The independent review also confirmed the C4-C R5-F2 status remains `INVALID / FROZEN`, the Installer and distribution are absent, and the R2/R3 clarifications remain open.
 
 ## Changes made and limits
 
@@ -163,4 +157,4 @@ The next reviewer should independently verify:
 
 ## Independent-review gate
 
-**R1-N PASS — FINAL DOCUMENTATION RECONCILIATION COMPLETE** means this documentation package and its required checks are complete. It does **not** mean **R1 INDEPENDENTLY REVIEWED**. After this commit, start the independent architecture review against the exact committed SHA. Do not start R2 before that gate is closed.
+**R1-N PASS — FINAL DOCUMENTATION RECONCILIATION COMPLETE** and the requested independent architecture review have been completed. The review returned **PASS WITH FINDINGS**; its single non-blocking report wording finding is corrected in this follow-up. This result does **not** mean R1 certification, and R2 has not been started.
