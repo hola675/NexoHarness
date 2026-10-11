@@ -2,7 +2,7 @@
 
 Status: ACTIVE. This document defines how NexoHarness converts observed facts into structured Experience and, after sufficient validation, into reusable contextual Knowledge. It reconciles, but does not replace, [`docs/shared-runtime.md`](../shared-runtime.md), which remains preserved and cross-referenced.
 
-**This is not a storage design.** No database, vector store, event bus, storage directory, embedding architecture, or search mechanism is selected here. No Learning/Evolution engine, Task Observer collector, automatic pattern mining, or canonical promotion is implemented here — that boundary, and the hand-off to it, belongs to a later phase (`learning-evolution.md`, currently PLANNED).
+**This is not a storage design.** No database, vector store, event bus, storage directory, embedding architecture, or search mechanism is selected here. The hand-off to the ACTIVE organizational model in [`learning-evolution.md`](learning-evolution.md) is documented, but no Learning/Evolution engine, Task Observer collector, automatic pattern mining, or canonical promotion runtime is implemented.
 
 ## Fundamental boundary
 
@@ -212,11 +212,11 @@ Useful Knowledge is selected by scope, relevance, validity, confidence, and rece
 
 ## Experience-to-Learning boundary
 
-This document ends at validated, scoped Knowledge. It does **not** develop hypothesis generation, evolution proposals, candidate patches, evaluation generation, or promotion — those belong to a later phase (`docs/model/learning-evolution.md`, currently PLANNED).
+This document ends at validated, scoped Knowledge. Hypothesis generation, evolution proposals, candidate patches, evaluation, and promotion are framed separately in the ACTIVE [`learning-evolution.md`](learning-evolution.md); those runtime mechanisms remain unimplemented.
 
 ## Deferred and known notes
 
 - **Persistence is fully deferred.** No database, vector store, event bus, storage directory, or embedding architecture is selected anywhere in this document.
 - **Known schema note:** `core/schemas/observation.schema.json`'s `spec.complexity` enum is `["BOUNDED", "COMPLEX"]` (matching NEP-1's "Initial complexity model"), while [`docs/model/work-lifecycle.md`](work-lifecycle.md)'s organizational Complexity dimension uses three values (`TRIVIAL`, `BOUNDED`, `COMPLEX`). This document does not resolve that difference; it is recorded as a CLARIFICATION finding in [`docs/reviews/r1-documentation-authority-audit.md`](../reviews/r1-documentation-authority-audit.md).
-- The completion `READY` conflict (R1-A/R1-B/R1-C) is unrelated to this document's content and remains **DEFERRED**; nothing here touches it.
+- Completion `READY` was resolved in R1-G as a scope distinction between Contract Instance handoff readiness and terminal Assignment outcome; nothing here changes either technical source.
 - `core/policies/evidence.md`'s E0–E4 evidence classes are referenced, not redefined.

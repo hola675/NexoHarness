@@ -119,12 +119,12 @@ An Assignment needs a conceptually stable identity for the duration of its execu
 
 Completion is never established merely because an implementer states "done." It requires, where applicable: the objective was satisfied, acceptance criteria were satisfied, required verification was completed, required review was completed, blocking findings were resolved, and limitations were disclosed. This elaborates, and does not relax, `core/policies/completion.md`.
 
-**Partial completion is preferable to false completion.** No new machine-readable enum is introduced in this phase for partial outcomes; see the deferred `READY` conflict below for why no enum unification is attempted here.
+**Partial completion is preferable to false completion.** This document introduces no machine-readable enum for partial outcomes. Its `READY` Intake result is a conceptual triage label, separate from both the Contract Instance handoff status and terminal Assignment outcomes.
 
 ## Observe
 
 Observation happens at or after defined lifecycle points, but **observation does not change the task result**. Task Observer records structured signals; it does not promote them to canonical behavior (`docs/concepts/task-observer.md`, `core/policies/self-improvement.md`).
 
-## Deferred conflict: completion `READY`
+## Completion `READY`: three scoped meanings
 
-As recorded in [`docs/reviews/r1-documentation-authority-audit.md`](../reviews/r1-documentation-authority-audit.md) and reaffirmed in [`docs/model/vocabulary.md`](vocabulary.md), `core/policies/completion.md` (5 states) and `core/schemas/common.schema.json`'s `completionStatus` enum (6 states, including `READY`) do not match. This document's Intake outcome vocabulary reuses the word `READY` only as a conceptual Intake triage result — **it is a different concept from the schema's `completionStatus` enum value of the same name**, and this document does not resolve, normalize, or merge the two. The conflict remains **DEFERRED**.
+The initial R1-A audit treated the Policy and schema lists as a possible conflict. R1-G resolved that finding as a scope distinction: `core/policies/completion.md` governs terminal Assignment outcomes, while `core/schemas/common.schema.json` also permits `READY` for a Contract Instance that is prepared for handoff. The `READY` outcome above is this document's separate conceptual Intake result. These meanings are not interchangeable; no schema or Policy change was made. The resolution and its evidence are recorded in the [authority audit](../reviews/r1-documentation-authority-audit.md#conflicts) and [Assurance & Certification](assurance-certification.md#ready-investigation-result-see-full-record-in-the-authority-audit).

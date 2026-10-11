@@ -218,13 +218,13 @@ Evolution may propose merging, removing, consolidating, deprecating, or simplify
 
 ## Deferred and known notes
 
-- **Completion `READY`** (Policy vs. `completionStatus` schema, from R1-A/B/C/D) remains **DEFERRED**; untouched here.
+- **Completion `READY`** was resolved in R1-G as a scope distinction between Contract Instance handoff readiness and terminal Assignment outcome; untouched here.
 - **Observation complexity vocabulary** (`BOUNDED | COMPLEX` vs. organizational `TRIVIAL | BOUNDED | COMPLEX`, from R1-D) remains **DEFERRED CLARIFICATION**; untouched here.
 - No background autonomous mutation: even a future continuous Observer performs continuous *observation*, never continuous autonomous *editing*.
 - **Human approval remains the current direction** for protected canonical changes before promotion, for V1; no approval UI, actor, or workflow implementation is designed here.
 - **Provider/Credential boundary.** Evolution can never auto-activate an external Provider, credential, integration, or permission expansion merely because an evaluation suggests it would help — it must be proposed, like any other change.
 - **Release boundary.** Promotion to canonical source is never equal to a release; release has its own additional gates (`docs/versioning.md`).
-- **Certification boundary.** A Candidate evaluation `PASS` is never equal to a certified release; certification belongs to Assurance and Distribution/Release, both currently PLANNED model documents.
+- **Certification boundary.** A Candidate evaluation `PASS` is never equal to a certified release; the organizational boundaries are documented in the ACTIVE [`assurance-certification.md`](assurance-certification.md) and [`distribution-release.md`](distribution-release.md). No certification or product-release runtime is implemented here.
 
 ## Explicit critical invariants
 

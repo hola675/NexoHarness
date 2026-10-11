@@ -1,6 +1,6 @@
 # Shared Runtime State
 
-> **Authority note:** this document's scopes, Adaptation Envelope, and boundary rules are reconciled under [`docs/model/knowledge-experience.md`](model/knowledge-experience.md), the organizational Knowledge & Experience model. That document also develops Experience Record, Knowledge lifecycle, confidence, contradiction handling, and gap taxonomy, none of which existed here. This document is preserved in full; it is not superseded. Its hand-off to a future Learning/Evolution model (hypothesis generation, evolution proposals, promotion) remains pending a later phase (`docs/model/learning-evolution.md`, currently PLANNED, together with `docs/continuous-improvement.md`'s reconciliation).
+> **Authority note:** this document's scopes, Adaptation Envelope, and boundary rules are reconciled under [`docs/model/knowledge-experience.md`](model/knowledge-experience.md), the organizational Knowledge & Experience model. That document also develops Experience Record, Knowledge lifecycle, confidence, contradiction handling, and gap taxonomy, none of which existed here. This document is preserved in full; it is not superseded. Its hand-off to hypothesis generation, evolution proposals, and promotion is framed by the ACTIVE [`docs/model/learning-evolution.md`](model/learning-evolution.md), alongside [`docs/continuous-improvement.md`](continuous-improvement.md). Those runtime mechanisms are not implemented.
 
 ## Purpose
 

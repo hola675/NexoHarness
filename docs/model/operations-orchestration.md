@@ -188,7 +188,7 @@ Runtime    — resolves the actual mechanism that fulfills it
 
 ## Learned routing boundary
 
-Shared Runtime evidence may, in a future phase, rank, recommend, or prefer among choices *already permitted*. It must never grant authority, invent a Role, or skip required verification (`docs/shared-runtime.md`'s Adaptation Envelope). This document does not elaborate the Knowledge/Learning model further; that reconciliation is deferred to a later phase (see "Deferred" below).
+Shared Runtime evidence may, in a future implementation, rank, recommend, or prefer among choices *already permitted*. It must never grant authority, invent a Role, or skip required verification (`docs/shared-runtime.md`'s Adaptation Envelope). The organizational Knowledge and Learning models are documented in [`knowledge-experience.md`](knowledge-experience.md) and [`learning-evolution.md`](learning-evolution.md); no learned-routing runtime is implemented here.
 
 If Role or Workflow effectiveness is ever mentioned, it is **task-class operational evidence**, never a human-like global performance leaderboard.
 
@@ -210,4 +210,4 @@ Prefer idempotent or safely replayable operations where practical, especially fo
 
 ## Deferred
 
-[`docs/shared-runtime.md`](../shared-runtime.md) and [`docs/continuous-improvement.md`](../continuous-improvement.md) are referenced above only where necessary and are not fully reconciled by this document; their reconciliation is planned for a later phase (`docs/model/knowledge-experience.md`, `docs/model/learning-evolution.md`, both currently PLANNED). The completion `READY` conflict recorded in [`docs/reviews/r1-documentation-authority-audit.md`](../reviews/r1-documentation-authority-audit.md) remains **DEFERRED** and is not touched here.
+The legacy [`docs/orchestration.md`](../orchestration.md), [`docs/execution-model.md`](../execution-model.md), [`docs/shared-runtime.md`](../shared-runtime.md), and [`docs/continuous-improvement.md`](../continuous-improvement.md) remain preserved and linked; their organizational overlaps are reconciled by the ACTIVE model documents. They are not deleted by that reconciliation. Persistent operational state, learned routing, and runtime implementation remain deferred. The completion `READY` finding was resolved by R1-G as a scope distinction; it is not an open conflict.

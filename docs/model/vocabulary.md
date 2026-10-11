@@ -150,9 +150,9 @@ Runtime observation never redefines Canonical intent by itself (`core/policies/s
 
 Neither is canonical input automatically.
 
-## Known deferred conflict: completion `READY`
+## Resolved scope distinction: completion `READY`
 
-`docs/reviews/r1-documentation-authority-audit.md` recorded a CONFLICT between `core/policies/completion.md` (5 completion states) and `core/schemas/common.schema.json`'s `completionStatus` enum (6 states, including `READY`). This document does not resolve that conflict. Where Completion needs to be mentioned here, it is described conceptually (see "Assurance vocabulary" above) without asserting a definitive enum. The conflict remains **DEFERRED**.
+The initial R1-A audit recorded an apparent conflict between `core/policies/completion.md` (five terminal Assignment outcomes) and `core/schemas/common.schema.json`'s six-value runtime-artifact status enum. R1-G resolved it as a scope distinction: schema `READY` means a Contract Instance is ready for handoff, not that the Assignment is complete. The Policy and schema retain their separate scopes; no schema or Policy change was made. The `READY` Intake outcome in [`work-lifecycle.md`](work-lifecycle.md) is a third, conceptual triage result. See the [R1-G finding](../reviews/r1-documentation-authority-audit.md#conflicts) and [Assurance & Certification](assurance-certification.md#ready-investigation-result-see-full-record-in-the-authority-audit).
 
 ## No new canonical nouns
 

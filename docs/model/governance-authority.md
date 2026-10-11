@@ -228,7 +228,7 @@ Grant no more authority than is necessary for the bounded responsibility and Ass
 
 ## Deferred and known notes
 
-- **Completion `READY`** (Policy vs. schema, from R1-A/B/C) remains **DEFERRED**; untouched here.
+- **Completion `READY`** was resolved in R1-G as a scope distinction between Contract Instance handoff readiness and terminal Assignment outcome; untouched here.
 - **Observation complexity vocabulary** (from R1-D/E) remains **DEFERRED CLARIFICATION**; untouched here.
 - **Approval-level taxonomy versus change-size taxonomy** is newly identified as a question for a later semantic audit (see "Approval taxonomy intentionally not frozen" above) — not resolved in this phase.
-- Assurance depth (verification levels, certification states, review-finding severity, certification packages) is explicitly deferred to a future phase (`docs/model/assurance-certification.md`, currently PLANNED).
+- The organizational assurance framing is documented in the ACTIVE [`assurance-certification.md`](assurance-certification.md). Any new schema, runtime enforcement, or certification service remains deferred and is not introduced here.

@@ -223,7 +223,7 @@ Resolution must consider whether a required effect can be observed, evidenced, a
 
 `Agent.spec.capabilities` (`core/schemas/agent.schema.json`) is a list of canonical Capability references: a canonical requirement/relationship — **never** automatic provider injection or an automatic permission grant. The F2 observation that a capability reference did not appear as an escalated tool in the captured child request is preserved only as bounded evidence of this non-escalation, never as global certification.
 
-`Profile` (`core/schemas/profile.schema.json`) bundles Capability refs and constraints. Selecting a Capability in a Profile does not authorize a provider and does not grant permission. Profile composition, activation, context, configuration, and target constraints are deliberately deferred to `docs/model/profiles-context-configuration.md` (PLANNED).
+`Profile` (`core/schemas/profile.schema.json`) bundles Capability refs and constraints. Selecting a Capability in a Profile does not authorize a provider and does not grant permission. Profile composition, activation, context, configuration, and target constraints are framed in the ACTIVE [`profiles-context-configuration.md`](profiles-context-configuration.md); their runtime management remains unimplemented.
 
 ## Portability, credentials, and external effects
 

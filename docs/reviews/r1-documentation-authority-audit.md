@@ -19,7 +19,9 @@ RESEARCH              — empirical/external investigation evidence
 STATUS                — current implementation/attempt status tracker
 ```
 
-## Dispositions
+## Initial Dispositions (R1-A; Historical)
+
+These labels document the R1-A starting assessment. Later R1 notes update the evidence, but these labels are historical. The current, single disposition for every inventoried legacy document is in the R1-N matrix below.
 
 ```text
 PRESERVE    — stays exactly where it is, as the authoritative source for its scope
@@ -32,9 +34,9 @@ NO_CHANGE   — correctly placed and scoped; no action of any kind
 CONFLICT    — a real, unresolved contradiction exists; flagged for a later decision
 ```
 
-## Authority Matrix
+## Authority Matrix (R1-A Dispositions; Later Notes Added)
 
-| Document | Current Role | Authority Class | Target Owner | Disposition | Reason | Dependencies |
+| Document | Current Role | Authority Class | Target Owner | Initial Disposition (R1-A) | Reason | Dependencies |
 |---|---|---|---|---|---|---|
 | `docs/architecture.md` | High-level system architecture | NORMATIVE | `docs/model/` (index role) + stays in place | REFINE | Becomes a thinner index/navigation document per the new frontier; its current content is still accurate and is not duplicated into `docs/model/` yet. **R1-H:** one sentence added stating Adapter != Runtime Resolver, linking `docs/model/capability-runtime.md`. | `docs/model/README.md`, `docs/source-of-truth.md` |
 | `docs/source-of-truth.md` | Canonical directory ownership table | NORMATIVE | stays in place | REFINE | Needs to explicitly place `docs/model/` as organizational/system layer alongside existing CANONICAL/GENERATED/RUNTIME/RESEARCH classes. **R1-K:** the directory table gained a canonical authoring root column that mirrors `CANONICAL_ROOTS` (11), plus explicit `core/directives/`, `core/policies/`, `core/schemas/` and `tools/` rows. A new "Registered Kinds and canonical authoring Kinds" section states the 13 registered and 11 canonical authoring Kinds and the Observation/ImprovementProposal special cases. VALIDATION, which the table already used, was added to Definitions. "13 canonical Kinds" became "13 registered technical Kinds". Frozen `research/*/probes/` records are now described as RESEARCH records summarizing runtime-derived evidence. The section states that a required repository directory is not a canonical authoring root, and one ownership rule was added: validation never promotes. | `docs/model/README.md`, `docs/model/canonical-information.md` |
@@ -85,6 +87,68 @@ CONFLICT    — a real, unresolved contradiction exists; flagged for a later dec
 | `core/policies/self-improvement.md` | Canonical self-improvement Policy | NORMATIVE | stays in place | PRESERVE | Authoritative owner for the promotion gate; see duplication findings below. | none |
 | `core/policies/evidence.md` | Canonical evidence Policy (E0–E4) | NORMATIVE | stays in place | PRESERVE | Authoritative owner for evidence classes; already correctly the sole source (R0 initially mis-assessed this as undefined — it is defined here). | none |
 
+## Current Legacy Disposition Matrix (R1-N)
+
+This table is the current disposition for each row inventoried above. The older `Disposition` labels remain only as the R1-A starting assessment. No file was deleted or moved in R1-N. `SUPERSEDE_CANDIDATE` records a possible later retirement only; it does not mean the file is superseded. `CONFLICT` is reserved for an unresolved incompatible authority claim; open clarifications listed below do not meet that definition.
+
+The preceding authority-matrix reason text includes phase-time statements; any reference there to work being planned or pending is historical and is superseded by this current disposition matrix and the R1-N update below.
+
+| Legacy document | Current disposition | R1-N rationale |
+|---|---|---|
+| `docs/architecture.md` | REFINE | High-level navigation and system framing remain useful; links to active model owners are maintained. |
+| `docs/source-of-truth.md` | REFINE | Retains technical directory/class ownership and current 13-Kind/11-root distinction; model layer points back to it. |
+| `docs/principles.md` | REFINE | Charter carries organizational framing, while exact NH-P identifier crosswalk and technical details remain in this preserved source. |
+| `docs/terminology.md` | REFINE | Organizational terms are cross-referenced to the model; technical terms remain here or in concepts/validation. |
+| `docs/lifecycle.md` | MERGE_RECONCILED | Build and improvement lifecycle framing now has active model owners; legacy source remains preserved. |
+| `docs/execution-model.md` | SUPERSEDE_CANDIDATE | Context model is reconciled in active model documents; test assertions and references must be migrated before any retirement. |
+| `docs/orchestration.md` | SUPERSEDE_CANDIDATE | Control-loop framing is reconciled in the active Operations model; preserve pending future reference and exclusive-content checks. |
+| `docs/shared-runtime.md` | MERGE_RECONCILED | Knowledge/Experience and Learning/Evolution hand-offs now have active model owners; no runtime storage mechanism is implied. |
+| `docs/continuous-improvement.md` | MERGE_RECONCILED | Improvement framing is reconciled in the active Learning/Evolution model; `core/policies/self-improvement.md` remains technical authority. |
+| `docs/canonical-format.md` | SUPERSEDE_CANDIDATE | Envelope overlap is reconciled under `docs/schema-system.md`; retain until all technical detail and inbound references are checked. |
+| `docs/schema-system.md` | PRESERVE | Technical owner of canonical schemas, registry, and validation-facing schema behavior. |
+| `docs/validation.md` | PRESERVE | Technical owner of the validation pipeline and diagnostics. |
+| `docs/versioning.md` | REFINE | Remains owner of SemVer, tag mechanics, and existing release workflow; active model frames system-level release boundaries. |
+| `docs/concepts/directives.md` | PRESERVE | Technical coordination and Directive semantics remain here. |
+| `docs/concepts/agents.md` | PRESERVE | Technical Agent Kind semantics and schema crosswalk remain here. |
+| `docs/concepts/skills.md` | PRESERVE | Technical Skill Kind semantics remain here. |
+| `docs/concepts/rules.md` | PRESERVE | Technical Rule fields and current `trigger` status remain here. |
+| `docs/concepts/workflows.md` | PRESERVE | Technical Workflow Kind concept remains here; candidate workflow families are not production entities. |
+| `docs/concepts/contracts.md` | PRESERVE | Contract Definition/Instance semantics and handoff status remain technical ownership here. |
+| `docs/concepts/capabilities.md` | PRESERVE | Technical Capability Kind, identity, and effect semantics remain here. |
+| `docs/concepts/profiles.md` | PRESERVE | Technical Profile Kind semantics remain here. |
+| `docs/concepts/enforcement.md` | PRESERVE | Technical Enforcement levels remain here. |
+| `docs/concepts/evaluations.md` | PRESERVE | Technical Evaluation Kind and method semantics remain here. |
+| `docs/concepts/task-observer.md` | PRESERVE | Technical Observer responsibilities and privacy boundary remain here. |
+| `docs/decisions/0001-canonical-manifest-model.md` | PRESERVE | Accepted ADR retained as append-only historical decision. |
+| `docs/decisions/0002-orchestration-shared-runtime.md` | PRESERVE | Accepted ADR retained as append-only historical decision. |
+| `docs/decisions/0003-codex-target-surface.md` | PRESERVE | Accepted ADR retained as append-only historical decision. |
+| `docs/decisions/0004-codex-adapter-translation-contract.md` | PRESERVE | Accepted ADR retained as append-only historical decision. |
+| `docs/decisions/0005-codex-agent-role-rendering.md` | PRESERVE | Accepted ADR retained as append-only historical decision; later probe status is recorded separately. |
+| `docs/reviews/codex-c4-b1-independent-review.md` | PRESERVE | Independent review record remains scoped to C4-B1/ADR 0005. |
+| `docs/adapters/codex.md` | STATUS_ONLY | Current Codex implementation and target evidence status. |
+| `docs/adapters/kilo.md` | STATUS_ONLY | Current Kilo adapter status. |
+| `docs/adapters/claude-code.md` | STATUS_ONLY | Current Claude Code adapter status. |
+| `docs/adapters/codex-capability-matrix.md` | PRESERVE | Target research summary remains distinct from canonical behavior and implementation status. |
+| `docs/adapters/codex-translation-contract.md` | PRESERVE | Codex translation design remains governed by accepted ADR 0004. |
+| `docs/research/methodology.md` | PRESERVE | Research intake procedure remains the research-process owner. |
+| `docs/research/upstream-sources.md` | PRESERVE | Upstream source registry remains research provenance. |
+| `research/codex/sources.md` | PRESERVE | Codex research source provenance retained. |
+| `research/codex/capability-matrix.md` | PRESERVE | Detailed Codex capability research retained. |
+| `research/codex/gaps.md` | PRESERVE | Codex/Nexo empirical gap analysis retained. |
+| `research/codex/probes/agents-md-0.160.0.md` | PRESERVE | Bounded AGENTS.md runtime probe record retained with scope and provenance. |
+| `research/codex/probes/skills-0.160.0.md` | PRESERVE | Bounded repository Skill runtime probe record retained with scope and provenance. |
+| `research/codex/probes/generated-skill-0.160.0.md` | PRESERVE | Bounded generated Skill runtime probe record retained with scope and provenance. |
+| `research/codex/probes/custom-agent-roles-0.160.0.md` | PRESERVE | Bounded custom Agent role runtime probe record retained with scope and provenance. |
+| `research/codex/probes/c4c-runtime-r5-f2-0.160.0.md` | PRESERVE | C4-C R5-F2 remains `INVALID / FROZEN`, not PASS or certification. |
+| `core/policies/precedence.md` | PRESERVE | Sole technical owner for precedence. |
+| `core/policies/completion.md` | PRESERVE | Technical owner for terminal Assignment completion outcomes; R1-G resolved the apparent READY mismatch by scope. |
+| `core/policies/delegation.md` | PRESERVE | Technical owner for delegation constraints. |
+| `core/policies/scope-control.md` | PRESERVE | Technical owner for scope control. |
+| `core/policies/self-improvement.md` | PRESERVE | Technical owner for the self-improvement and promotion boundary. |
+| `core/policies/evidence.md` | PRESERVE | Technical owner for E0–E4 evidence classes. |
+
+Current disposition counts: `PRESERVE` 37, `REFINE` 5, `MERGE_RECONCILED` 3, `SUPERSEDE_CANDIDATE` 3, `STATUS_ONLY` 3, `RELOCATE_CANDIDATE` 0, `NO_CHANGE` 0, `CONFLICT` 0. The 51 rows cover each inventoried legacy document individually; the three supersede candidates are documented for later review and none is deleted by this reconciliation.
+
 ## No stale-authority duplication (R1-A.14)
 
 | Norm | Authoritative owner | Secondary explanation(s) | Note |
@@ -102,9 +166,9 @@ CONFLICT    — a real, unresolved contradiction exists; flagged for a later dec
 
 2. **Complexity vocabulary mismatch (schema vs. organizational model) — CLARIFICATION, not blocking.** `core/schemas/observation.schema.json`'s `spec.complexity` enum is `["BOUNDED", "COMPLEX"]`, matching `core/directives/execution-protocol.md`'s (NEP-1) "Initial complexity model: BOUNDED, COMPLEX." [`docs/model/work-lifecycle.md`](../model/work-lifecycle.md) (R1-C) introduced a three-value organizational Complexity dimension (`TRIVIAL`, `BOUNDED`, `COMPLEX`) for Classify, without noting that the Observation schema only tracks two of those three values. This is not a contradiction of meaning — `TRIVIAL` work can still be recorded as `BOUNDED` at the Observation-schema level — but it is an unremarked vocabulary gap between an organizational-model dimension and the one existing schema field with a related name. Recorded here as a CLARIFICATION for a later phase; neither `work-lifecycle.md` nor the schema is changed by this finding.
 
-No other real contradiction was found. Everything else marked MERGE is a structural consolidation candidate, not a substantive disagreement.
+At the initial R1-A close, the READY item above was still unresolved and the remaining overlap findings were not substantive contradictions. R1-G later resolved READY by scope. The R1-N disposition matrix and final reconciliation report record the current state; the dated R1-A through R1-M entries below remain historical snapshots.
 
-## Summary counts
+## R1-A Initial Summary Counts (Historical)
 
 ```text
 PRESERVE:    31
@@ -270,9 +334,25 @@ The supplied R1-M text ended during item 22, immediately after “Installation s
 
 **Sequence:** R1-N final reconciliation follows R1-M, then independent architecture review, R1 certification, and R2.
 
+## R1-N update (2026-10-11)
+
+`docs/model/README.md` and all 14 listed model documents were checked; all 14 are ACTIVE. Their responsibility, technical dependencies, overlaps, links, and present status are summarized in [`docs/reviews/r1-final-reconciliation-report.md`](r1-final-reconciliation-report.md). The practical authority hierarchy remains subordinate to `core/policies/precedence.md`: technical Policies, Directives, and schemas retain applicable technical authority; accepted ADRs remain historical; concepts own technical Kind semantics; model docs own organizational/system framing; adapter docs own target detail/status; reviews own review evidence; research owns empirical evidence.
+
+The current legacy disposition matrix above now assigns exactly one R1-N disposition to each inventoried legacy document. Its 51 rows comprise 37 `PRESERVE`, 5 `REFINE`, 3 `MERGE_RECONCILED`, 3 `SUPERSEDE_CANDIDATE`, and 3 `STATUS_ONLY`; there are no current `CONFLICT`, `RELOCATE_CANDIDATE`, or `NO_CHANGE` entries. The three possible supersession candidates are retained; no legacy file was deleted, moved, or physically merged.
+
+**Temporal reconciliation.** R1-A left the completion `READY` finding open at that time. R1-G resolved it by scope: terminal Assignment outcomes in `core/policies/completion.md`, Contract Instance handoff readiness in `common.schema.json`, and the model's Intake triage `READY` are distinct. Current status is **RESOLVED**. Earlier dated R1-B through R1-F statements that called it deferred remain historical snapshots; no prior entry is rewritten.
+
+**Stale-current-status corrections.** ACTIVE model docs now refer to the created ACTIVE Knowledge/Learning, Profiles/Context, Assurance, and Distribution/Release models instead of calling them PLANNED. They continue to state that runtime engines are not implemented. `docs/adapters/codex.md` distinguishes the defined Phase 1.1-A contract from the existing Phase 1.1-B adapter core; `docs/architecture.md` states the Installer is planned but not implemented; `docs/concepts/workflows.md` identifies the listed workflow families as design candidates with no authored production Workflow entities. `docs/shared-runtime.md` now points to the ACTIVE Learning/Evolution model.
+
+**Implementation evidence.** Source inspection confirmed `SUPPORTED_KINDS` has 13 entries and `CANONICAL_ROOTS` has 11. Codex renderer output includes `deploymentEligible`, but `CodexManifest` does not; this remains a blocker before any Phase 1.2 Installer consumer. `installer/` and `observer/` contain only `.gitkeep`, `dist/` is absent, and no authored production entities are present under the reviewed `core/contracts/`, `agents/`, `skills/`, `rules/`, `workflows/`, `capabilities/`, `profiles/`, `enforcement/`, or `evals/` roots. C4-C R5-F2 remains `INVALID / FROZEN`.
+
+Open clarifications and future implementation findings were carried forward without resolution or technical edits: Observation complexity vocabulary; approval taxonomy versus change size; Core Directive capability wording; Agent inputs/output Contract; Roadmap Phase 3 interpretation; Observation and ImprovementProposal metadata status and decision-state representation; `Rule.trigger`; `requiredCanonicalDirectories` naming; runtime reference validation; and ImprovementProposal physical storage. The `deploymentEligible` manifest gap remains a separate pre-Phase 1.2 blocker.
+
+No new source-of-truth conflict was found. No schema, Policy, Directive, ADR, adapter implementation, tool, test, research record, roadmap, generated output, or canonical entity was modified. Fresh validation results and the exact containing commit are recorded in the final reconciliation report and final execution result.
+
 ## What this audit does not do
 
 - The initial R1-A audit did not create any of the 14 planned `docs/model/*.md` documents; only `docs/model/README.md` existed at that initial audit baseline.
 - It does not move, merge, or delete any existing file.
-- It does not resolve the completion-status CONFLICT.
+- R1-A left the completion-status finding open at that time; R1-G later resolved it as a scope distinction. The current status is **RESOLVED**, not CONFLICT.
 - It does not change `core/policies/*`, `core/schemas/*`, any ADR, or any adapter implementation.
