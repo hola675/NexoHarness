@@ -2,6 +2,8 @@
 
 These are initial pre-alpha budgets for the current repository. They are development guardrails, not permanent universal thresholds; changing them requires measured evidence and explicit review.
 
+> **Quality boundary:** these current performance budgets are not universal quality thresholds. See [Evaluation & Quality](model/evaluation-quality.md); a timing budget does not replace claim-specific evaluation evidence.
+
 | Class | Use | Target | Hard budget |
 |---|---|---:|---:|
 | FAST / INNER LOOP | Core tests during active development | 60 seconds | 90 seconds |

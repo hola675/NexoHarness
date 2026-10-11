@@ -1,6 +1,6 @@
 # Evaluations
 
-> **Boundary note:** this document remains the TECHNICAL_NORMATIVE source for the Evaluation Kind and its methods/schema. [`docs/model/assurance-certification.md`](../model/assurance-certification.md) provides the organizational Assurance framing (Verification, Review, Certification) around it, including the Evaluation-Definition-versus-Run distinction; it does not alter the methods or schema defined here.
+> **Boundary note:** this document remains the TECHNICAL_NORMATIVE source for the Evaluation Kind, its methods, and its schema. [`docs/model/evaluation-quality.md`](../model/evaluation-quality.md) frames quality requirements, requirement traceability, and evaluation coverage. [`docs/model/assurance-certification.md`](../model/assurance-certification.md) frames evidence, verification, review, and certification, including the Evaluation-Definition-versus-Run distinction. Neither model document alters the Evaluation methods or schema defined here.
 
 NexoHarness uses multiple forms of evidence:
 
