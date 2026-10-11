@@ -238,9 +238,15 @@ Observation complexity (R1-D/E) remains **DEFERRED CLARIFICATION**; the approval
 
 No schema, registry, canonical root, validator, adapter, Observer or runtime subsystem was modified or added, and no directory was created or moved. This update does not make this audit a normative source; it remains a reconciliation record.
 
+## R1-L update (2026-10-11)
+
+`docs/model/evaluation-quality.md` was created and is ACTIVE. It frames quality as claim- and scope-relative, relates quality claims to the existing Evaluation Definition and its runtime evidence, distinguishes evaluation from assessment and governed decisions, and describes fit-for-claim evaluation coverage and metric interpretation. It preserves existing method, evidence, result, comparison, and assurance semantics by referring to `docs/concepts/evaluations.md`, `docs/model/assurance-certification.md`, and `docs/model/learning-evolution.md`.
+
+`docs/model/README.md` now lists Evaluation & Quality as ACTIVE. The existing Evaluation schema, policies, technical concept, Assurance model, and Learning & Evolution model were left unchanged. No Kind, schema, result scale, quality score, registry, directory, adapter, or runtime implementation was added. R1-N reconciliation and independent architecture review remain future work; this entry does not claim either has occurred.
+
 ## What this audit does not do
 
-- It does not create any of the 14 planned `docs/model/*.md` documents; only `docs/model/README.md` exists as of this audit.
+- The initial R1-A audit did not create any of the 14 planned `docs/model/*.md` documents; only `docs/model/README.md` existed at that initial audit baseline.
 - It does not move, merge, or delete any existing file.
 - It does not resolve the completion-status CONFLICT.
 - It does not change `core/policies/*`, `core/schemas/*`, any ADR, or any adapter implementation.

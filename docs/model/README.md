@@ -43,7 +43,7 @@ The following model documents are the approved set for this frontier. Documents 
 - [`operations-orchestration.md`](operations-orchestration.md) — **ACTIVE.** Organizational control-plane view, building on `docs/orchestration.md` and `docs/execution-model.md`.
 - [`canonical-information.md`](canonical-information.md) — **ACTIVE.** Organizational/system information model: the five information classes, registered Kinds versus canonical authoring roots, definition-versus-instance classification, provenance, and allowed and forbidden information flows. It builds on `docs/source-of-truth.md`, `docs/canonical-format.md` and `docs/schema-system.md`.
 - [`profiles-context-configuration.md`](profiles-context-configuration.md) — **ACTIVE.** Organizational view of context/profile configuration, building on `docs/concepts/profiles.md`.
-- `evaluation-quality.md` — **PLANNED.** Organizational view of evidence and quality, building on `docs/concepts/evaluations.md`.
+- [`evaluation-quality.md`](evaluation-quality.md) — **ACTIVE.** Organizational view of quality claims, evaluation design and coverage, and metric interpretation; builds on `docs/concepts/evaluations.md`, `assurance-certification.md`, and `learning-evolution.md`.
 - `distribution-release.md` — **PLANNED.** Organizational view of distribution and release, building on `docs/versioning.md`'s release mechanics.
 
 Each future document must declare, in its own front section, which existing `docs/concepts/`, `docs/decisions/`, `core/policies/` or `docs/adapters/` material it builds on, and must not restate that material's authority incompatibly. See the full reconciliation findings in [`docs/reviews/r1-documentation-authority-audit.md`](../reviews/r1-documentation-authority-audit.md).
