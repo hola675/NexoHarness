@@ -44,9 +44,9 @@ Shared Runtime State holds scoped operational evidence and learned recommendatio
 
 ## Translation and Distribution Layers
 
-Target adapters attach below the NexoHarness architecture as sibling consumers of the same canonical source. The accepted product/certification priority is Kilo Code first and Claude Code second; Codex is retained as prior experimental/model-validation work under [ADR 0006](decisions/0006-product-v1-and-adapter-priority.md). Each adapter consumes the same canonical source independently and may normalize target-specific telemetry into shared concepts when future target capabilities permit it. No adapter is the source for another adapter or for canonical behavior.
-
 Earlier architecture guidance said Codex is first, Claude Code second, and Kilo Code third. ADR 0006 supersedes that sequence for product and certification priority; the older roadmap sequence remains pending separate reconciliation.
+
+Target adapters attach below the NexoHarness architecture as sibling consumers of the same canonical source. The accepted product/certification priority is Kilo Code first and Claude Code second; Codex is retained as prior experimental/model-validation work under [ADR 0006](decisions/0006-product-v1-and-adapter-priority.md). Each adapter consumes the same canonical source independently and may normalize target-specific telemetry into shared concepts when future target capabilities permit it. No adapter is the source for another adapter or for canonical behavior.
 
 ```text
                  ┌→ Codex adapter → Codex
