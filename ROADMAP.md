@@ -1,13 +1,13 @@
 # Roadmap
 
-## Current Product Target Priority — ADR 0006
+## Current Product Target Priority — ADR 0007
 
 1. **Kilo Code** — first product and certification target for Canonical Model + Kilo Code Adapter V1.
-2. **Claude Code** — second product target, after Kilo Code.
+2. **OpenAI Codex** — second harness target, after Kilo Code.
 
-Codex is retained as prior research, experimental adapter work, model validation, and historical milestones. It is not the first product or certification target. The existing section order and phase identifiers below are retained for historical traceability; they do not define current adapter priority or delivery order. ADR 0006 governs product scope and priority.
+The initial environment for both targets is **Windows + VS Code**. The Kilo baseline is `v7.8.8`; existing Codex CLI work does not establish Codex VS Code compatibility. Claude Code is outside current target scope; its historical references remain below for provenance. The section order and phase identifiers remain historical and do not define current priority. [ADR 0007](docs/decisions/0007-windows-vscode-target-scope.md) governs target scope and priority; ADR 0006 continues to govern DKT-01 and DKT-03–06.
 
-The next separate gate is to define the initial Kilo Code phase from research and a capability matrix. This roadmap reconciliation does not authorize that investigation or implementation.
+K1 — define the Kilo Code translation contract for Windows + VS Code using the pinned K0 evidence — is authorized by the responsible person's 2026-10-13 instruction covering this and future phases. It is not part of this roadmap reconciliation and is not started here. K1 must resolve the permission boundary described in ADR 0007.
 
 ## Foundation
 
@@ -68,7 +68,7 @@ The next separate gate is to define the initial Kilo Code phase from research an
 - 6.3 Rollback certification
 - 6.4 Codex V1 — superseded as the first product V1 by ADR 0006
 
-## Claude Code — Second Product Target
+## Claude Code — Historical Direction, Outside Current Scope
 
 - 7.0 Claude capability matrix
 - 7.1 Claude adapter
@@ -76,7 +76,7 @@ The next separate gate is to define the initial Kilo Code phase from research an
 - 7.3 Codex / Claude cross-harness parity
 - 7.4 Claude V1
 
-## Kilo Code — First Product and Certification Target
+## Kilo Code — First Product and Certification Target (Windows + VS Code)
 
 - 8.0 Kilo capability matrix
 - 8.1 Kilo adapter

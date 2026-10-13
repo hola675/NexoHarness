@@ -14,7 +14,7 @@ NexoHarness **defines, coordinates, adapts, verifies, learns, and evolves under 
 
 ## Target strategy
 
-Product and certification priority is **1. Kilo Code, 2. Claude Code**. Codex work is retained as prior experimental/model-validation work; see [ADR 0006](../decisions/0006-product-v1-and-adapter-priority.md). Targets **consume** canonical semantics through adapters; they do not define them. No target implementation becomes the source for another target, or for canonical behavior itself.
+Product and certification priority is **1. Kilo Code, 2. Codex**, initially on Windows + VS Code; see [ADR 0007](../decisions/0007-windows-vscode-target-scope.md). Existing Codex CLI work is prior experimental/model-validation evidence and does not establish VS Code compatibility. Claude Code is outside current target scope, with historical records preserved. Targets **consume** canonical semantics through adapters; they do not define them. No target implementation becomes the source for another target, or for canonical behavior itself.
 
 ## Organizational functions
 

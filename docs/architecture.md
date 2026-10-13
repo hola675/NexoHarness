@@ -23,7 +23,7 @@ This document is the authoritative high-level architecture for NexoHarness. The 
                             │
                   ┌─────────┼─────────┐
                   ▼         ▼         ▼
-                Codex     Claude     Kilo
+                Kilo      Codex
 ```
 
 **DEFINE** owns intended canonical behavior, contracts, authority and rules. **EXECUTE** coordinates a task through the Nexo Execution Protocol, proportionate workflows, bounded responsibilities and abstract capability requests. **LEARN** turns admissible execution evidence into operational patterns or governed canonical improvement candidates. Learning does not control canonical promotion.
@@ -44,14 +44,13 @@ Shared Runtime State holds scoped operational evidence and learned recommendatio
 
 ## Translation and Distribution Layers
 
-Earlier architecture guidance said Codex is first, Claude Code second, and Kilo Code third. ADR 0006 supersedes that sequence for product and certification priority; the older roadmap sequence remains pending separate reconciliation.
+The historical roadmap direction recorded Codex is first, Claude Code second, and Kilo Code third. ADR 0006 later selected Kilo Code first and Claude Code second; [ADR 0007](decisions/0007-windows-vscode-target-scope.md) supersedes only that priority decision and now governs target scope: Windows + VS Code, with Kilo Code first and Codex second. Claude Code is outside current scope; prior references remain historical.
 
-Target adapters attach below the NexoHarness architecture as sibling consumers of the same canonical source. The accepted product/certification priority is Kilo Code first and Claude Code second; Codex is retained as prior experimental/model-validation work under [ADR 0006](decisions/0006-product-v1-and-adapter-priority.md). Each adapter consumes the same canonical source independently and may normalize target-specific telemetry into shared concepts when future target capabilities permit it. No adapter is the source for another adapter or for canonical behavior.
+Target adapters attach below the NexoHarness architecture as sibling consumers of the same canonical source. The current product/certification priority is Kilo Code first and Codex second, both initially on Windows + VS Code. Existing Codex CLI work is prior experimental/model-validation work and does not establish VS Code compatibility. Each adapter consumes the same canonical source independently and may normalize target-specific telemetry into shared concepts when future target capabilities permit it. No adapter is the source for another adapter or for canonical behavior.
 
 ```text
-                 ┌→ Codex adapter → Codex
-Nexo architecture├→ Claude adapter → Claude Code
-                 └→ Kilo adapter → Kilo Code
+                 ┌→ Kilo adapter → Kilo Code (Windows + VS Code)
+Nexo architecture└→ Codex adapter → Codex (Windows + VS Code)
 ```
 
 `dist/` is reserved for generated harness artifacts and is never a source dependency. The Codex adapter currently renders in memory. An Installer is planned but not implemented; it would reconcile eligible generated output with an explicitly scoped target environment. Installation, Doctor inspection, target-runtime verification, scoped certification, and product release are separate steps ([`docs/model/distribution-release.md`](model/distribution-release.md)). An adapter maps canonical semantics to one target; it is not a runtime resolver — selecting an available, authorized binding for a Capability at execution time is a separate future runtime responsibility (see [`docs/model/capability-runtime.md`](model/capability-runtime.md)).
@@ -91,4 +90,4 @@ Phase 0.3 defines architecture only. It does not implement the Orchestrator, run
 
 ## Organizational and system model
 
-This document is a high-level index: layer boundaries, dependency direction and source-of-truth navigation. The fuller organizational/system view — including an explicit NEXO ORGANIZATION layer above Canonical Definitions and an EXPERIENCE layer alongside Learning/Evolution — is being reconciled separately in [`docs/model/`](model/README.md). `docs/model/` explains organizational framing; it does not redefine the canonical Kinds, schemas or adapter contracts summarized above. Product/certification priority is Kilo Code then Claude Code under ADR 0006; current Codex implementation and C4-C runtime-verification status are tracked in [`docs/adapters/codex.md`](adapters/codex.md), not duplicated here. The roadmap still reflects the previous Codex-led schedule and awaits separate reconciliation.
+This document is a high-level index: layer boundaries, dependency direction and source-of-truth navigation. The fuller organizational/system view — including an explicit NEXO ORGANIZATION layer above Canonical Definitions and an EXPERIENCE layer alongside Learning/Evolution — is being reconciled separately in [`docs/model/`](model/README.md). `docs/model/` explains organizational framing; it does not redefine the canonical Kinds, schemas or adapter contracts summarized above. Product/certification priority and initial environment are Kilo Code then Codex on Windows + VS Code under [ADR 0007](decisions/0007-windows-vscode-target-scope.md); current Codex implementation and C4-C runtime-verification status are tracked in [`docs/adapters/codex.md`](adapters/codex.md), not duplicated here. Historical phase identifiers remain in the roadmap.

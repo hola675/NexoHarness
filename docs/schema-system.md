@@ -62,11 +62,11 @@ Registering a schema Kind is a separate decision from adding a canonical authori
 A canonical schema describes NexoHarness behavior and contracts. It is not a schema for a target harness.
 
 ```text
-                  ┌→ Codex adapter → Codex output
-Agent canonical ──┼→ Claude Code adapter → Claude Code output
-                  └→ Kilo Code adapter → Kilo Code output
+                  ┌→ Kilo Code adapter → Kilo Code output (Windows + VS Code)
+Agent canonical ──┤
+                  └→ Codex adapter → Codex output (Windows + VS Code)
 ```
 
-Each adapter consumes the canonical schema independently; adapter outputs are never source inputs for another adapter. Product/certification priority is Kilo Code first and Claude Code second; Codex remains prior experimental/model-validation work under [ADR 0006](decisions/0006-product-v1-and-adapter-priority.md).
+Each adapter consumes the canonical schema independently; adapter outputs are never source inputs for another adapter. Product/certification priority is Kilo Code first and Codex second, initially on Windows + VS Code, under [ADR 0007](decisions/0007-windows-vscode-target-scope.md). Claude Code is outside current target scope; its historical records are preserved.
 
 Canonical schemas must not encode harness names, provider IDs, model IDs or concrete tool configuration. Adapters own translation and provider selection.

@@ -4,10 +4,10 @@ NexoHarness is a portable, testable engineering harness for AI coding agents. It
 
 ## Current Product Target Priority
 
-1. Kilo Code — first product and certification target
-2. Claude Code
+1. Kilo Code — first product and certification target, initially Windows + VS Code
+2. OpenAI Codex — second harness target, initially Windows + VS Code
 
-Codex is retained as prior experimental/model-validation work, not the current product-priority target. See [ADR 0006](docs/decisions/0006-product-v1-and-adapter-priority.md). The roadmap still reflects the earlier Codex-led schedule and requires separate authorized reconciliation.
+Codex CLI work is retained as prior experimental/model-validation work; it does not demonstrate Codex VS Code compatibility. Claude Code is outside current target scope, with historical records preserved. [ADR 0007](docs/decisions/0007-windows-vscode-target-scope.md) governs current scope and priority; ADR 0006 remains historical except for DKT-01 and DKT-03–06, which remain in force. The roadmap retains historical phase identifiers while its active priority section follows ADR 0007.
 
 All adapters consume the same harness-neutral canonical source.
 
