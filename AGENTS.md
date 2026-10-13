@@ -2,11 +2,12 @@
 
 NexoHarness is a portable, testable engineering harness for AI coding agents. It defines harness-neutral canonical behavior and translates it into native configurations through adapters.
 
-## Current Adapter Priority
+## Current Product Target Priority
 
-1. Codex — first certification target
+1. Kilo Code — first product and certification target
 2. Claude Code
-3. Kilo Code
+
+Codex is retained as prior experimental/model-validation work, not the current product-priority target. See [ADR 0006](docs/decisions/0006-product-v1-and-adapter-priority.md). The roadmap still reflects the earlier Codex-led schedule and requires separate authorized reconciliation.
 
 All adapters consume the same harness-neutral canonical source.
 

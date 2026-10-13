@@ -52,6 +52,7 @@ For each recheck, separate stable release evidence from main-only evidence, docu
 ## Consequences
 
 - Codex CLI defines Phase 1.1's first target; the canonical Nexo model remains harness-neutral.
+- The future product/certification priority stated in this consequence is superseded by [ADR 0006](0006-product-v1-and-adapter-priority.md): Kilo Code is first and Claude Code second. This ADR remains accepted for its Codex research snapshot and current Codex-specific evidence; it does not establish Codex as the current product-priority target.
 - A test result for CLI cannot certify IDE, desktop app, Cloud or API surfaces.
 - Features marked experimental or version-unclear are conditional and cannot silently become V1 requirements.
 - Nexo-owned workflow, authority, shared runtime and promotion responsibilities remain explicit gaps.

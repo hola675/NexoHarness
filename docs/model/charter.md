@@ -14,7 +14,7 @@ NexoHarness **defines, coordinates, adapts, verifies, learns, and evolves under 
 
 ## Target strategy
 
-Target priority is **1. Codex, 2. Claude Code, 3. Kilo Code**. Targets **consume** canonical semantics through adapters; they do not define them. No target implementation becomes the source for another target, or for canonical behavior itself.
+Product and certification priority is **1. Kilo Code, 2. Claude Code**. Codex work is retained as prior experimental/model-validation work; see [ADR 0006](../decisions/0006-product-v1-and-adapter-priority.md). Targets **consume** canonical semantics through adapters; they do not define them. No target implementation becomes the source for another target, or for canonical behavior itself.
 
 ## Organizational functions
 

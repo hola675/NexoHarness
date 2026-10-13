@@ -67,6 +67,6 @@ Agent canonical ──┼→ Claude Code adapter → Claude Code output
                   └→ Kilo Code adapter → Kilo Code output
 ```
 
-Codex is first, Claude Code second, and Kilo Code third. Each adapter consumes the canonical schema independently; adapter outputs are never source inputs for another adapter.
+Each adapter consumes the canonical schema independently; adapter outputs are never source inputs for another adapter. Product/certification priority is Kilo Code first and Claude Code second; Codex remains prior experimental/model-validation work under [ADR 0006](decisions/0006-product-v1-and-adapter-priority.md).
 
 Canonical schemas must not encode harness names, provider IDs, model IDs or concrete tool configuration. Adapters own translation and provider selection.

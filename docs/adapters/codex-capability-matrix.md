@@ -2,7 +2,7 @@
 
 **Research snapshot:** 2026-10-05. **Stable baseline:** Codex CLI `0.160.0` (`rust-v0.160.0`, 2026-10-01). **Upstream main observed:** `3f1ccb7ceb814e54314826f68d61c892e2f5a48e` (2026-10-05). See detailed evidence and provenance in [`research/codex/capability-matrix.md`](../../research/codex/capability-matrix.md) and [`research/codex/sources.md`](../../research/codex/sources.md).
 
-This is Phase 1.0 research and design input, not an adapter specification. The recommended first certification target is **Codex Local CLI / local Codex harness at 0.160.0**. The IDE extension and desktop app are related secondary local surfaces; Cloud/managed and Agents API/SDK are distinct and excluded from the first target. ADR 0003 records the accepted target decision following independent review.
+This is Phase 1.0 research and design input, not an adapter specification. Its accepted research snapshot selected **Codex Local CLI / local Codex harness at 0.160.0** for study. The IDE extension and desktop app are related secondary local surfaces; Cloud/managed and Agents API/SDK are distinct and excluded from that research scope. ADR 0003 records the historical research decision; [ADR 0006](../decisions/0006-product-v1-and-adapter-priority.md) sets Kilo Code as the first product/certification target and retains Codex as prior experimental/model-validation work.
 
 ## Summary matrix
 

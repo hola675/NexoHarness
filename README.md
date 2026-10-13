@@ -6,7 +6,7 @@ Portable engineering harness for AI coding agents.
 
 NexoHarness is an open-source, portable, testable and continuously improving engineering system for AI coding agents. It defines responsibilities, reusable procedures, behavioral rules, workflows, contracts, capabilities, enforcement and evaluations from a harness-neutral canonical source.
 
-Harness-specific adapters translate that canonical system into native configurations without making the canonical model depend on one platform. Codex is the first certification target, followed by Claude Code and Kilo Code. Each adapter is built independently from the same canonical source.
+Harness-specific adapters translate that canonical system into native configurations without making the canonical model depend on one platform. Kilo Code is the first product and certification target, followed by Claude Code. Codex work is retained as prior experimental/model-validation work. Each adapter consumes the same canonical source independently; see [ADR 0006](docs/decisions/0006-product-v1-and-adapter-priority.md).
 
 Phases 0.0 and 0.0.5 establish the repository constitution, universal execution model and documentation baseline. They do not ship production agents, skills, workflows, runtime observer code or adapter logic.
 
@@ -35,7 +35,7 @@ Canonical Source ─┬→ Codex Adapter ─────→ Codex
                   └→ Kilo Code Adapter ──→ Kilo Code
 ```
 
-Target priority: **Codex → Claude Code → Kilo Code**.
+Product target priority: **Kilo Code → Claude Code**. Codex remains prior experimental/model-validation work.
 
 See [the architecture](docs/architecture.md) and [source-of-truth rules](docs/source-of-truth.md).
 

@@ -1,6 +1,6 @@
 # Codex Adapter
 
-Codex is the first target in the adapter and certification order. Phase 1.0 research is certified. Phase 1.1-A defined the translation contract, and the Phase 1.1-B adapter core implementation exists. Filesystem distribution and installation are not implemented; C4-C runtime verification remains `INVALID / FROZEN` at R5-F2.
+Codex is retained as prior experimental/model-validation work, but is no longer the product-priority or first product-certification target. Kilo Code is first and Claude Code second under [ADR 0006](../decisions/0006-product-v1-and-adapter-priority.md). Phase 1.0 research remains certified. Phase 1.1-A defined the translation contract, and the Phase 1.1-B adapter core implementation exists. Filesystem distribution and installation are not implemented; C4-C runtime verification remains `INVALID / FROZEN` at R5-F2.
 
 Design references:
 
