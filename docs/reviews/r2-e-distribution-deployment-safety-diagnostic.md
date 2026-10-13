@@ -246,4 +246,4 @@ Fresh local checks on the report worktree passed:
 - Staged `git diff --cached --check` — PASS after removing a trailing blank line.
 - Staged change — one new file only: this report (239 lines before closeout metadata); no schema, Policy, Directive, ADR, adapter, runtime, test, generated artifact, or roadmap change.
 
-Baseline CI on `9b3b00a653092552acdb40196b3bf230210f9d6a` — PASS, GitHub Actions run [38325732337](https://github.com/hola675/NexoHarness/actions/runs/38325732337). The post-commit CI result is recorded after push below.
+Baseline CI on `9b3b00a653092552acdb40196b3bf230210f9d6a` — PASS, GitHub Actions run [38325732337](https://github.com/hola675/NexoHarness/actions/runs/38325732337). CI for report commit `4854cf721fd6e3700ed8e1a17005eb5bf1610dd8` — PASS, GitHub Actions run [38327168336](https://github.com/hola675/NexoHarness/actions/runs/38327168336).
