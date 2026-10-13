@@ -1,5 +1,14 @@
 # Roadmap
 
+## Current Product Target Priority — ADR 0006
+
+1. **Kilo Code** — first product and certification target for Canonical Model + Kilo Code Adapter V1.
+2. **Claude Code** — second product target, after Kilo Code.
+
+Codex is retained as prior research, experimental adapter work, model validation, and historical milestones. It is not the first product or certification target. The existing section order and phase identifiers below are retained for historical traceability; they do not define current adapter priority or delivery order. ADR 0006 governs product scope and priority.
+
+The next separate gate is to define the initial Kilo Code phase from research and a capability matrix. This roadmap reconciliation does not authorize that investigation or implementation.
+
 ## Foundation
 
 - 0.0 Repository constitution — COMPLETE
@@ -9,12 +18,12 @@
 - 0.2 Validation Framework & Reference Integrity — CERTIFIED
 - 0.3 Orchestration, Shared Runtime & Continuous Improvement Architecture — CERTIFIED
 
-## Codex Target
+## Codex Target — Prior Research and Historical Milestones
 
-- 1.0 Codex capability matrix — CERTIFIED
-- 1.1 Codex adapter — IN PROGRESS
-- 1.2 Codex installer / uninstaller / doctor
-- 1.3 Isolated Codex fixture
+- 1.0 Codex capability matrix — CERTIFIED (completed historical milestone)
+- 1.1 Codex adapter — IN PROGRESS (historical status at ADR 0006); retained as prior experimental and model-validation work, not the product-priority adapter. This reconciliation does not authorize continuation.
+- 1.2 Codex installer / uninstaller / doctor — outside the accepted product V1 scope
+- 1.3 Isolated Codex fixture — outside the accepted product V1 scope
 
 ## Behavior Core
 
@@ -51,15 +60,15 @@
 - 5.4 Eval generation
 - 5.5 Promotion gate
 
-## Certification
+## Certification — historical phase numbering retained
 
 - 6.0 Structural certification
 - 6.1 Behavioral certification
-- 6.2 Codex integration certification
+- 6.2 Codex integration certification — not the first product certification target
 - 6.3 Rollback certification
-- 6.4 Codex V1
+- 6.4 Codex V1 — superseded as the first product V1 by ADR 0006
 
-## Claude Code
+## Claude Code — Second Product Target
 
 - 7.0 Claude capability matrix
 - 7.1 Claude adapter
@@ -67,7 +76,7 @@
 - 7.3 Codex / Claude cross-harness parity
 - 7.4 Claude V1
 
-## Kilo Code
+## Kilo Code — First Product and Certification Target
 
 - 8.0 Kilo capability matrix
 - 8.1 Kilo adapter
