@@ -43,7 +43,7 @@ Each source identifier below has exactly one treatment. A consolidated ID joins 
 | Inventory `INV-04` | CF-03 | MERGED |
 | Inventory `INV-05` | CF-04 | RESOLVED_BY_EVIDENCE |
 | Inventory `INV-06` | CF-07 | MERGED |
-| Inventory `INV-07` | CF-08 | MERGED |
+| Inventory `INV-07` | CF-09 | MERGED |
 | Inventory `INV-08` | CF-09 | MERGED |
 | Inventory `INV-09` | CF-06 | DEFERRED |
 | Inventory `INV-10` | CF-20 | MERGED |
@@ -58,7 +58,7 @@ Each source identifier below has exactly one treatment. A consolidated ID joins 
 | R2A-05 | CF-01 | MERGED |
 | R2B-01 | CF-07 | MERGED |
 | R2B-02 | CF-07 | MERGED |
-| R2B-03 | CF-08 | MERGED |
+| R2B-03 | CF-09 | MERGED |
 | R2B-04 | CF-09 | MERGED |
 | R2B-05 | CF-14 | MERGED |
 | R2B-06 | CF-16 | MERGED |
