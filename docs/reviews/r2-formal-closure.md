@@ -1,7 +1,8 @@
 # R2-H — Formal Diagnostic Closure
 
-**Status: R2 DIAGNOSTIC COMPLETE**  
-**Closure baseline:** `da6bc7f34a520f3e1a26cb3034afcb502fb0a9a8`  
+**Status: R2 DIAGNOSTIC COMPLETE**
+
+**Closure baseline:** `da6bc7f34a520f3e1a26cb3034afcb502fb0a9a8`
 **Scope:** formal closure of the R2 diagnostic and governance record only.
 
 ## Closure determination
