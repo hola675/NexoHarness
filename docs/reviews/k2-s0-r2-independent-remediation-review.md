@@ -74,6 +74,6 @@ Validation performed for this review change:
 - Scope check before commit: exactly one untracked file, `docs/reviews/k2-s0-r2-independent-remediation-review.md`; no tracked modifications and no changes in canonical directories or `dist/`.
 - Candidate and historical review commits remain unchanged; upstream source links point to the specified immutable SHA.
 
-GitHub Actions was consulted for the published candidate branch `fix/k2-s0-s0r01-rule-discovery`; its Actions branch filter showed **0 workflow run results**. The CLI `gh` is unavailable in this environment, so this result comes from the repository's public Actions page rather than `gh run list`. No passing CI is inferred. Review-branch Actions status is not yet available at report creation and must be checked after publishing this review commit.
+GitHub Actions was consulted for both the published candidate branch `fix/k2-s0-s0r01-rule-discovery` and the published review branch `review/k2-s0-r2-independent`; each branch's Actions filter showed **0 workflow run results**. The CLI `gh` is unavailable in this environment, so these results come from the repository's public Actions page rather than `gh run list`. No passing CI is inferred.
 
 **Next gate:** preserve this review as a separate artifact and submit the corrected inventory for the next governance/review decision. No merge, certification, K2-P0 approval, or K2-P1 authorization follows from this PASS.
