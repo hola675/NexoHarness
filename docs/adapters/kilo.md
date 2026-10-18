@@ -1,6 +1,6 @@
 # Kilo Code Adapter — K1 design boundary
 
-**Status:** K1 translation-contract design draft; **not implemented, probed, reviewed or certified**.
+**Status:** K1 translation contract exists; adapter implementation and product certification are not established.
 
 Kilo Code is the **first product and certification target** under [ADR 0007](../decisions/0007-windows-vscode-target-scope.md). Initial supported target scope for design is **Windows + VS Code**, pinned to **Kilo Code v7.8.8** (K0 release commit `e2887f08e5a6394299c810ba508f358aaf4c5bc3`). Kilo CLI evidence cannot establish VS Code client behavior.
 
@@ -8,7 +8,7 @@ The adapter must consume the [harness-neutral canonical source](../source-of-tru
 
 ## K1 contract
 
-See [K1 translation contract](kilo-translation-contract.md) for the proposed per-Kind translation dispositions, fail-closed permission boundary, evidence requirements, and unresolved VS Code probes.
+See the existing [K1 translation contract](kilo-translation-contract.md) for the per-Kind translation dispositions, fail-closed permission boundary, evidence requirements, and unresolved VS Code probes. This contract was already present in the repository before this documentation reconciliation.
 
 ## Evidence and limitations
 
