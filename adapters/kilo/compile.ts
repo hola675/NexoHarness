@@ -86,6 +86,9 @@ export function compileKilo(request: {
     target.sourceCommit !== undefined && target.sourceCommit !== KILO_TARGET.sourceCommit)) {
     diagnostics.push(diagnostic("TARGET_UNVERIFIED", "BLOCKING", "Requested target differs from the pinned K0 evidence."));
   }
+  if (request.selection.length === 0) {
+    diagnostics.push(diagnostic("INVALID_SELECTION", "BLOCKING", "An explicit nonempty canonical selection is required."));
+  }
   const seen = new Set<string>();
   for (const item of request.selection) {
     const source = sourceFor(item.entity);
