@@ -2,7 +2,7 @@ import { KILO_TARGET } from "./model.ts";
 
 /** Historical research baseline, not a required installed release. */
 export interface KiloTargetSelection {
-  client: "vscode-extension";
+  client: "vscode-extension" | "desktop";
   platform: "windows";
   version: string;
   sourceCommit?: string;
@@ -21,16 +21,18 @@ const shaPattern = /^[a-f0-9]{40}$/i;
  * semver compatibility assertion, and no authority to install or deploy.
  */
 export function resolveKiloTarget(input?: Partial<KiloTargetSelection>): KiloTargetResolution {
-  const version = input?.version ?? KILO_TARGET.version;
+  const client = input?.client ?? KILO_TARGET.client;
+  const version = input?.version ?? (client === "desktop" ? "" : KILO_TARGET.version);
   const diagnostics: string[] = [];
-  if (input?.client !== undefined && input.client !== KILO_TARGET.client) diagnostics.push("UNSUPPORTED_CLIENT");
+  if (client !== "desktop" && client !== "vscode-extension") diagnostics.push("UNSUPPORTED_CLIENT");
+  if (client === "desktop" && input?.version === undefined) diagnostics.push("TARGET_VERSION_REQUIRED");
   if (input?.platform !== undefined && input.platform !== KILO_TARGET.platform) diagnostics.push("UNSUPPORTED_PLATFORM");
   if (!versionPattern.test(version)) diagnostics.push("INVALID_TARGET_VERSION");
   if (input?.sourceCommit !== undefined && !shaPattern.test(input.sourceCommit)) diagnostics.push("INVALID_SOURCE_COMMIT");
-  const baseline = version === KILO_TARGET.version &&
+  const baseline = client === "vscode-extension" && version === KILO_TARGET.version &&
     (input?.sourceCommit === undefined || input.sourceCommit === KILO_TARGET.sourceCommit);
   const target: KiloTargetSelection = {
-    client: KILO_TARGET.client, platform: KILO_TARGET.platform, version,
+    client, platform: KILO_TARGET.platform, version,
     ...(input?.sourceCommit ? { sourceCommit: input.sourceCommit } :
       baseline ? { sourceCommit: KILO_TARGET.sourceCommit } : {}),
   };
