@@ -10,6 +10,7 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "kilo:preview": "node --experimental-strip-types tools/kilo/preview.ts",
     "verify": "node --experimental-strip-types tools/validate/verify-performance.ts",
     "verify:core": "npm run typecheck && npm run validate && npm test && git diff --check",
     "validate": "npm run validate:repository && npm run validate:schemas && npm run validate:integrity",
