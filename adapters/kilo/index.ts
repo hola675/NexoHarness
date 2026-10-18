@@ -24,3 +24,6 @@ export type { KiloTargetSelection, KiloTargetResolution } from "./target.ts";
 
 export { buildKiloCandidateBundle } from "./candidate-bundle.ts";
 export type { KiloCandidateBundle } from "./candidate-bundle.ts";
+
+export { preflightKiloInstall } from "./install-preflight.ts";
+export type { KiloInstallPreflight } from "./install-preflight.ts";
