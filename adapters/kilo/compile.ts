@@ -99,7 +99,7 @@ export function compileKilo(request: {
     }
     const disposition = KILO_KIND_DISPOSITIONS[source.kind];
     if (seen.has(`${source.kind}:${item.entity.id}`)) {
-      diagnostics.push(diagnostic("DUPLICATE_IDENTITY", "BLOCKING", "Canonical identity selected more than once.", target, resolution.evidence, target, resolution.evidence, source.ref, disposition));
+      diagnostics.push(diagnostic("DUPLICATE_IDENTITY", "BLOCKING", "Canonical identity selected more than once.", target, resolution.evidence, source.ref, disposition));
     }
     seen.add(`${source.kind}:${item.entity.id}`);
     const degraded = item.requirement === "OPTIONAL" && item.allowDegradation === true;
@@ -110,7 +110,7 @@ export function compileKilo(request: {
     diagnostics.push(diagnostic(degraded ? "OPTIONAL_DEGRADATION" : code, degraded ? "WARNING" : "BLOCKING",
       degraded ? "Optional semantics omitted by explicit degradation; no target artifact emitted." :
       "K0 desk research does not establish effective Windows + VS Code semantic preservation or permissions.",
-      source.ref, disposition));
+      target, resolution.evidence, source.ref, disposition));
   }
   translations.sort((a, b) => compare(a.sourceRef, b.sourceRef));
   diagnostics.sort((a, b) => compare(JSON.stringify([a.sourceRef ?? "", a.code, a.severity]),
