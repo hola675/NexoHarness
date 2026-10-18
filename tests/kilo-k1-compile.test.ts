@@ -41,3 +41,9 @@ test("K1 runtime-only and governance kinds do not become artifacts", () => {
   assert.ok(r.diagnostics.some(d => d.code === "NEXO_RUNTIME_REQUIRED"));
   assert.ok(r.diagnostics.some(d => d.code === "NO_TARGET_ARTIFACT"));
 });
+
+test("K1 rejects an empty selection rather than producing a successful empty preview", () => {
+  const r = compileKilo({ selection: [] });
+  assert.equal(r.deploymentEligible, false);
+  assert.ok(r.diagnostics.some(d => d.code === "INVALID_SELECTION" && d.severity === "BLOCKING"));
+});
