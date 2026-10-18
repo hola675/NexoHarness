@@ -21,3 +21,6 @@ export type { KiloPreviewPlan } from "./preview-plan.ts";
 
 export { resolveKiloTarget } from "./target.ts";
 export type { KiloTargetSelection, KiloTargetResolution } from "./target.ts";
+
+export { buildKiloCandidateBundle } from "./candidate-bundle.ts";
+export type { KiloCandidateBundle } from "./candidate-bundle.ts";
