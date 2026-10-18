@@ -12,3 +12,6 @@ export { compileKilo } from "./compile.ts";
 export type { KiloSelection, KiloCompilation, KiloDiagnostic, KiloTranslation } from "./compile.ts";
 export { validateKiloSkillMarkdown } from "./skill-format.ts";
 export type { SkillFormatIssue } from "./skill-format.ts";
+
+export { previewKiloSkill } from "./skill-preview.ts";
+export type { KiloSkillPreview, KiloSkillCandidate } from "./skill-preview.ts";
