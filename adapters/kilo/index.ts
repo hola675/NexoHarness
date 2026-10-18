@@ -7,3 +7,6 @@ export {
   KILO_PERMISSION_BOUNDARY,
 } from "./model.ts";
 export type { KiloAuthorityDimension, KiloTranslationClass } from "./model.ts";
+
+export { compileKilo } from "./compile.ts";
+export type { KiloSelection, KiloCompilation, KiloDiagnostic, KiloTranslation } from "./compile.ts";
