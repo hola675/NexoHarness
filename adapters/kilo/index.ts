@@ -15,3 +15,6 @@ export type { SkillFormatIssue } from "./skill-format.ts";
 
 export { previewKiloSkill } from "./skill-preview.ts";
 export type { KiloSkillPreview, KiloSkillCandidate } from "./skill-preview.ts";
+
+export { planKiloPreview } from "./preview-plan.ts";
+export type { KiloPreviewPlan } from "./preview-plan.ts";
