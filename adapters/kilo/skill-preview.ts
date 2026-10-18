@@ -51,7 +51,7 @@ export function previewKiloSkill(record: CanonicalEntityRecord): KiloSkillPrevie
   if (!specification || Object.keys(specification).some(key => key !== "purpose")) {
     diagnostics.push("UNMAPPED_SKILL_SEMANTICS");
   }
-  if (!metadata || Object.keys(metadata).some(key => !["id", "version", "status"].includes(key))) {
+  if (!metadata || Object.keys(metadata).some(key => !["id", "title", "version", "status"].includes(key))) {
     diagnostics.push("UNMAPPED_SKILL_METADATA");
   }
   if (diagnostics.length > 0) return { ok: false, candidate: null, diagnostics: diagnostics.sort() };
