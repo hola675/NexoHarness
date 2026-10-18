@@ -6,9 +6,9 @@ Portable engineering harness for AI coding agents.
 
 NexoHarness is an open-source, portable, testable and continuously improving engineering system for AI coding agents. It defines responsibilities, reusable procedures, behavioral rules, workflows, contracts, capabilities, enforcement and evaluations from a harness-neutral canonical source.
 
-Harness-specific adapters translate that canonical system into native configurations without making the canonical model depend on one platform. Kilo Code is the first product and certification target, followed by Claude Code. Codex work is retained as prior experimental/model-validation work. Each adapter consumes the same canonical source independently; see [ADR 0006](docs/decisions/0006-product-v1-and-adapter-priority.md).
+Harness-specific adapters translate that canonical system into native configurations without making the canonical model depend on one platform. Kilo Code is the first product and certification target, followed by OpenAI Codex, initially on Windows + VS Code. Existing Codex CLI work remains experimental/model-validation evidence, not proof of Codex VS Code compatibility. Claude Code is outside current target scope. Each adapter consumes the same canonical source independently; [ADR 0007](docs/decisions/0007-windows-vscode-target-scope.md) governs current priority and target environment; [ADR 0006](docs/decisions/0006-product-v1-and-adapter-priority.md) remains in force for DKT-01 and DKT-03–06.
 
-Phases 0.0 and 0.0.5 establish the repository constitution, universal execution model and documentation baseline. They do not ship production agents, skills, workflows, runtime observer code or adapter logic.
+Foundation phases 0.0–0.3 are marked certified in the roadmap. The repository also contains prior Codex adapter work. These milestones do not establish a production-ready Kilo adapter, runtime Observer, installer, or installable V1.
 
 ## Why NexoHarness?
 
@@ -30,12 +30,11 @@ AI coding behavior is fragmented across prompts, agents, skills, rules, commands
 ## Architecture
 
 ```text
-Canonical Source ─┬→ Codex Adapter ─────→ Codex
-                  ├→ Claude Code Adapter → Claude Code
-                  └→ Kilo Code Adapter ──→ Kilo Code
+Canonical Source ─┬→ Kilo Code Adapter ──→ Kilo Code (Windows + VS Code)
+                  └→ Codex Adapter ─────→ Codex (Windows + VS Code)
 ```
 
-Product target priority: **Kilo Code → Claude Code**. Codex remains prior experimental/model-validation work.
+Product target priority: **Kilo Code → Codex**, initially on Windows + VS Code, per ADR 0007. Claude Code is outside current target scope.
 
 See [the architecture](docs/architecture.md) and [source-of-truth rules](docs/source-of-truth.md).
 
@@ -55,7 +54,7 @@ See [the architecture](docs/architecture.md) and [source-of-truth rules](docs/so
 
 ## Status
 
-**Pre-alpha / Foundation phase.** NexoHarness is not ready to install or use as a package.
+**Pre-alpha / Kilo adapter design phase.** The foundation is marked certified, but the Kilo adapter is not implemented or certified. NexoHarness is not ready to install or use as a package.
 
 ## Roadmap
 
