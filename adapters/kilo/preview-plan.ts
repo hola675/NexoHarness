@@ -1,5 +1,6 @@
 import { compileKilo, type KiloSelection, type KiloCompilation } from "./compile.ts";
 import { previewKiloSkill, type KiloSkillCandidate } from "./skill-preview.ts";
+import type { KiloTargetSelection } from "./target.ts";
 
 /**
  * Pure K1 orchestration: never promotes candidates to deployment artifacts.
@@ -13,8 +14,8 @@ export interface KiloPreviewPlan {
   deploymentEligible: false;
 }
 const cmp = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
-export function planKiloPreview(selection: readonly KiloSelection[]): KiloPreviewPlan {
-  const analysis = compileKilo({ selection });
+export function planKiloPreview(selection: readonly KiloSelection[], target?: Partial<KiloTargetSelection>): KiloPreviewPlan {
+  const analysis = compileKilo({ selection, target });
   const candidates: KiloSkillCandidate[] = [];
   const diagnostics: KiloPreviewPlan["diagnostics"] = [];
   const identities = new Set<string>();
@@ -32,7 +33,7 @@ export function planKiloPreview(selection: readonly KiloSelection[]): KiloPrevie
       diagnostics.push({ sourceRef: ref, code: "OPTIONAL_SKILL_OMITTED" });
       continue;
     }
-    const result = previewKiloSkill(record);
+    const result = previewKiloSkill(record, target);
     if (!result.ok) {
       for (const code of result.diagnostics) diagnostics.push({ sourceRef: ref, code });
       continue;
