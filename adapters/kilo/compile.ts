@@ -68,7 +68,7 @@ function diagnostic(code: KiloDiagnosticCode, severity: KiloSeverity, semanticLo
   sourceRef?: string, translationClass?: KiloTranslationClass): KiloDiagnostic {
   return {
     code, severity, ...(sourceRef ? { sourceRef } : {}),
-    surface: `Kilo Code ${target.version} / Windows / VS Code`,
+    surface: `Kilo Code ${target.version} / Windows / ${target.client}`,
     ...(translationClass ? { translationClass } : {}),
     semanticLoss,
     enforcement: "NONE_UNKNOWN",
