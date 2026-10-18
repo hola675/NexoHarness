@@ -18,3 +18,6 @@ export type { KiloSkillPreview, KiloSkillCandidate } from "./skill-preview.ts";
 
 export { planKiloPreview } from "./preview-plan.ts";
 export type { KiloPreviewPlan } from "./preview-plan.ts";
+
+export { resolveKiloTarget } from "./target.ts";
+export type { KiloTargetSelection, KiloTargetResolution } from "./target.ts";
