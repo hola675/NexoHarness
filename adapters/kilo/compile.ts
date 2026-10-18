@@ -1,5 +1,6 @@
 import type { CanonicalEntityRecord } from "../../tools/validate/canonical-integrity.ts";
-import { KILO_KIND_DISPOSITIONS, KILO_TARGET, type KiloTranslationClass } from "./model.ts";
+import { KILO_KIND_DISPOSITIONS, type KiloTranslationClass } from "./model.ts";
+import { resolveKiloTarget, type KiloTargetSelection } from "./target.ts";
 import type { CanonicalKind } from "../../tools/validate/schemas.ts";
 
 /**
@@ -25,7 +26,7 @@ export interface KiloDiagnostic {
   translationClass?: KiloTranslationClass;
   semanticLoss: string;
   enforcement: "PROMPT_ADVISORY_ONLY" | "NONE_UNKNOWN";
-  evidence: "K0_DESK_RESEARCH_ONLY";
+  evidence: "K0_DESK_RESEARCH_ONLY" | "UNVERIFIED_VERSION";
 }
 export interface KiloTranslation {
   sourceRef: string;
@@ -37,7 +38,7 @@ export interface KiloTranslation {
   targetArtifact: "NONE";
 }
 export interface KiloCompilation {
-  target: typeof KILO_TARGET;
+  target: KiloTargetSelection;
   translations: KiloTranslation[];
   diagnostics: KiloDiagnostic[];
   usable: false;
@@ -63,43 +64,42 @@ function sourceFor(record: CanonicalEntityRecord): { ref: string; path: string; 
   return { ref: `${record.kind}:${record.id}@${record.version}`, path, kind: record.kind as CanonicalKind };
 }
 function diagnostic(code: KiloDiagnosticCode, severity: KiloSeverity, semanticLoss: string,
+  target: KiloTargetSelection, evidence: KiloDiagnostic["evidence"],
   sourceRef?: string, translationClass?: KiloTranslationClass): KiloDiagnostic {
   return {
     code, severity, ...(sourceRef ? { sourceRef } : {}),
-    surface: "Kilo Code v7.8.8 / Windows / VS Code",
+    surface: `Kilo Code ${target.version} / Windows / VS Code`,
     ...(translationClass ? { translationClass } : {}),
     semanticLoss,
     enforcement: "NONE_UNKNOWN",
-    evidence: "K0_DESK_RESEARCH_ONLY",
+    evidence,
   };
 }
 export function compileKilo(request: {
   selection: readonly KiloSelection[];
-  target?: { client?: string; platform?: string; version?: string; sourceCommit?: string };
+  target?: Partial<KiloTargetSelection>;
 }): KiloCompilation {
   const diagnostics: KiloDiagnostic[] = [];
   const translations: KiloTranslation[] = [];
-  const target = request.target;
-  if (target && (target.client !== undefined && target.client !== KILO_TARGET.client ||
-    target.platform !== undefined && target.platform !== KILO_TARGET.platform ||
-    target.version !== undefined && target.version !== KILO_TARGET.version ||
-    target.sourceCommit !== undefined && target.sourceCommit !== KILO_TARGET.sourceCommit)) {
-    diagnostics.push(diagnostic("TARGET_UNVERIFIED", "BLOCKING", "Requested target differs from the pinned K0 evidence."));
+  const resolution = resolveKiloTarget(request.target);
+  const target = resolution.target;
+  for (const code of resolution.diagnostics) {
+    diagnostics.push(diagnostic("TARGET_UNVERIFIED", "BLOCKING", code, target, resolution.evidence));
   }
   if (request.selection.length === 0) {
-    diagnostics.push(diagnostic("INVALID_SELECTION", "BLOCKING", "An explicit nonempty canonical selection is required."));
+    diagnostics.push(diagnostic("INVALID_SELECTION", "BLOCKING", "An explicit nonempty canonical selection is required.", target, resolution.evidence));
   }
   const seen = new Set<string>();
   for (const item of request.selection) {
     const source = sourceFor(item.entity);
     if (!source || (item.requirement !== "REQUIRED" && item.requirement !== "OPTIONAL") ||
       (item.allowDegradation !== undefined && typeof item.allowDegradation !== "boolean")) {
-      diagnostics.push(diagnostic("INVALID_SELECTION", "BLOCKING", "Selection identity, envelope, requirement or source path is invalid."));
+      diagnostics.push(diagnostic("INVALID_SELECTION", "BLOCKING", "Selection identity, envelope, requirement or source path is invalid.", target, resolution.evidence));
       continue;
     }
     const disposition = KILO_KIND_DISPOSITIONS[source.kind];
     if (seen.has(`${source.kind}:${item.entity.id}`)) {
-      diagnostics.push(diagnostic("DUPLICATE_IDENTITY", "BLOCKING", "Canonical identity selected more than once.", source.ref, disposition));
+      diagnostics.push(diagnostic("DUPLICATE_IDENTITY", "BLOCKING", "Canonical identity selected more than once.", target, resolution.evidence, target, resolution.evidence, source.ref, disposition));
     }
     seen.add(`${source.kind}:${item.entity.id}`);
     const degraded = item.requirement === "OPTIONAL" && item.allowDegradation === true;
@@ -116,5 +116,5 @@ export function compileKilo(request: {
   diagnostics.sort((a, b) => compare(JSON.stringify([a.sourceRef ?? "", a.code, a.severity]),
     JSON.stringify([b.sourceRef ?? "", b.code, b.severity])));
   // No K1 runtime probes, installer or eligibility authority exists. Never promote a preview.
-  return { target: KILO_TARGET, translations, diagnostics, usable: false, deploymentEligible: false, artifacts: [] };
+  return { target, translations, diagnostics, usable: false, deploymentEligible: false, artifacts: [] };
 }
