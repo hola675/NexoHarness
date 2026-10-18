@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import type { CanonicalEntityRecord } from "../../tools/validate/canonical-integrity.ts";
 import { validateKiloSkillMarkdown } from "./skill-format.ts";
-import { KILO_TARGET } from "./model.ts";
+import { resolveKiloTarget, type KiloTargetSelection } from "./target.ts";
 
 /**
  * Deterministic, in-memory Skill candidate preview.
@@ -13,7 +13,7 @@ export interface KiloSkillCandidate {
   content: string;
   sha256: string;
   sourceRef: string;
-  target: typeof KILO_TARGET;
+  target: KiloTargetSelection;
   advisoryOnly: true;
   deployable: false;
 }
@@ -23,8 +23,9 @@ export type KiloSkillPreview =
 
 const safeName = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 function quoted(value: string): string { return JSON.stringify(value); }
-export function previewKiloSkill(record: CanonicalEntityRecord): KiloSkillPreview {
-  const diagnostics: string[] = [];
+export function previewKiloSkill(record: CanonicalEntityRecord, selectedTarget?: Partial<KiloTargetSelection>): KiloSkillPreview {
+  const resolution = resolveKiloTarget(selectedTarget);
+  const diagnostics: string[] = resolution.diagnostics.filter(code => code !== "VERSION_EVIDENCE_REQUIRED");
   const meta = record.document.metadata;
   const spec = record.document.spec;
   const metadata = meta && typeof meta === "object" && !Array.isArray(meta) ? meta as Record<string, unknown> : null;
@@ -62,7 +63,7 @@ export function previewKiloSkill(record: CanonicalEntityRecord): KiloSkillPrevie
   return {
     ok: true, diagnostics: [],
     candidate: { path, content, sha256: createHash("sha256").update(content, "utf8").digest("hex"),
-      sourceRef: `Skill:${id}@${record.version}`, target: KILO_TARGET,
+      sourceRef: `Skill:${id}@${record.version}`, target: resolution.target,
       advisoryOnly: true, deployable: false },
   };
 }
